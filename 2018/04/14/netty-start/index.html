@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,netty,nio," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="介绍netty是一个异步事件驱动的网络应用框架，用来快速开发可维护的高性能协议服务器和客户端。极大的简化了tcp和udp的socket编程。 支持ftp, smtp, http以及各种基于二进制和基于文本的传统协议，因此netty能实现轻松的开发，性能，稳定性，灵活性。 设计 支持各种通信类型的统一API，阻塞和非阻塞socket  基于灵活和可扩展的线程模型，可以清晰的分离问题  高度可定制化的">
+<meta name="keywords" content="java,netty,nio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="netty-start">
+<meta property="og:url" content="https://chenliosng.github.io/2018/04/14/netty-start/index.html">
+<meta property="og:site_name" content="Hi, coder">
+<meta property="og:description" content="介绍netty是一个异步事件驱动的网络应用框架，用来快速开发可维护的高性能协议服务器和客户端。极大的简化了tcp和udp的socket编程。 支持ftp, smtp, http以及各种基于二进制和基于文本的传统协议，因此netty能实现轻松的开发，性能，稳定性，灵活性。 设计 支持各种通信类型的统一API，阻塞和非阻塞socket  基于灵活和可扩展的线程模型，可以清晰的分离问题  高度可定制化的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://netty.io/images/components.png">
+<meta property="og:updated_time" content="2018-04-14T08:28:53.059Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="netty-start">
+<meta name="twitter:description" content="介绍netty是一个异步事件驱动的网络应用框架，用来快速开发可维护的高性能协议服务器和客户端。极大的简化了tcp和udp的socket编程。 支持ftp, smtp, http以及各种基于二进制和基于文本的传统协议，因此netty能实现轻松的开发，性能，稳定性，灵活性。 设计 支持各种通信类型的统一API，阻塞和非阻塞socket  基于灵活和可扩展的线程模型，可以清晰的分离问题  高度可定制化的">
+<meta name="twitter:image" content="https://netty.io/images/components.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chenliosng.github.io/2018/04/14/netty-start/"/>
+
+
+
+
+
+  <title>netty-start | Hi, coder</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4017d56af796b6206a285ab35c559a01";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi, coder</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chenliosng.github.io/2018/04/14/netty-start/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈礼松">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi, coder">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">netty-start</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-14T12:18:06+08:00">
+                2018-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/netty/" itemprop="url" rel="index">
+                    <span itemprop="name">netty</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>netty是一个异步事件驱动的网络应用框架，用来快速开发可维护的高性能协议服务器和客户端。极大的简化了tcp和udp的socket编程。</p>
+<p>支持ftp, smtp, http以及各种基于二进制和基于文本的传统协议，因此netty能实现轻松的开发，性能，稳定性，灵活性。</p>
+<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><ul>
+<li><p>支持各种通信类型的统一API，阻塞和非阻塞socket</p>
+</li>
+<li><p>基于灵活和可扩展的线程模型，可以清晰的分离问题</p>
+</li>
+<li><p>高度可定制化的线程模型，单线程或者多线程</p>
+</li>
+<li><p>真正的无连接数据包socket支持</p>
+</li>
+</ul>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><ul>
+<li><p>吞吐量更好，延迟更低</p>
+</li>
+<li><p>更少的资源消耗</p>
+</li>
+<li><p>最小化不必要的内存copy</p>
+</li>
+</ul>
+<h3 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h3><blockquote>
+<p>官网文档：<a href="https://netty.io/wiki/index.html" target="_blank" rel="noopener">https://netty.io/wiki/index.html</a></p>
+</blockquote>
+<a id="more"></a>
+<p><img src="https://netty.io/images/components.png" alt="netty组织图"></p>
+<h2 id="实现几个demo"><a href="#实现几个demo" class="headerlink" title="实现几个demo"></a>实现几个demo</h2><h3 id="相关类描述"><a href="#相关类描述" class="headerlink" title="相关类描述"></a>相关类描述</h3><ol>
+<li><p>NioEventLoopGroup： 是一个循环处理IO操作的多线程事件，netty EventLoopGroup为不同类型的传输提供了各种实现，<br>bossGroup接收链接并将接收的链接分发给workGroup，workGroup来处理接收的请求。使用多少个线程以及他们如何映射到创建的channel取决于EventLoopGroup的实现，例如可以通过构造函数</p>
+</li>
+<li><p>ServerBootStrap： 建立server启动的辅助类，简化使用channel</p>
+</li>
+<li><p>NioServerSocketChannel： 用来实例化新channel的传入连接的类</p>
+</li>
+<li><p>ChannelInitializer： 一个特殊的处理程序，旨在帮助用户配置新的channel。可以通过ChannelPipeline添加一些新的channel处理程序</p>
+</li>
+<li><p>ChannelOption： 编写一个tcp/ip的服务器，可以设置诸如tcpNoDelay和socket keepalive等参数</p>
+</li>
+<li><p>option方法是为了NioServerSocketChannel接收传入连接。childOption方法是为了接收的ServerChannel。</p>
+</li>
+<li><p>绑定端口并启动服务器，</p>
+</li>
+</ol>
+<h3 id="编写一个discard服务器"><a href="#编写一个discard服务器" class="headerlink" title="编写一个discard服务器"></a>编写一个discard服务器</h3><ol>
+<li>定义server的handler类<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Handles a server-side channel.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiscardServerHandler</span> <span class="keyword">extends</span> <span class="title">ChannelInboundHandlerAdapter</span> </span>&#123; <span class="comment">// (1)</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123; <span class="comment">// (2)</span></span><br><span class="line">        <span class="comment">// Discard the received data silently.</span></span><br><span class="line">        ((ByteBuf) msg).release(); <span class="comment">// (3)</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exceptionCaught</span><span class="params">(ChannelHandlerContext ctx, Throwable cause)</span> </span>&#123; <span class="comment">// (4)</span></span><br><span class="line">        <span class="comment">// Close the connection when an exception is raised.</span></span><br><span class="line">        cause.printStackTrace();</span><br><span class="line">        ctx.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>channelRead： 重写时间处理代码，每当接收到来自客户端的数据时，都会使用受到的消息调用此方法。消息类型：ByteBuf</p>
+<ol start="2">
+<li><p>为了实现discard协议，处理程序忽略收到的消息，ByteBuf是一个引用对象，必须使用release()方法释放。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// Do something with msg</span></span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        ReferenceCountUtil.release(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实现server的启动类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiscardServer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PORT = Integer.parseInt(System.getProperty(<span class="string">"port"</span>, <span class="string">"8009"</span>));</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line"></span><br><span class="line">        EventLoopGroup boss = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">        EventLoopGroup work = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            ServerBootstrap b = <span class="keyword">new</span> ServerBootstrap();</span><br><span class="line">            b.group(boss, work)</span><br><span class="line">                    .channel(NioServerSocketChannel.class)</span><br><span class="line">                    .handler(<span class="keyword">new</span> LoggingHandler(LogLevel.INFO))</span><br><span class="line">                    .childHandler(<span class="keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                            ChannelPipeline p = ch.pipeline();</span><br><span class="line">                            p.addLast(<span class="keyword">new</span> DiscardServerHandler());</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line"></span><br><span class="line">            ChannelFuture f = b.bind(PORT).sync();</span><br><span class="line">            f.channel().closeFuture().sync();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            boss.shutdownGracefully();</span><br><span class="line">            work.shutdownGracefully();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>其中类含义参考上述 “相关类描述”</p>
+<ol start="4">
+<li>server handler查看传入信息的内容<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">    ByteBuf in = (ByteBuf) msg;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        System.out.println(in.toString(io.netty.util.CharsetUtil.US_ASCII));</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        ReferenceCountUtil.release(msg); <span class="comment">// (2)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>telnet测试结果如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">client: telnet 127.0.0.1 8007</span><br><span class="line">client: hi, my name is cls</span><br><span class="line"></span><br><span class="line">server: 信息: [id: 0x0164a9e2, L:/0:0:0:0:0:0:0:0:8007] RECEIVED: [id: 0x27f3f08c, L:/127.0.0.1:8007 - R:/127.0.0.1:56705]</span><br><span class="line">server: hi, my name is cls</span><br></pre></td></tr></table></figure>
+<h3 id="编写一个echo服务器"><a href="#编写一个echo服务器" class="headerlink" title="编写一个echo服务器"></a>编写一个echo服务器</h3><p>到目前为止，我们消费数据而没有做出任何回应，然而，服务器应该对请求做出相应。我们来实现echo想客户端写入响应数据。</p>
+<p>这个例子与discard服务器唯一的区别在于，它将接收到的数据发送回来，而不是将接收的数据打印到控制台，因此修改channelRead()方法足够了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">    ctx.write(msg); <span class="comment">// (1)</span></span><br><span class="line">    ctx.flush(); <span class="comment">// (2)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>ChannelHandlerContext对象提供了各种操作，能够触发各种io事件和操作。我们调用write逐字写入收到的消息</p>
+</li>
+<li><p>ctx.write(Object)在内部被缓存，然后通过flush到客户端，可以使用writeAndFlush(msg)更加简洁</p>
+</li>
+</ol>
+<h3 id="超时时间的服务器"><a href="#超时时间的服务器" class="headerlink" title="超时时间的服务器"></a>超时时间的服务器</h3><p>发送一个32整数的消息，在发送消息后关闭连接，例子中体现如何构建和发送消息，并在完成时关闭。</p>
+<p>因为我们忽略任何接收到的数据，但只要建立连接就发送消息，我们不恩能够使用此次的channelRead()方法。这次应该重写channelActive()方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeServerHandler</span> <span class="keyword">extends</span> <span class="title">ChannelInboundHandlerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelActive</span><span class="params">(<span class="keyword">final</span> ChannelHandlerContext ctx)</span> </span>&#123; <span class="comment">// (1)</span></span><br><span class="line">        <span class="keyword">final</span> ByteBuf time = ctx.alloc().buffer(<span class="number">4</span>); <span class="comment">// (2)</span></span><br><span class="line">        time.writeInt((<span class="keyword">int</span>) (System.currentTimeMillis() / <span class="number">1000L</span> + <span class="number">2208988800L</span>));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">final</span> ChannelFuture f = ctx.writeAndFlush(time); <span class="comment">// (3)</span></span><br><span class="line">        f.addListener(<span class="keyword">new</span> ChannelFutureListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operationComplete</span><span class="params">(ChannelFuture future)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">assert</span> f == future;</span><br><span class="line">                ctx.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;); <span class="comment">// (4)</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exceptionCaught</span><span class="params">(ChannelHandlerContext ctx, Throwable cause)</span> </span>&#123;</span><br><span class="line">        cause.printStackTrace();</span><br><span class="line">        ctx.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>channelActive将会在建立连接时被调用，并写入一个32整数，表示此方法中的当前时间</p>
+</li>
+<li><p>要发送消息，需要分配一个新的缓冲区，ByteBuf容量至少为4个字节的数据。通过ctx.alloc()分配</p>
+</li>
+<li><p>因为netty是异步编程。任何的请求可能尚未执行。例如在发送消息之前，以下代码可能会关闭连接。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Channel ch = ...;</span><br><span class="line">ch.writeAndFlush(message);</span><br><span class="line">ch.close();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>因此，需要close()在ChannelFuture完成之后调用方法返回的write()方法。并在写入操作完成时通知其监听器。</p>
+<ol start="4">
+<li>当写请求完成后，我们通过监听得到通知。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f.addListener(ChannelFutureListener.CLOSE);</span><br></pre></td></tr></table></figure>
+<p>时间服务器编程的client端程序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeClient</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String HOST = System.getProperty(<span class="string">"host"</span>, <span class="string">"127.0.0.1"</span>);</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PORT = Integer.parseInt(System.getProperty(<span class="string">"port"</span>, <span class="string">"8007"</span>));</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        EventLoopGroup workerGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Bootstrap b = <span class="keyword">new</span> Bootstrap(); <span class="comment">// (1)</span></span><br><span class="line">            b.group(workerGroup); <span class="comment">// (2)</span></span><br><span class="line">            b.channel(NioSocketChannel.class); <span class="comment">// (3)</span></span><br><span class="line">            b.option(ChannelOption.SO_KEEPALIVE, <span class="keyword">true</span>); <span class="comment">// (4)</span></span><br><span class="line">            b.handler(<span class="keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                    ch.pipeline().addLast(<span class="keyword">new</span> TimeClientHandler());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Start the client.</span></span><br><span class="line">            ChannelFuture f = b.connect(HOST, PORT).sync(); <span class="comment">// (5)</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// Wait until the connection is closed.</span></span><br><span class="line">            f.channel().closeFuture().sync();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            workerGroup.shutdownGracefully();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>client的handler实现<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeClientHandler</span> <span class="keyword">extends</span> <span class="title">ChannelInboundHandlerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">        ByteBuf m = (ByteBuf) msg; <span class="comment">// (1)</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">long</span> currentTimeMillis = (m.readUnsignedInt() - <span class="number">2208988800L</span>) * <span class="number">1000L</span>;</span><br><span class="line">            System.out.println(<span class="keyword">new</span> Date(currentTimeMillis));</span><br><span class="line">            ctx.close();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            m.release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exceptionCaught</span><span class="params">(ChannelHandlerContext ctx, Throwable cause)</span> </span>&#123;</span><br><span class="line">        cause.printStackTrace();</span><br><span class="line">        ctx.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client: Sat Apr 14 15:47:46 CST 2018</span><br></pre></td></tr></table></figure></p>
+<h3 id="处理基于流的传输"><a href="#处理基于流的传输" class="headerlink" title="处理基于流的传输"></a>处理基于流的传输</h3><p>问题：基于流的传输不是一个完整的数据包队列，而是一个字节队列，难以做拆分。</p>
+<p>举例如下， 发送数据包 abc | def | ghi 接收时很有可能这样读取 ab | cdefg | h | i</p>
+<p>解决方案一： handlerAdded的时候定义一个ByteBuf为4的缓冲区，channelRead时直到读取的容量大于4个bytes，才输出。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeClientHandler</span> <span class="keyword">extends</span> <span class="title">ChannelInboundHandlerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ByteBuf buf;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handlerAdded</span><span class="params">(ChannelHandlerContext ctx)</span> </span>&#123;</span><br><span class="line">        buf = ctx.alloc().buffer(<span class="number">4</span>); <span class="comment">// (1)</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handlerRemoved</span><span class="params">(ChannelHandlerContext ctx)</span> </span>&#123;</span><br><span class="line">        buf.release(); <span class="comment">// (1)</span></span><br><span class="line">        buf = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">        ByteBuf m = (ByteBuf) msg;</span><br><span class="line">        buf.writeBytes(m); <span class="comment">// (2)</span></span><br><span class="line">        m.release();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (buf.readableBytes() &gt;= <span class="number">4</span>) &#123; <span class="comment">// (3)</span></span><br><span class="line">            <span class="keyword">long</span> currentTimeMillis = (buf.readUnsignedInt() - <span class="number">2208988800L</span>) * <span class="number">1000L</span>;</span><br><span class="line">            System.out.println(<span class="keyword">new</span> Date(currentTimeMillis));</span><br><span class="line">            ctx.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exceptionCaught</span><span class="params">(ChannelHandlerContext ctx, Throwable cause)</span> </span>&#123;</span><br><span class="line">        cause.printStackTrace();</span><br><span class="line">        ctx.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解决方案二： 使用ByteToMessageDecoder自定义解码请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeDecoder</span> <span class="keyword">extends</span> <span class="title">ByteToMessageDecoder</span> </span>&#123; <span class="comment">// (1)</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">decode</span><span class="params">(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out)</span> </span>&#123; <span class="comment">// (2)</span></span><br><span class="line">        <span class="keyword">if</span> (in.readableBytes() &lt; <span class="number">4</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>; <span class="comment">// (3)</span></span><br><span class="line">        &#125;        </span><br><span class="line">        out.add(in.readBytes(<span class="number">4</span>)); <span class="comment">// (4)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>ByteToMessageDecoder实现了ChannelInboundHandler更容易处理碎片问题</p>
+</li>
+<li><p>每当收到新数据时，都会调用内部维护累计缓冲区的方法</p>
+</li>
+</ol>
+<p>修改TimeClient，将自定义的TimeDecoder注入其中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">b.handler(<span class="keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ch.pipeline().addLast(<span class="keyword">new</span> TimeDecoder(), <span class="keyword">new</span> TimeClientHandler());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">附加：还有更加极简的方法</span><br><span class="line"></span><br><span class="line">~~~ java</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeDecoder</span> <span class="keyword">extends</span> <span class="title">ReplayingDecoder</span>&lt;<span class="title">Void</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">decode</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out)</span> </span>&#123;</span><br><span class="line">        out.add(in.readBytes(<span class="number">4</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用POJO而不再使用ByteBuf通信"><a href="#使用POJO而不再使用ByteBuf通信" class="headerlink" title="使用POJO而不再使用ByteBuf通信"></a>使用POJO而不再使用ByteBuf通信</h3><ol>
+<li><p>先定义一个UnixTime对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnixTime</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> value;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UnixTime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(System.currentTimeMillis() / <span class="number">1000L</span> + <span class="number">2208988800L</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UnixTime</span><span class="params">(<span class="keyword">long</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">value</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Date((value() - <span class="number">2208988800L</span>) * <span class="number">1000L</span>).toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给client定义一个解码器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">decode</span><span class="params">(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (in.readableBytes() &lt; <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    out.add(<span class="keyword">new</span> UnixTime(in.readUnsignedInt()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修正client handler类的channelRead方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">    UnixTime m = (UnixTime) msg;</span><br><span class="line">    System.out.println(m);</span><br><span class="line">    ctx.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更新server端handler类的channelActive方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelActive</span><span class="params">(ChannelHandlerContext ctx)</span> </span>&#123;</span><br><span class="line">    ChannelFuture f = ctx.writeAndFlush(<span class="keyword">new</span> UnixTime());</span><br><span class="line">    f.addListener(ChannelFutureListener.CLOSE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>为server端提供编码器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeEncoder</span> <span class="keyword">extends</span> <span class="title">MessageToByteEncoder</span>&lt;<span class="title">UnixTime</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">encode</span><span class="params">(ChannelHandlerContext ctx, UnixTime msg, ByteBuf out)</span> </span>&#123;</span><br><span class="line">        out.writeInt((<span class="keyword">int</span>)msg.value());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>测试得到。client端启动时得到正确的时间。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/wechat.jpg" alt="陈礼松 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/alipay.jpg" alt="陈礼松 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/netty/" rel="tag"># netty</a>
+          
+            <a href="/tags/nio/" rel="tag"># nio</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/12/java-wildcard-achieve/" rel="next" title="java通配符替换的几种实现方式">
+                <i class="fa fa-chevron-left"></i> java通配符替换的几种实现方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://www.kehue.com/pic/cls.jpg"
+                alt="陈礼松" />
+            
+              <p class="site-author-name" itemprop="name">陈礼松</p>
+              <p class="site-description motion-element" itemprop="description">吃饭睡觉撸码</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设计"><span class="nav-text">设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能"><span class="nav-text">性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关文档"><span class="nav-text">相关文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现几个demo"><span class="nav-text">实现几个demo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关类描述"><span class="nav-text">相关类描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写一个discard服务器"><span class="nav-text">编写一个discard服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写一个echo服务器"><span class="nav-text">编写一个echo服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超时时间的服务器"><span class="nav-text">超时时间的服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理基于流的传输"><span class="nav-text">处理基于流的传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用POJO而不再使用ByteBuf通信"><span class="nav-text">使用POJO而不再使用ByteBuf通信</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈礼松</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
