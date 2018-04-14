@@ -343,6 +343,17 @@
 
           
           
+             <span id="/2018/04/14/netty-start/" class="leancloud_visitors" data-flag-title="netty-start">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -511,6 +522,17 @@
 
           
           
+             <span id="/2018/04/12/java-wildcard-achieve/" class="leancloud_visitors" data-flag-title="java通配符替换的几种实现方式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -532,8 +554,7 @@
 
       
         
-          
-            <p>java中通配符的替换有几种方式(如下面例子)。我们先尝试自己实现。</p>
+          <p>java中通配符的替换有几种方式(如下面例子)。我们先尝试自己实现。</p>
 <ol>
 <li><p>String.format(“hi, %s”, “uname”)</p>
 </li>
@@ -549,16 +570,13 @@
 </li>
 </ol>
 <p><img src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/java-wildcard-achieve.png" alt="思路图"></p>
-<h3 id="code实现"><a href="#code实现" class="headerlink" title="code实现"></a>code实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">conver2Match</span><span class="params">(String text, Object... params)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(params.length == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> text;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    String result = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> nextMatchFlag = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">char</span> unit: text.toCharArray()) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(nextMatchFlag) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (unit) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'d'</span> : result += (<span class="keyword">int</span>) params[index++]; <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'c'</span> : result += (<span class="keyword">char</span>) params[index++]; <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">'s'</span> : result += params[index++].toString(); <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>: result += <span class="string">"%"</span> + unit;</span><br><span class="line">            &#125;</span><br><span class="line">            nextMatchFlag = <span class="keyword">false</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(unit == <span class="string">'%'</span>) &#123;</span><br><span class="line">            nextMatchFlag = <span class="keyword">true</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            nextMatchFlag = <span class="keyword">false</span>;</span><br><span class="line">            result += unit;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(String.format(<span class="string">""</span>, <span class="string">""</span>));</span><br><span class="line">    System.out.println(conver2Match(<span class="string">"hello world, %s, time: %s"</span>, <span class="string">"cls"</span>, <span class="keyword">new</span> Date().getTime()));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>执行结果如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello world, cls, time: 1523536240047</span><br></pre></td></tr></table></figure></p>
-<h2 id="String-format实现过程"><a href="#String-format实现过程" class="headerlink" title="String.format实现过程"></a>String.format实现过程</h2><p>分析源码得到其通过java.util.Formatter实现。先通过Matcher从字符串中查找分隔符，拆分成FOrmatString数组，在进行分段print输出。</p>
-<p>java.util.Formatter.format() 代码如下： </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Formatter <span class="title">format</span><span class="params">(Locale l, String format, Object ... args)</span> </span>&#123;</span><br><span class="line">    ensureOpen();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// index of last argument referenced</span></span><br><span class="line">    <span class="keyword">int</span> last = -<span class="number">1</span>;</span><br><span class="line">    <span class="comment">// last ordinary index</span></span><br><span class="line">    <span class="keyword">int</span> lasto = -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    FormatString[] fsa = parse(format);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; fsa.length; i++) &#123;</span><br><span class="line">        FormatString fs = fsa[i];</span><br><span class="line">        <span class="keyword">int</span> index = fs.index();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">switch</span> (index) &#123;</span><br><span class="line">            <span class="keyword">case</span> -<span class="number">2</span>:  <span class="comment">// fixed string, "%n", or "%%"</span></span><br><span class="line">                fs.print(<span class="keyword">null</span>, l);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> -<span class="number">1</span>:  <span class="comment">// relative index</span></span><br><span class="line">                <span class="keyword">if</span> (last &lt; <span class="number">0</span> || (args != <span class="keyword">null</span> &amp;&amp; last &gt; args.length - <span class="number">1</span>))</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> MissingFormatArgumentException(fs.toString());</span><br><span class="line">                fs.print((args == <span class="keyword">null</span> ? <span class="keyword">null</span> : args[last]), l);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">0</span>:  <span class="comment">// ordinary index</span></span><br><span class="line">                lasto++;</span><br><span class="line">                last = lasto;</span><br><span class="line">                <span class="keyword">if</span> (args != <span class="keyword">null</span> &amp;&amp; lasto &gt; args.length - <span class="number">1</span>)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> MissingFormatArgumentException(fs.toString());</span><br><span class="line">                fs.print((args == <span class="keyword">null</span> ? <span class="keyword">null</span> : args[lasto]), l);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:  <span class="comment">// explicit index</span></span><br><span class="line">                last = index - <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span> (args != <span class="keyword">null</span> &amp;&amp; last &gt; args.length - <span class="number">1</span>)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> MissingFormatArgumentException(fs.toString());</span><br><span class="line">                fs.print((args == <span class="keyword">null</span> ? <span class="keyword">null</span> : args[last]), l);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException x) &#123;</span><br><span class="line">            lastException = x;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>查找分割字符串代码如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> FormatString[] parse(String s) &#123;</span><br><span class="line">ArrayList&lt;FormatString&gt; al = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">Matcher m = fsPattern.matcher(s);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, len = s.length(); i &lt; len; ) &#123;</span><br><span class="line">    <span class="keyword">if</span> (m.find(i)) &#123;</span><br><span class="line">        <span class="comment">// Anything between the start of the string and the beginning</span></span><br><span class="line">        <span class="comment">// of the format specifier is either fixed text or contains</span></span><br><span class="line">        <span class="comment">// an invalid format string.</span></span><br><span class="line">        <span class="keyword">if</span> (m.start() != i) &#123;</span><br><span class="line">            <span class="comment">// Make sure we didn't miss any invalid format specifiers</span></span><br><span class="line">            checkText(s, i, m.start());</span><br><span class="line">            <span class="comment">// Assume previous characters were fixed text</span></span><br><span class="line">            al.add(<span class="keyword">new</span> FixedString(s.substring(i, m.start())));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        al.add(<span class="keyword">new</span> FormatSpecifier(m));</span><br><span class="line">        i = m.end();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// No more valid format specifiers.  Check for possible invalid</span></span><br><span class="line">        <span class="comment">// format specifiers.</span></span><br><span class="line">        checkText(s, i, len);</span><br><span class="line">        <span class="comment">// The rest of the string is fixed text</span></span><br><span class="line">        al.add(<span class="keyword">new</span> FixedString(s.substring(i)));</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> al.toArray(<span class="keyword">new</span> FormatString[al.size()]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="org-slf4j-Logger-info实现过程"><a href="#org-slf4j-Logger-info实现过程" class="headerlink" title="org.slf4j.Logger.info实现过程"></a>org.slf4j.Logger.info实现过程</h2><p>分析源码得知，它的实现思路与我们一致。代码比较简洁，贴出用来作为对比。</p>
-<p>org.slf4j.helpers.MessageFormatter.arrayFormat() 代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> FormattingTuple <span class="title">arrayFormat</span><span class="params">(String messagePattern, Object[] argArray)</span> </span>&#123;</span><br><span class="line">    Throwable throwableCandidate = getThrowableCandidate(argArray);</span><br><span class="line">    <span class="keyword">if</span> (messagePattern == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> FormattingTuple((String)<span class="keyword">null</span>, argArray, throwableCandidate);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (argArray == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> FormattingTuple(messagePattern);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">        StringBuilder sbuf = <span class="keyword">new</span> StringBuilder(messagePattern.length() + <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> L;</span><br><span class="line">        <span class="keyword">for</span>(L = <span class="number">0</span>; L &lt; argArray.length; ++L) &#123;</span><br><span class="line">            <span class="keyword">int</span> j = messagePattern.indexOf(<span class="string">"&#123;&#125;"</span>, i);</span><br><span class="line">            <span class="keyword">if</span> (j == -<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> FormattingTuple(messagePattern, argArray, throwableCandidate);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                sbuf.append(messagePattern.substring(i, messagePattern.length()));</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> FormattingTuple(sbuf.toString(), argArray, throwableCandidate);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (isEscapedDelimeter(messagePattern, j)) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!isDoubleEscaped(messagePattern, j)) &#123;</span><br><span class="line">                    --L;</span><br><span class="line">                    sbuf.append(messagePattern.substring(i, j - <span class="number">1</span>));</span><br><span class="line">                    sbuf.append(<span class="string">'&#123;'</span>);</span><br><span class="line">                    i = j + <span class="number">1</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    sbuf.append(messagePattern.substring(i, j - <span class="number">1</span>));</span><br><span class="line">                    deeplyAppendParameter(sbuf, argArray[L], <span class="keyword">new</span> HashMap());</span><br><span class="line">                    i = j + <span class="number">2</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                sbuf.append(messagePattern.substring(i, j));</span><br><span class="line">                deeplyAppendParameter(sbuf, argArray[L], <span class="keyword">new</span> HashMap());</span><br><span class="line">                i = j + <span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        sbuf.append(messagePattern.substring(i, messagePattern.length()));</span><br><span class="line">        <span class="keyword">if</span> (L &lt; argArray.length - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> FormattingTuple(sbuf.toString(), argArray, throwableCandidate);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> FormattingTuple(sbuf.toString(), argArray, (Throwable)<span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/12/java-wildcard-achieve/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -653,6 +671,17 @@
           
 
           
+          
+             <span id="/2018/04/12/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -1003,6 +1032,113 @@
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FI63hYfmopG1Ew1odC2fnj3L-gzGzoHsz", "TaKy2dPCbbbOP7vEkxCmWGVF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 
