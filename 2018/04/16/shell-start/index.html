@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hi, chenlisong" />
+  <meta name="keywords" content="shell," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="Java|工科男|编程">
-<meta property="og:type" content="website">
-<meta property="og:title" content="hi, coder">
-<meta property="og:url" content="http://chenlisong.github.io/index.html">
+<meta name="description" content="介绍记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。 涉及的内容：  语法：变量，打印，运算，控制，循环，容器，方法  文件：文件读取，文件写入  sed流编辑  awk使用   语法变量 等号两边不能有空格  弱语言类型，不需要使用类型限定  变量可以修改类型  变量之间可以相互赋值   123456789101112131415str=&quot;hello world&quot;echo">
+<meta name="keywords" content="shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell-start">
+<meta property="og:url" content="http://chenlisong.github.io/2018/04/16/shell-start/index.html">
 <meta property="og:site_name" content="hi, coder">
-<meta property="og:description" content="Java|工科男|编程">
+<meta property="og:description" content="介绍记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。 涉及的内容：  语法：变量，打印，运算，控制，循环，容器，方法  文件：文件读取，文件写入  sed流编辑  awk使用   语法变量 等号两边不能有空格  弱语言类型，不需要使用类型限定  变量可以修改类型  变量之间可以相互赋值   123456789101112131415str=&quot;hello world&quot;echo">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-16T09:11:17.246Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hi, coder">
-<meta name="twitter:description" content="Java|工科男|编程">
+<meta name="twitter:title" content="shell-start">
+<meta name="twitter:description" content="介绍记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。 涉及的内容：  语法：变量，打印，运算，控制，循环，容器，方法  文件：文件读取，文件写入  sed流编辑  awk使用   语法变量 等号两边不能有空格  弱语言类型，不需要使用类型限定  变量可以修改类型  变量之间可以相互赋值   123456789101112131415str=&quot;hello world&quot;echo">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/2018/04/16/shell-start/"/>
 
 
 
 
 
-  <title>hi, coder</title>
+  <title>shell-start | hi, coder</title>
   
 
 
@@ -153,8 +155,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -257,9 +258,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -289,9 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/16/shell-start/" itemprop="url">shell-start</a></h1>
+          <h1 class="post-title" itemprop="name headline">shell-start</h1>
         
 
         <div class="post-meta">
@@ -374,9 +373,7 @@
       
 
       
-        
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。</p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。</p>
 <p>涉及的内容：</p>
 <ol>
 <li><p>语法：变量，打印，运算，控制，循环，容器，方法</p>
@@ -487,8 +484,6 @@
 <p>shell在线检测语法：<a href="https://www.shellcheck.net" target="_blank" rel="noopener">https://www.shellcheck.net</a><br>待补充：sed, awk</p>
 </blockquote>
 
-          
-        
       
     </div>
     
@@ -498,509 +493,70 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/wechat.jpg" alt="陈礼松 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/alipay.jpg" alt="陈礼松 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/2018/04/14/netty-start/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈礼松">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hi, coder">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/14/netty-start/" itemprop="url">netty-start</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-14T12:18:06+08:00">
-                2018-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/netty/" itemprop="url" rel="index">
-                    <span itemprop="name">netty</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/shell/" rel="tag"># shell</a>
           
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/04/14/netty-start/" class="leancloud_visitors" data-flag-title="netty-start">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>netty是一个异步事件驱动的网络应用框架，用来快速开发可维护的高性能协议服务器和客户端。极大的简化了tcp和udp的socket编程。</p>
-<p>支持ftp, smtp, http以及各种基于二进制和基于文本的传统协议，因此netty能实现轻松的开发，性能，稳定性，灵活性。</p>
-<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><ul>
-<li><p>支持各种通信类型的统一API，阻塞和非阻塞socket</p>
-</li>
-<li><p>基于灵活和可扩展的线程模型，可以清晰的分离问题</p>
-</li>
-<li><p>高度可定制化的线程模型，单线程或者多线程</p>
-</li>
-<li><p>真正的无连接数据包socket支持</p>
-</li>
-</ul>
-<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><ul>
-<li><p>吞吐量更好，延迟更低</p>
-</li>
-<li><p>更少的资源消耗</p>
-</li>
-<li><p>最小化不必要的内存copy</p>
-</li>
-</ul>
-<h3 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h3><blockquote>
-<p>官网文档：<a href="https://netty.io/wiki/index.html" target="_blank" rel="noopener">https://netty.io/wiki/index.html</a></p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/14/netty-start/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/14/netty-start/" rel="next" title="netty-start">
+                <i class="fa fa-chevron-left"></i> netty-start
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/2018/04/12/java-wildcard-achieve/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈礼松">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hi, coder">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/12/java-wildcard-achieve/" itemprop="url">java通配符替换的几种实现方式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T20:22:47+08:00">
-                2018-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/04/12/java-wildcard-achieve/" class="leancloud_visitors" data-flag-title="java通配符替换的几种实现方式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>java中通配符的替换有几种方式(如下面例子)。我们先尝试自己实现。</p>
-<ol>
-<li><p>String.format(“hi, %s”, “uname”)</p>
-</li>
-<li><p>log.info(“hi, {}”, “uname”)。</p>
-</li>
-</ol>
-<h2 id="自行实现"><a href="#自行实现" class="headerlink" title="自行实现"></a>自行实现</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ol>
-<li><p>方法体 public String convet2Match(String text, Object… params)；</p>
-</li>
-<li><p>考虑时间复杂度，遍历text，一次得到结果，O(1)；</p>
-</li>
-<li><p>实现方式：字符匹配替换，Matcher类find。</p>
-</li>
-</ol>
-<p><img src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/java-wildcard-achieve.png" alt="思路图"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/12/java-wildcard-achieve/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/2018/04/12/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈礼松">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hi, coder">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/12/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T17:03:37+08:00">
-                2018-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/04/12/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -1010,10 +566,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -1021,6 +578,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1041,8 +602,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1106,6 +676,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法"><span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打印"><span class="nav-text">打印</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运算"><span class="nav-text">运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制"><span class="nav-text">控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环"><span class="nav-text">循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器"><span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件"><span class="nav-text">文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件读取"><span class="nav-text">文件读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目录的读取"><span class="nav-text">目录的读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件写入"><span class="nav-text">文件写入</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1246,6 +832,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
