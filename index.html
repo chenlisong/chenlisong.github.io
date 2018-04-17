@@ -272,7 +272,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/2018/04/16/shell-awk/">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/2018/04/17/shell-awk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈礼松">
@@ -291,7 +291,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/16/shell-awk/" itemprop="url">shell之awk命令</a></h1>
+                <a class="post-title-link" href="/2018/04/17/shell-awk/" itemprop="url">shell之awk命令</a></h1>
         
 
         <div class="post-meta">
@@ -303,8 +303,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T17:56:09+08:00">
-                2018-04-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-17T11:56:09+08:00">
+                2018-04-17
               </time>
             
 
@@ -343,7 +343,7 @@
 
           
           
-             <span id="/2018/04/16/shell-awk/" class="leancloud_visitors" data-flag-title="shell之awk命令">
+             <span id="/2018/04/17/shell-awk/" class="leancloud_visitors" data-flag-title="shell之awk命令">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -375,8 +375,7 @@
 
       
         
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>awk是处理文件文本的语言，是一个强大的文本分析工具</p>
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>awk是处理文件文本的语言，是一个强大的文本分析工具</p>
 <p>awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。</p>
 <h2 id="awk命令"><a href="#awk命令" class="headerlink" title="awk命令"></a>awk命令</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">awk [选项参数] <span class="string">'script'</span> var=value file(s)</span><br><span class="line"></span><br><span class="line">awk [选项参数] -f scriptfile var=value files(s)</span><br></pre></td></tr></table></figure>
 <p>选项参数：</p>
@@ -392,33 +391,13 @@
 <li><p>-W help or –help 打印全部awk选项和每个选项的简短说明</p>
 </li>
 </ul>
-<h3 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h3><p>1.txt文本内容如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2 this is a test</span><br><span class="line">3 Are you like awk</span><br><span class="line">This&apos;s a test</span><br><span class="line">10 There are orange,apple,mongo</span><br></pre></td></tr></table></figure>
-<ol>
-<li>输出文件内容/使用pattern方式<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;[pattern] action&#125;'</span> &#123;filename&#125; <span class="comment">#行匹配语句 awk '' 只能用单引号</span></span><br><span class="line"></span><br><span class="line">awk <span class="string">'&#123;print $1, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line">awk <span class="string">'&#123;printf "%-8s %-10s\n", $1, $4&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>执行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2 a</span><br><span class="line">3 like</span><br><span class="line">This<span class="string">'s </span></span><br><span class="line"><span class="string">10 orange,apple,mongo</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2        a         </span></span><br><span class="line"><span class="string">3        like      </span></span><br><span class="line"><span class="string">This'</span>s             </span><br><span class="line">10       orange,apple,mongo</span><br></pre></td></tr></table></figure></p>
-<ol start="2">
-<li>输出文件内容/使用-F方式</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">awk -F <span class="comment">#-F相当于内置变量FS，指定分割字符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用逗号分割</span></span><br><span class="line">awk -F, <span class="string">'&#123;print $1, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用内建变量</span></span><br><span class="line">awk <span class="string">'BEGIN&#123;FS=","&#125; &#123;print $1, $2&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用多个分隔符，先用空格分割，再用逗号分割</span></span><br><span class="line">awk -F <span class="string">'[ ,]'</span> <span class="string">'&#123;print $1, $2, $5&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">2 this is a <span class="built_in">test</span> </span><br><span class="line">3 Are you like awk </span><br><span class="line">This<span class="string">'s a test </span></span><br><span class="line"><span class="string">10 There are orange</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2 this is a test </span></span><br><span class="line"><span class="string">3 Are you like awk </span></span><br><span class="line"><span class="string">This'</span>s a <span class="built_in">test</span> </span><br><span class="line">10 There are orange apple</span><br><span class="line"></span><br><span class="line">2 this <span class="built_in">test</span></span><br><span class="line">3 Are awk</span><br><span class="line">This<span class="string">'s a </span></span><br><span class="line"><span class="string">10 There apple</span></span><br></pre></td></tr></table></figure></p>
-<ol start="3">
-<li>输出文件内容/使用-v方式</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk -v <span class="comment">#设置变量</span></span><br><span class="line"></span><br><span class="line">awk -va=1 <span class="string">'&#123;print $1, $1+a&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line">awk -va=1 -vb=s <span class="string">'&#123;print $1, $1+a, $1b&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2 3</span><br><span class="line">3 4</span><br><span class="line">This<span class="string">'s 1</span></span><br><span class="line"><span class="string">10 11</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2 3 2s</span></span><br><span class="line"><span class="string">3 4 3s</span></span><br><span class="line"><span class="string">This'</span>s 1 This<span class="string">'ss</span></span><br><span class="line"><span class="string">10 11 10s</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>执行命令脚本</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -f cal.awk 1.txt</span><br></pre></td></tr></table></figure>
-<p>例子如下<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#过滤第一列大于2的行</span></span><br><span class="line">awk <span class="string">'$1&gt;2'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#过滤第一列等于2的行</span></span><br><span class="line">awk <span class="string">'$1==2 &#123;print $1, $3&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#过滤第一列大于2并且第二列等于Are的行</span></span><br><span class="line">awk <span class="string">'$1&gt;2 &amp;&amp; $2=="Are" &#123;print $1, $2, $3&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用正则匹配</span></span><br><span class="line"><span class="comment">#输出第二列包含“th”，并打印第二列与第四列</span></span><br><span class="line">awk <span class="string">'$2 ~ /th/ &#123;print $2, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出包含re的行</span></span><br><span class="line">awk <span class="string">'/re/'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#忽略大小写</span></span><br><span class="line">awk <span class="string">'BEGIN&#123;IGNORECASE=1&#125; /this/'</span> 1.txt</span><br></pre></td></tr></table></figure></p>
-<p>其他的一些实例</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#从文件中找到长度大于20的行</span></span><br><span class="line">awk <span class="string">'length&gt;20'</span> 1.txt</span><br></pre></td></tr></table></figure>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/17/shell-awk/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -568,15 +547,12 @@
 
       
         
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。</p>
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。</p>
 <p>涉及的内容：</p>
 <ol>
 <li><p>语法：变量，打印，运算，控制，循环，容器，方法</p>
 </li>
 <li><p>文件：文件读取，文件写入</p>
-</li>
-<li><p>sed流编辑</p>
 </li>
 <li><p>awk使用</p>
 </li>
@@ -591,96 +567,13 @@
 <li><p>变量之间可以相互赋值</p>
 </li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">"hello world"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$str</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;str&#125;</span></span><br><span class="line"></span><br><span class="line">str=123</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$str</span></span><br><span class="line"></span><br><span class="line">str2=<span class="variable">$str</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$str2</span></span><br><span class="line"></span><br><span class="line">curDir=$(<span class="built_in">pwd</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"curDir = <span class="variable">$&#123;curDir&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">curDirCon=`ls`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"curDirCon = <span class="variable">$&#123;curDirCon&#125;</span>"</span></span><br></pre></td></tr></table></figure>
-<p>执行结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hello world</span><br><span class="line">hello world</span><br><span class="line">123</span><br><span class="line">123</span><br><span class="line">curDir = /root/shells-start</span><br><span class="line">curDirCon = variable.sh</span><br></pre></td></tr></table></figure></p>
-<h3 id="打印"><a href="#打印" class="headerlink" title="打印"></a>打印</h3><ol>
-<li><p>-e 转义字符处理，比如\t显示制表符而不是显示输出\t</p>
-</li>
-<li><p>-n 把文本字符串和命令输出显示在同一行</p>
-</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">"hi\tcls"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"hi\tcls"</span></span><br><span class="line"></span><br><span class="line">hi      cls</span><br><span class="line">hi\tcls</span><br></pre></td></tr></table></figure>
-<h3 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h3><ol>
-<li><p>使用expr执行算数运算，</p>
-</li>
-<li><p>使用[]执行算数，运算符不需要转义</p>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> $(expr 5 + 5)</span><br><span class="line"><span class="built_in">echo</span> $(expr 16 - 5)</span><br><span class="line"><span class="built_in">echo</span> $(expr 5 \* 5)</span><br><span class="line"><span class="built_in">echo</span> $(expr 28 / 5)</span><br><span class="line"></span><br><span class="line">10, 11, 25, 5</span><br></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> $[5 + 5]</span><br><span class="line"><span class="built_in">echo</span> $[16 - 5]</span><br><span class="line"><span class="built_in">echo</span> $[5 * 5]</span><br><span class="line"><span class="built_in">echo</span> $[28 / 5]</span><br><span class="line"></span><br><span class="line">10, 11, 25, 5</span><br></pre></td></tr></table></figure>
-<h3 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h3><p>数值比较</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [[ 3 &gt; 7 ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"no"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"yes"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">console: yes</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>n1 -eq n2 检查n1是否与n2相等</p>
-</li>
-<li><p>n1 -ge n2 n1 &gt;= n2</p>
-</li>
-<li><p>n1 -gt n2 n1 &gt; n2</p>
-</li>
-<li><p>n1 -le n2 n1 &lt;= n2</p>
-</li>
-<li><p>n1 -lt n2 n1 &lt; n2</p>
-</li>
-<li><p>n1 -ne n2 n1 != n2</p>
-</li>
-</ul>
-<p>完成乘法口诀的例子</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line"><span class="keyword">while</span> [ <span class="variable">$i</span> -lt 10 ]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="keyword">for</span>(( j=1;j&lt;=9;j++ ))</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">        [ <span class="variable">$j</span> -le <span class="variable">$i</span> ] &amp;&amp; <span class="built_in">echo</span> -e -n <span class="string">"<span class="variable">$i</span>*<span class="variable">$j</span>=$[ <span class="variable">$i</span> * <span class="variable">$j</span> ]\t"</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">''</span></span><br><span class="line">    i=$[<span class="variable">$i</span>+1]</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-<p>执行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1*1=1</span><br><span class="line">2*1=2   2*2=4</span><br><span class="line">3*1=3   3*2=6   3*3=9</span><br><span class="line">4*1=4   4*2=8   4*3=12  4*4=16</span><br><span class="line">5*1=5   5*2=10  5*3=15  5*4=20  5*5=25</span><br><span class="line">6*1=6   6*2=12  6*3=18  6*4=24  6*5=30  6*6=36</span><br><span class="line">7*1=7   7*2=14  7*3=21  7*4=28  7*5=35  7*6=42  7*7=49</span><br><span class="line">8*1=8   8*2=16  8*3=24  8*4=32  8*5=40  8*6=48  8*7=56  8*8=64</span><br><span class="line">9*1=9   9*2=18  9*3=27  9*4=36  9*5=45  9*6=54  9*7=63  9*8=72  9*9=81</span><br></pre></td></tr></table></figure></p>
-<p>文件比较</p>
-<p>-d file 检查file是否存在并是一个目录</p>
-<p>-e file 检查file是否存在</p>
-<p>-f file 检查file是否存在并是一个文件</p>
-<p>-r file 检查file是否存在并可读</p>
-<p>-s file 检查file是否存在并非空</p>
-<p>-w file 检查file是否存在并可写</p>
-<p>-x file 检查file是否存在并可执行</p>
-<p>-O file 检查file是否存在并属当前用户所有</p>
-<p>-G file 检查file是否存在并且默认组与当前用户相同</p>
-<p>file1 -nt file2 检查file1是否比file2新</p>
-<p>file1 -ot file2 检查file1是否比file2旧</p>
-<p>判断文件是否存在</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">file=cal.sh</span><br><span class="line"><span class="keyword">if</span> [ -e <span class="variable">$file</span> ];</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$file</span> 存在"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$file</span> 不存在"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<p>输出结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cal.sh 存在</span><br></pre></td></tr></table></figure></p>
-<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><p>for循环计算<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">num=0;</span><br><span class="line"><span class="keyword">for</span> (( i=0;i&lt;10;i++ ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    num=$[ <span class="variable">$num</span> + <span class="variable">$i</span> ]</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"result=<span class="variable">$num</span>"</span></span><br><span class="line"></span><br><span class="line">result=45</span><br></pre></td></tr></table></figure></p>
-<p>while循环： while表示条件满足执行循环，比如下面是从1循环到9<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">i=1</span><br><span class="line"><span class="keyword">while</span> [[ i -lt 10 ]];</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    i=$[ <span class="variable">$i</span> + 1 ]</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
-<p>until循环：表示条件不满足时执行循环</p>
-<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><p>数组的定义：declare -a array_name</p>
-<p>注意：osx系统因为bash的版本太低，只能定义索引数组，在bash版本高于4.1的版本可以使用declare -A array_name定义关联数组</p>
-<ol>
-<li><p>array[$cfg_line_count]=$line 把内容保存到数组</p>
-</li>
-<li><p>config_content=${array[i]}; 读取数组第i个元素</p>
-</li>
-</ol>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">func_sum</span></span>()&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$2</span> * <span class="variable">$1</span> = $[ <span class="variable">$2</span> * <span class="variable">$1</span> ]"</span></span><br><span class="line">    <span class="built_in">return</span> $[ <span class="variable">$2</span> * <span class="variable">$1</span> ]</span><br><span class="line">&#125;</span><br><span class="line">func_sum 5 6</span><br><span class="line">total=$(func_sum 5 7)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"total: <span class="variable">$total</span>"</span></span><br></pre></td></tr></table></figure>
-<h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><h3 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h3><p>文件的读取可以使用cat命令结合for in循环处理</p>
-<p>注意：$IFS是文件循环处理的分隔符，按按行处理数据需要把该值设置为$’\n’，处理完成之后恢复旧值</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">file=<span class="string">"1.data"</span></span><br><span class="line">IFS_OLD=<span class="variable">$IFS</span></span><br><span class="line">IFS=$<span class="string">'\n'</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> $(cat <span class="variable">$file</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$line</span>"</span></span><br><span class="line"><span class="keyword">done</span> </span><br><span class="line">IFS=<span class="variable">$IFS_OLD</span></span><br><span class="line"></span><br><span class="line">hello, my name is cls1</span><br><span class="line">hello, my name is cls2</span><br><span class="line">hello, my name is cls3</span><br></pre></td></tr></table></figure>
-<h3 id="目录的读取"><a href="#目录的读取" class="headerlink" title="目录的读取"></a>目录的读取</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">list_file_loop</span></span>()&#123;</span><br><span class="line">    <span class="keyword">if</span> [ -d <span class="variable">$1</span> ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"处理目录：<span class="variable">$1</span>"</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> $(ls <span class="variable">$1</span>)</span><br><span class="line">        <span class="keyword">do</span></span><br><span class="line">            list_file_loop <span class="variable">$1</span><span class="string">"/"</span><span class="variable">$item</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"处理文件：<span class="variable">$1</span>"</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line">list_file_loop /opt</span><br></pre></td></tr></table></figure>
-<h3 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h3><p>使用输出重定向把内容输出到文件</p>
-<ul>
-<li><blockquote>
-<p>先清空文件，再把内容写入到文件</p>
-</blockquote>
-</li>
-<li><blockquote>
-<blockquote>
-<p>把内容追加写入到文件中</p>
-</blockquote>
-</blockquote>
-</li>
-<li><p>sort 命令对文件内容以行为单位排序</p>
-</li>
-<li><p>uniq 对文件内容进行去重，以行为单位，一般需要结合sort命令使用</p>
-</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file=<span class="string">"1.data"</span></span><br><span class="line">destfile=<span class="string">"1-copy.data"</span></span><br><span class="line">sort <span class="variable">$file</span> | uniq &gt; <span class="variable">$destfile</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>shell在线检测语法：<a href="https://www.shellcheck.net" target="_blank" rel="noopener">https://www.shellcheck.net</a><br>待补充：sed, awk</p>
-</blockquote>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/16/shell-start/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

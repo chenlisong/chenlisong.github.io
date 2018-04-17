@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="介绍记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。 涉及的内容：  语法：变量，打印，运算，控制，循环，容器，方法  文件：文件读取，文件写入  sed流编辑  awk使用   语法变量 等号两边不能有空格  弱语言类型，不需要使用类型限定  变量可以修改类型  变量之间可以相互赋值   123456789101112131415str=&quot;hello world&quot;echo">
+<meta name="description" content="介绍记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。 涉及的内容：  语法：变量，打印，运算，控制，循环，容器，方法  文件：文件读取，文件写入  awk使用   语法变量 等号两边不能有空格  弱语言类型，不需要使用类型限定  变量可以修改类型  变量之间可以相互赋值">
 <meta name="keywords" content="shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shell编程基础">
 <meta property="og:url" content="http://chenlisong.github.io/2018/04/16/shell-start/index.html">
 <meta property="og:site_name" content="hi, coder">
-<meta property="og:description" content="介绍记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。 涉及的内容：  语法：变量，打印，运算，控制，循环，容器，方法  文件：文件读取，文件写入  sed流编辑  awk使用   语法变量 等号两边不能有空格  弱语言类型，不需要使用类型限定  变量可以修改类型  变量之间可以相互赋值   123456789101112131415str=&quot;hello world&quot;echo">
+<meta property="og:description" content="介绍记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。 涉及的内容：  语法：变量，打印，运算，控制，循环，容器，方法  文件：文件读取，文件写入  awk使用   语法变量 等号两边不能有空格  弱语言类型，不需要使用类型限定  变量可以修改类型  变量之间可以相互赋值">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-17T01:26:35.221Z">
+<meta property="og:updated_time" content="2018-04-17T03:45:26.769Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shell编程基础">
-<meta name="twitter:description" content="介绍记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。 涉及的内容：  语法：变量，打印，运算，控制，循环，容器，方法  文件：文件读取，文件写入  sed流编辑  awk使用   语法变量 等号两边不能有空格  弱语言类型，不需要使用类型限定  变量可以修改类型  变量之间可以相互赋值   123456789101112131415str=&quot;hello world&quot;echo">
+<meta name="twitter:description" content="介绍记录和学习shell使用和学习过程中比较重要的部分，做一个总结和分享。 涉及的内容：  语法：变量，打印，运算，控制，循环，容器，方法  文件：文件读取，文件写入  awk使用   语法变量 等号两边不能有空格  弱语言类型，不需要使用类型限定  变量可以修改类型  变量之间可以相互赋值">
 
 
 
@@ -380,8 +380,6 @@
 </li>
 <li><p>文件：文件读取，文件写入</p>
 </li>
-<li><p>sed流编辑</p>
-</li>
 <li><p>awk使用</p>
 </li>
 </ol>
@@ -395,6 +393,7 @@
 <li><p>变量之间可以相互赋值</p>
 </li>
 </ol>
+<a id="more"></a>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">"hello world"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$str</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;str&#125;</span></span><br><span class="line"></span><br><span class="line">str=123</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$str</span></span><br><span class="line"></span><br><span class="line">str2=<span class="variable">$str</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$str2</span></span><br><span class="line"></span><br><span class="line">curDir=$(<span class="built_in">pwd</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"curDir = <span class="variable">$&#123;curDir&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">curDirCon=`ls`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"curDirCon = <span class="variable">$&#123;curDirCon&#125;</span>"</span></span><br></pre></td></tr></table></figure>
 <p>执行结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hello world</span><br><span class="line">hello world</span><br><span class="line">123</span><br><span class="line">123</span><br><span class="line">curDir = /root/shells-start</span><br><span class="line">curDirCon = variable.sh</span><br></pre></td></tr></table></figure></p>
 <h3 id="打印"><a href="#打印" class="headerlink" title="打印"></a>打印</h3><ol>
@@ -481,7 +480,7 @@
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file=<span class="string">"1.data"</span></span><br><span class="line">destfile=<span class="string">"1-copy.data"</span></span><br><span class="line">sort <span class="variable">$file</span> | uniq &gt; <span class="variable">$destfile</span></span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>shell在线检测语法：<a href="https://www.shellcheck.net" target="_blank" rel="noopener">https://www.shellcheck.net</a><br>待补充：sed, awk</p>
+<p>shell在线检测语法：<a href="https://www.shellcheck.net" target="_blank" rel="noopener">https://www.shellcheck.net</a><br>awk: <a href="/2018/04/17/shell-awk/" title="shell之awk命令">shell之awk命令</a></p>
 </blockquote>
 
       
@@ -552,7 +551,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/16/shell-awk/" rel="prev" title="shell之awk命令">
+              <a href="/2018/04/17/shell-awk/" rel="prev" title="shell之awk命令">
                 shell之awk命令 <i class="fa fa-chevron-right"></i>
               </a>
             
