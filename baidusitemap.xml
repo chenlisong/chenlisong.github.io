@@ -4,14 +4,18 @@
 
     
   <url>
-    <loc>http://chenlisong.github.io/2018/04/16/shell-start/</loc>
-    <lastmod>2018-04-17T03:45:26.769Z</lastmod>
+    <loc>http://chenlisong.github.io/2018/04/17/shell-awk/</loc>
+    <lastmod>2018-04-17T03:48:08.729Z</lastmod>
     <data>
         <display>
-        <title>shell编程基础</title>
-        <pubTime>2018-04-16T03:07:06.000Z</pubTime>
+        <title>shell-awk命令</title>
+        <pubTime>2018-04-17T03:56:09.000Z</pubTime>
         
         <tag>shell</tag>
+         
+        <tag>awk</tag>
+         
+        <tag>cat</tag>
          
          
            
@@ -24,18 +28,14 @@
 
     
   <url>
-    <loc>http://chenlisong.github.io/2018/04/17/shell-awk/</loc>
-    <lastmod>2018-04-17T03:40:48.273Z</lastmod>
+    <loc>http://chenlisong.github.io/2018/04/16/shell-start/</loc>
+    <lastmod>2018-04-17T03:47:49.184Z</lastmod>
     <data>
         <display>
-        <title>shell之awk命令</title>
-        <pubTime>2018-04-17T03:56:09.000Z</pubTime>
+        <title>shell简单编程</title>
+        <pubTime>2018-04-16T03:07:06.000Z</pubTime>
         
         <tag>shell</tag>
-         
-        <tag>awk</tag>
-         
-        <tag>cat</tag>
          
          
            
