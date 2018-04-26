@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mycat,mysql," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="介绍mycat的sql解析模块是mycat实现sql路由模块和sql结果集后处理模块的基础。 特性 判断sql语法是否正确  sql语句分类并对不同类型的sql语句做不同的逻辑处理，例如缓存，拦截  为sql路由模块处理提供服务  为sql结果集后处理模块提供服务，例如group by, order by, limit   浅解析对sql语句做类型的解析主要是为了能对不同类型的sql语句进行不同的">
+<meta name="keywords" content="mycat,mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mycat的sql解析">
+<meta property="og:url" content="http://chenlisong.github.io/mycat-sql-parser/index.html">
+<meta property="og:site_name" content="hi, coder">
+<meta property="og:description" content="介绍mycat的sql解析模块是mycat实现sql路由模块和sql结果集后处理模块的基础。 特性 判断sql语法是否正确  sql语句分类并对不同类型的sql语句做不同的逻辑处理，例如缓存，拦截  为sql路由模块处理提供服务  为sql结果集后处理模块提供服务，例如group by, order by, limit   浅解析对sql语句做类型的解析主要是为了能对不同类型的sql语句进行不同的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://7xtamf.com1.z0.glb.clouddn.com/image/blog/mycat-sql-parser/mycat-druid-parser-classdiagram.jpg">
+<meta property="og:updated_time" content="2018-04-26T10:15:57.744Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mycat的sql解析">
+<meta name="twitter:description" content="介绍mycat的sql解析模块是mycat实现sql路由模块和sql结果集后处理模块的基础。 特性 判断sql语法是否正确  sql语句分类并对不同类型的sql语句做不同的逻辑处理，例如缓存，拦截  为sql路由模块处理提供服务  为sql结果集后处理模块提供服务，例如group by, order by, limit   浅解析对sql语句做类型的解析主要是为了能对不同类型的sql语句进行不同的">
+<meta name="twitter:image" content="http://7xtamf.com1.z0.glb.clouddn.com/image/blog/mycat-sql-parser/mycat-druid-parser-classdiagram.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenlisong.github.io/mycat-sql-parser/"/>
+
+
+
+
+
+  <title>mycat的sql解析 | hi, coder</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4017d56af796b6206a285ab35c559a01";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">hi, coder</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/mycat-sql-parser/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈礼松">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="hi, coder">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mycat的sql解析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-26T16:46:06+08:00">
+                2018-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mycat/" itemprop="url" rel="index">
+                    <span itemprop="name">mycat</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/mycat-sql-parser/" class="leancloud_visitors" data-flag-title="mycat的sql解析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>mycat的sql解析模块是mycat实现sql路由模块和sql结果集后处理模块的基础。</p>
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
+<li><p>判断sql语法是否正确</p>
+</li>
+<li><p>sql语句分类并对不同类型的sql语句做不同的逻辑处理，例如缓存，拦截</p>
+</li>
+<li><p>为sql路由模块处理提供服务</p>
+</li>
+<li><p>为sql结果集后处理模块提供服务，例如group by, order by, limit</p>
+</li>
+</ul>
+<h2 id="浅解析"><a href="#浅解析" class="headerlink" title="浅解析"></a>浅解析</h2><p>对sql语句做类型的解析主要是为了能对不同类型的sql语句进行不同的逻辑处理。</p>
+<ol>
+<li><p>select语句会考虑是否缓存，是否利用缓存的路由结果</p>
+</li>
+<li><p>对delete, update, insert会判断权限</p>
+</li>
+<li><p>对于不支持的特殊语句，决定是否可以直接返回响应给客户端</p>
+</li>
+</ol>
+<a id="more"></a>
+<h2 id="深解析"><a href="#深解析" class="headerlink" title="深解析"></a>深解析</h2><p>需要解析整个sql语句，得到sql<a href="http://blog.chinaunix.net/uid-26750235-id-3139100.html" target="_blank" rel="noopener">语法树 ast</a>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select name from user where id = 1;</span><br></pre></td></tr></table></figure>
+<p>经过深解析，能得到select的具体列，from子句涉及的表名，where条件有哪些，子查询，group by, order by, limit, 函数等。</p>
+<ol>
+<li><p>判断sql语法是否正确，词法分析，语法分析</p>
+</li>
+<li><p>根据sql解析树，为sql路由模块服务</p>
+</li>
+<li><p>解析得到整个sql语句的详细信息，为sql结果集后处理模块服务</p>
+</li>
+</ol>
+<p>采用alibaba的druid sql parse实现。</p>
+<h2 id="浅解析-源码分析"><a href="#浅解析-源码分析" class="headerlink" title="浅解析-源码分析"></a>浅解析-源码分析</h2><ol>
+<li>ServerQueryHandler的query方法调用ServerParse.parse()方法</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerQueryHandler</span> <span class="keyword">implements</span> <span class="title">FrontendQueryHandler</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">query</span><span class="params">(String sql)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        ServerConnection c = <span class="keyword">this</span>.source;</span><br><span class="line">        <span class="keyword">if</span> (LOGGER.isDebugEnabled()) &#123;</span><br><span class="line">            LOGGER.debug(<span class="keyword">new</span> StringBuilder().append(c).append(sql).toString());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        <span class="keyword">int</span> rs = ServerParse.parse(sql);</span><br><span class="line">        <span class="keyword">int</span> sqlType = rs &amp; <span class="number">0xff</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">switch</span> (sqlType) &#123;</span><br><span class="line">        <span class="comment">//explain sql</span></span><br><span class="line">        <span class="keyword">case</span> ServerParse.EXPLAIN:</span><br><span class="line">            ExplainHandler.handle(sql, c, rs &gt;&gt;&gt; <span class="number">8</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="comment">//explain2 datanode=? sql=?</span></span><br><span class="line">        <span class="keyword">case</span> ServerParse.EXPLAIN2:</span><br><span class="line">            Explain2Handler.handle(sql, c, rs &gt;&gt;&gt; <span class="number">8</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ServerParse.SET:</span><br><span class="line">            SetHandler.handle(sql, c, rs &gt;&gt;&gt; <span class="number">8</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ServerParse.SHOW:</span><br><span class="line">            ShowHandler.handle(sql, c, rs &gt;&gt;&gt; <span class="number">8</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ServerParse.SELECT:</span><br><span class="line">            SelectHandler.handle(sql, c, rs &gt;&gt;&gt; <span class="number">8</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/MyCATApache/Mycat-Server/blob/0c9563cf3833f991aac4ef962b97529a780595c6/src/main/java/io/mycat/server/ServerQueryHandler.java" target="_blank" rel="noopener">ServerQueryHandler.java 源码</a></p>
+<ol start="2">
+<li>在ServerParse.parse()，逐个字符判断sql语句的第一个单词，得到不同的sql类型(int值表达类型)。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> OTHER = -<span class="number">1</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BEGIN = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> COMMIT = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DELETE = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INSERT = <span class="number">4</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> REPLACE = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ROLLBACK = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SELECT = <span class="number">7</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SET = <span class="number">8</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SHOW = <span class="number">9</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> START = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UPDATE = <span class="number">11</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> KILL = <span class="number">12</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SAVEPOINT = <span class="number">13</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> USE = <span class="number">14</span>;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/MyCATApache/Mycat-Server/blob/0c9563cf3833f991aac4ef962b97529a780595c6/src/main/java/io/mycat/server/parser/ServerParse.java" target="_blank" rel="noopener">ServerParse.java 源码</a></p>
+<ol start="3">
+<li>根据解析到的sql类型，进入不同的逻辑分支，体现在ServerQueryHandler类的switch代码段。指定不同类型的Handler执行。</li>
+</ol>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">select database()</span><br><span class="line"></span><br><span class="line">select user()</span><br><span class="line"></span><br><span class="line">select last_insert_id()</span><br><span class="line"></span><br><span class="line">select version()</span><br><span class="line"></span><br><span class="line">select 查询语句</span><br></pre></td></tr></table></figure></p>
+<p>在SelectHandler类中实现了对语法的解析，ServerParseSelect进一步解析select后面跟着的词，来进行下一轮的switch处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerParseSelect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> OTHER = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VERSION_COMMENT = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DATABASE = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> USER = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LAST_INSERT_ID = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> IDENTITY = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VERSION = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parse</span><span class="params">(String stmt, <span class="keyword">int</span> offset)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = offset;</span><br><span class="line">        <span class="keyword">for</span> (; i &lt; stmt.length(); ++i) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (stmt.charAt(i)) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">' '</span>:</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'/'</span>:</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'#'</span>:</span><br><span class="line">                i = ParseUtil.comment(stmt, i);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'@'</span>:</span><br><span class="line">                <span class="keyword">return</span> select2Check(stmt, i);</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'D'</span>:</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'d'</span>:</span><br><span class="line">                <span class="keyword">return</span> databaseCheck(stmt, i);</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'L'</span>:</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'l'</span>:</span><br><span class="line">                <span class="keyword">return</span> lastInsertCheck(stmt, i);</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'U'</span>:</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'u'</span>:</span><br><span class="line">                <span class="keyword">return</span> userCheck(stmt, i);</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'C'</span>:</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'c'</span>:</span><br><span class="line">                <span class="keyword">return</span> currentUserCheck(stmt, i);</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'V'</span>:</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'v'</span>:</span><br><span class="line">                <span class="keyword">return</span> versionCheck(stmt, i);</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">return</span> OTHER;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> OTHER;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/MyCATApache/Mycat-Server/blob/a6b4c7cf6ca9d47078b2cb706f33f92de349a2f2/src/main/java/io/mycat/server/parser/ServerParseSelect.java" target="_blank" rel="noopener">ServerParseSelect.java 源码</a></p>
+<h2 id="深解析-源码分析"><a href="#深解析-源码分析" class="headerlink" title="深解析-源码分析"></a>深解析-源码分析</h2><p>深解析是利用alibaba的druid sql parser来实现的。</p>
+<p>对于mysql语法，使用的是MysqlStatementParser来进行解析。例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">"select * from customer where id = 1"</span>;</span><br><span class="line">SQLStatementParser parser = <span class="keyword">new</span> MysqlStatementParser(sql);</span><br><span class="line">SQLStatement stmt = parser.parseStatement();</span><br></pre></td></tr></table></figure>
+<p>SQLStatement是druid定义的一个统一的接口，不同数据库不同sql语法的statement都会实现该接口，比如上面的语句对应的是SqlSelectStatement</p>
+<ol>
+<li>mycat的sql深解析逻辑耦合在路由模块中，DruidMycatRouteStrategy.routeNormalSqlWithAST()</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DruidMycatRouteStrategy</span> <span class="keyword">extends</span> <span class="title">AbstractRouteStrategy</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RouteResultset <span class="title">routeNormalSqlWithAST</span><span class="params">(SchemaConfig schema,</span></span></span><br><span class="line"><span class="function"><span class="params">            String stmt, RouteResultset rrs,String charset,</span></span></span><br><span class="line"><span class="function"><span class="params">            LayerCachePool cachePool,<span class="keyword">int</span> sqlType,ServerConnection sc)</span> <span class="keyword">throws</span> SQLNonTransientException </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *  只有mysql时只支持mysql语法</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        SQLStatementParser parser = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (schema.isNeedSupportMultiDBType()) &#123;</span><br><span class="line">            parser = <span class="keyword">new</span> MycatStatementParser(stmt);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            parser = <span class="keyword">new</span> MySqlStatementParser(stmt); </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        MycatSchemaStatVisitor visitor = <span class="keyword">null</span>;</span><br><span class="line">        SQLStatement statement;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 解析出现问题统一抛SQL语法错误</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            statement = parser.parseStatement();</span><br><span class="line">            visitor = <span class="keyword">new</span> MycatSchemaStatVisitor();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception t) &#123;</span><br><span class="line">            LOGGER.error(<span class="string">"DruidMycatRouteStrategyError"</span>, t);</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> SQLSyntaxErrorException(t);</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">return</span> rrsResult;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>druid通过vistor, statement方式解析得到sql statement的完整内容。</p>
+<p><img src="http://7xtamf.com1.z0.glb.clouddn.com/image/blog/mycat-sql-parser/mycat-druid-parser-classdiagram.jpg" alt="DruidParser图"></p>
+<ol start="2">
+<li>mycat中通过调用DruidParser.parser()获取到上述的解析需求，代码DefaultDruidParser.parser()</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 对SQLStatement解析</span></span><br><span class="line"><span class="comment"> * 主要通过visitor解析和statement解析：有些类型的SQLStatement通过visitor解析足够了，</span></span><br><span class="line"><span class="comment"> *  有些只能通过statement解析才能得到所有信息</span></span><br><span class="line"><span class="comment"> *  有些需要通过两种方式解析才能得到完整信息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> wang.dw</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultDruidParser</span> <span class="keyword">implements</span> <span class="title">DruidParser</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用MycatSchemaStatVisitor解析,得到tables、tableAliasMap、conditions等</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> schema</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> stmt</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">parser</span><span class="params">(SchemaConfig schema, RouteResultset rrs, SQLStatement stmt, String originSql,LayerCachePool cachePool,MycatSchemaStatVisitor schemaStatVisitor)</span> <span class="keyword">throws</span> SQLNonTransientException </span>&#123;</span><br><span class="line">        ctx = <span class="keyword">new</span> DruidShardingParseInfo();</span><br><span class="line">        <span class="comment">//设置为原始sql，如果有需要改写sql的，可以通过修改SQLStatement中的属性，然后调用SQLStatement.toString()得到改写的sql</span></span><br><span class="line">        ctx.setSql(originSql);</span><br><span class="line">        <span class="comment">//通过visitor解析</span></span><br><span class="line">        visitorParse(rrs,stmt,schemaStatVisitor);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//通过Statement解析</span></span><br><span class="line">        statementParse(schema, rrs, stmt);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>DruidParserFactory.create动态的创建对应需要的DruidParser类。例如：DruidSelectParser</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DruidParserFactory</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DruidParser <span class="title">create</span><span class="params">(SchemaConfig schema, SQLStatement statement, SchemaStatVisitor visitor)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        DruidParser parser = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (statement <span class="keyword">instanceof</span> SQLSelectStatement)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(schema.isNeedSupportMultiDBType())</span><br><span class="line">            &#123;</span><br><span class="line">                parser = getDruidParserForMultiDB(schema, statement, visitor);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (parser == <span class="keyword">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                parser = <span class="keyword">new</span> DruidSelectParser();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (statement <span class="keyword">instanceof</span> MySqlInsertStatement)</span><br><span class="line">        &#123;</span><br><span class="line">            parser = <span class="keyword">new</span> DruidInsertParser();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (statement <span class="keyword">instanceof</span> MySqlDeleteStatement)</span><br><span class="line">        &#123;</span><br><span class="line">            parser = <span class="keyword">new</span> DruidDeleteParser();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (statement <span class="keyword">instanceof</span> MySqlCreateTableStatement)</span><br><span class="line">        &#123;</span><br><span class="line">            parser = <span class="keyword">new</span> DruidCreateTableParser();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (statement <span class="keyword">instanceof</span> MySqlUpdateStatement)</span><br><span class="line">        &#123;</span><br><span class="line">            parser = <span class="keyword">new</span> DruidUpdateParser();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (statement <span class="keyword">instanceof</span> SQLAlterTableStatement)</span><br><span class="line">        &#123;</span><br><span class="line">            parser = <span class="keyword">new</span> DruidAlterTableParser();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (statement <span class="keyword">instanceof</span> MySqlLockTableStatement) &#123;</span><br><span class="line">            parser = <span class="keyword">new</span> DruidLockTableParser();</span><br><span class="line">        &#125; <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            parser = <span class="keyword">new</span> DefaultDruidParser();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> parser;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/wechat.jpg" alt="陈礼松 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/alipay.jpg" alt="陈礼松 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mycat/" rel="tag"># mycat</a>
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/shell-awk/" rel="next" title="shell-awk命令">
+                <i class="fa fa-chevron-left"></i> shell-awk命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://www.kehue.com/pic/cls.jpg"
+                alt="陈礼松" />
+            
+              <p class="site-author-name" itemprop="name">陈礼松</p>
+              <p class="site-description motion-element" itemprop="description">Java|工科男|编程</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特性"><span class="nav-text">特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浅解析"><span class="nav-text">浅解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深解析"><span class="nav-text">深解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浅解析-源码分析"><span class="nav-text">浅解析-源码分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深解析-源码分析"><span class="nav-text">深解析-源码分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈礼松</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FI63hYfmopG1Ew1odC2fnj3L-gzGzoHsz", "TaKy2dPCbbbOP7vEkxCmWGVF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
