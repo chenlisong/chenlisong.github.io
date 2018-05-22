@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="shell,awk,cat," />
+  <meta name="keywords" content="fastjson,cglib," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="介绍awk是处理文件文本的语言，是一个强大的文本分析工具 awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。 awk命令语法123awk [选项参数] &apos;script&apos; var=value file(s)awk [选项参数] -f scriptfile var=value files(s) 选项参数：  -F fs or">
-<meta name="keywords" content="shell,awk,cat">
+<meta name="description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011121314151617@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);">
+<meta name="keywords" content="fastjson,cglib">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell-awk命令">
-<meta property="og:url" content="http://chenlisong.github.io/shell-awk/index.html">
+<meta property="og:title" content="fastjson的Double类型转换">
+<meta property="og:url" content="http://chenlisong.github.io/fastjson-convert-double/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="介绍awk是处理文件文本的语言，是一个强大的文本分析工具 awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。 awk命令语法123awk [选项参数] &apos;script&apos; var=value file(s)awk [选项参数] -f scriptfile var=value files(s) 选项参数：  -F fs or">
+<meta property="og:description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011121314151617@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-17T03:51:05.432Z">
+<meta property="og:updated_time" content="2018-05-22T08:17:49.935Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell-awk命令">
-<meta name="twitter:description" content="介绍awk是处理文件文本的语言，是一个强大的文本分析工具 awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。 awk命令语法123awk [选项参数] &apos;script&apos; var=value file(s)awk [选项参数] -f scriptfile var=value files(s) 选项参数：  -F fs or">
+<meta name="twitter:title" content="fastjson的Double类型转换">
+<meta name="twitter:description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011121314151617@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/shell-awk/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/fastjson-convert-double/"/>
 
 
 
 
 
-  <title>shell-awk命令 | 一抹阳光丶</title>
+  <title>fastjson的Double类型转换 | 一抹阳光丶</title>
   
 
 
@@ -273,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/shell-awk/">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/fastjson-convert-double/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一抹阳光丶">
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">shell-awk命令</h1>
+          <h1 class="post-title" itemprop="name headline">fastjson的Double类型转换</h1>
         
 
         <div class="post-meta">
@@ -302,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-17T11:56:09+08:00">
-                2018-04-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T15:17:06+08:00">
+                2018-05-22
               </time>
             
 
@@ -325,8 +325,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/shell/" itemprop="url" rel="index">
-                    <span itemprop="name">shell</span>
+                  <a href="/categories/fastjson/" itemprop="url" rel="index">
+                    <span itemprop="name">fastjson</span>
                   </a>
                 </span>
 
@@ -342,7 +342,7 @@
 
           
           
-             <span id="/shell-awk/" class="leancloud_visitors" data-flag-title="shell-awk命令">
+             <span id="/fastjson-convert-double/" class="leancloud_visitors" data-flag-title="fastjson的Double类型转换">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -373,48 +373,33 @@
       
 
       
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>awk是处理文件文本的语言，是一个强大的文本分析工具</p>
-<p>awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。</p>
-<h2 id="awk命令"><a href="#awk命令" class="headerlink" title="awk命令"></a>awk命令</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">awk [选项参数] <span class="string">'script'</span> var=value file(s)</span><br><span class="line"></span><br><span class="line">awk [选项参数] -f scriptfile var=value files(s)</span><br></pre></td></tr></table></figure>
-<p>选项参数：</p>
-<ul>
-<li><p>-F fs or –field-separator fs 指定输入文件拆分隔符，fs是一个字符串或者是一个正则表达式，如 -f</p>
-</li>
-<li><p>-V var=value or –asign var=value 赋值一个用户定义变量</p>
-</li>
-<li><p>-S scrptfile or –file scriptfile 从脚本文件中读取awk命令</p>
-</li>
-<li><p>-W compright or –copyright 打印简短版权信息</p>
-</li>
-<li><p>-W help or –help 打印全部awk选项和每个选项的简短说明</p>
-</li>
-</ul>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。</p>
+<h2 id="代码测试"><a href="#代码测试" class="headerlink" title="代码测试"></a>代码测试</h2><p>有如下实体类<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fastjsonConvertDouble</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    TObj obj = <span class="keyword">new</span> TObj();</span><br><span class="line">    obj.setValue(<span class="number">1.0</span>d);</span><br><span class="line">    Map map = JSON.parseObject(JSON.toJSONString(obj), Map.class);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"output map: "</span> + map);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"value class: "</span> + map.get(<span class="string">"value"</span>).getClass());</span><br><span class="line">&#125;</span><br><span class="line">~~~ </span><br><span class="line"></span><br><span class="line">执行结果如下</span><br><span class="line">~~~ shell</span><br><span class="line">output map: &#123;value=<span class="number">1.0</span>&#125;</span><br><span class="line">value class: class java.math.BigDecimal</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
-<h3 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h3><p>1.txt文本内容如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2 this is a test</span><br><span class="line">3 Are you like awk</span><br><span class="line">This&apos;s a test</span><br><span class="line">10 There are orange,apple,mongo</span><br></pre></td></tr></table></figure>
-<ol>
-<li>输出文件内容/使用pattern方式</li>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ol>
+<li><p>fastjson第一次在将java对象转换成string的时候，保留了1.0的值；</p>
+</li>
+<li><p>fastjson在解析成对象的时候，因为只有string串的信息，会将精度尽可能的提高，java浮点最高精度的是bigdecimal；</p>
+</li>
+<li><p>如果这时将值写入mongo时，因为java的bigdecimal类型对mongo是无适配的，所以会报异常。</p>
+</li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;[pattern] action&#125;'</span> &#123;filename&#125; <span class="comment">#行匹配语句 awk '' 只能用单引号</span></span><br><span class="line"></span><br><span class="line">awk <span class="string">'&#123;print $1, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line">awk <span class="string">'&#123;printf "%-8s %-10s\n", $1, $4&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2 a</span><br><span class="line">3 like</span><br><span class="line">This<span class="string">'s </span></span><br><span class="line"><span class="string">10 orange,apple,mongo</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2        a         </span></span><br><span class="line"><span class="string">3        like      </span></span><br><span class="line"><span class="string">This'</span>s             </span><br><span class="line">10       orange,apple,mongo</span><br></pre></td></tr></table></figure></p>
-<ol start="2">
-<li>输出文件内容/使用-F方式</li>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>使用cglib-3.1的BeanMap工具类转换成Map对象。其内部亦是通过反射实现。</p>
+<p>先看实现代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Map&lt;Object,Object&gt; <span class="title">cglibConvert</span><span class="params">(Object o)</span></span>&#123;</span><br><span class="line">    Object value = <span class="keyword">null</span>;</span><br><span class="line">    BeanMap beanMap = BeanMap.create(o);</span><br><span class="line">    Map&lt;Object,Object&gt; map = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line">    <span class="keyword">for</span> (Object key : beanMap.keySet()) &#123;</span><br><span class="line">        value = beanMap.get(key);</span><br><span class="line">        <span class="keyword">if</span> (key != <span class="keyword">null</span> &amp;&amp; value != <span class="keyword">null</span>) &#123;</span><br><span class="line">            map.put(key, value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> map;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fastjsonConvertDouble</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    TObj obj = <span class="keyword">new</span> TObj();</span><br><span class="line">    obj.setValue(<span class="number">1.0</span>d);</span><br><span class="line"></span><br><span class="line">    Map map = cglibConvert(obj);</span><br><span class="line">    System.out.println(<span class="string">"output map: "</span> + map);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"value class: "</span> + map.get(<span class="string">"value"</span>).getClass());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">output map: &#123;value=1.0&#125;</span><br><span class="line">value class: class java.lang.Double</span><br></pre></td></tr></table></figure></p>
+<h2 id="再分析cglib的BeanMap实现过程"><a href="#再分析cglib的BeanMap实现过程" class="headerlink" title="再分析cglib的BeanMap实现过程"></a>再分析cglib的BeanMap实现过程</h2><ol>
+<li><p>BeanMap implements Map，意味着BeanMap拥有kv的特性；</p>
+</li>
+<li><p>AbstractClassGenerator.create(object key)反射初始化并将object转换成BeanMap；</p>
+</li>
+<li><p>初始化cglib反射后的BeanMap对象gen，写入name，classloader信息；</p>
+</li>
+<li><p>通过KeyFactory实现对象到多key的转换。</p>
+</li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">awk -F <span class="comment">#-F相当于内置变量FS，指定分割字符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用逗号分割</span></span><br><span class="line">awk -F, <span class="string">'&#123;print $1, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用内建变量</span></span><br><span class="line">awk <span class="string">'BEGIN&#123;FS=","&#125; &#123;print $1, $2&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用多个分隔符，先用空格分割，再用逗号分割</span></span><br><span class="line">awk -F <span class="string">'[ ,]'</span> <span class="string">'&#123;print $1, $2, $5&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">2 this is a <span class="built_in">test</span> </span><br><span class="line">3 Are you like awk </span><br><span class="line">This<span class="string">'s a test </span></span><br><span class="line"><span class="string">10 There are orange</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2 this is a test </span></span><br><span class="line"><span class="string">3 Are you like awk </span></span><br><span class="line"><span class="string">This'</span>s a <span class="built_in">test</span> </span><br><span class="line">10 There are orange apple</span><br><span class="line"></span><br><span class="line">2 this <span class="built_in">test</span></span><br><span class="line">3 Are awk</span><br><span class="line">This<span class="string">'s a </span></span><br><span class="line"><span class="string">10 There apple</span></span><br></pre></td></tr></table></figure></p>
-<ol start="3">
-<li>输出文件内容/使用-v方式</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk -v <span class="comment">#设置变量</span></span><br><span class="line"></span><br><span class="line">awk -va=1 <span class="string">'&#123;print $1, $1+a&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line">awk -va=1 -vb=s <span class="string">'&#123;print $1, $1+a, $1b&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2 3</span><br><span class="line">3 4</span><br><span class="line">This<span class="string">'s 1</span></span><br><span class="line"><span class="string">10 11</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2 3 2s</span></span><br><span class="line"><span class="string">3 4 3s</span></span><br><span class="line"><span class="string">This'</span>s 1 This<span class="string">'ss</span></span><br><span class="line"><span class="string">10 11 10s</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>执行命令脚本</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -f cal.awk 1.txt</span><br></pre></td></tr></table></figure>
-<p>例子如下<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#过滤第一列大于2的行</span></span><br><span class="line">awk <span class="string">'$1&gt;2'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#过滤第一列等于2的行</span></span><br><span class="line">awk <span class="string">'$1==2 &#123;print $1, $3&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#过滤第一列大于2并且第二列等于Are的行</span></span><br><span class="line">awk <span class="string">'$1&gt;2 &amp;&amp; $2=="Are" &#123;print $1, $2, $3&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用正则匹配</span></span><br><span class="line"><span class="comment">#输出第二列包含“th”，并打印第二列与第四列</span></span><br><span class="line">awk <span class="string">'$2 ~ /th/ &#123;print $2, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出包含re的行</span></span><br><span class="line">awk <span class="string">'/re/'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#忽略大小写</span></span><br><span class="line">awk <span class="string">'BEGIN&#123;IGNORECASE=1&#125; /this/'</span> 1.txt</span><br></pre></td></tr></table></figure></p>
-<p>其他的一些实例</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#从文件中找到长度大于20的行</span></span><br><span class="line">awk <span class="string">'length&gt;20'</span> 1.txt</span><br></pre></td></tr></table></figure>
+<p>部分代码截取<br>BeanMap.create()<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(BeanMap)<span class="keyword">super</span>.create(KEY_FACTORY.newInstance(<span class="keyword">this</span>.beanClass, <span class="keyword">this</span>.require));</span><br></pre></td></tr></table></figure></p>
+<p>AbstractClassGenerator.create(Object key) key是BeanMap对象实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (gen == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">byte</span>[] b = <span class="keyword">this</span>.strategy.generate(<span class="keyword">this</span>);</span><br><span class="line">    String className = ClassNameReader.getClassName(<span class="keyword">new</span> ClassReader(b));</span><br><span class="line">    <span class="keyword">this</span>.getClassNameCache(loader).add(className);</span><br><span class="line">    gen = ReflectUtils.defineClass(className, b, loader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -461,11 +446,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/shell/" rel="tag"># shell</a>
+            <a href="/tags/fastjson/" rel="tag"># fastjson</a>
           
-            <a href="/tags/awk/" rel="tag"># awk</a>
-          
-            <a href="/tags/cat/" rel="tag"># cat</a>
+            <a href="/tags/cglib/" rel="tag"># cglib</a>
           
         </div>
       
@@ -478,8 +461,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/shell-start/" rel="next" title="shell编程入门">
-                <i class="fa fa-chevron-left"></i> shell编程入门
+              <a href="/mycat-sql-parser/" rel="next" title="mycat的sql解析">
+                <i class="fa fa-chevron-left"></i> mycat的sql解析
               </a>
             
           </div>
@@ -487,10 +470,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/mycat-sql-parser/" rel="prev" title="mycat的sql解析">
-                mycat的sql解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -632,7 +611,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#awk命令"><span class="nav-text">awk命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础用法"><span class="nav-text">基础用法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码测试"><span class="nav-text">代码测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决"><span class="nav-text">解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再分析cglib的BeanMap实现过程"><span class="nav-text">再分析cglib的BeanMap实现过程</span></a></li></ol></div>
             
 
           </div>
