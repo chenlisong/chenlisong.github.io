@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="一抹阳光丶">
 <meta property="og:description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011121314151617@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-22T08:17:49.935Z">
+<meta property="og:updated_time" content="2018-05-22T08:21:13.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fastjson的Double类型转换">
 <meta name="twitter:description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011121314151617@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);">
@@ -400,6 +400,7 @@
 </ol>
 <p>部分代码截取<br>BeanMap.create()<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(BeanMap)<span class="keyword">super</span>.create(KEY_FACTORY.newInstance(<span class="keyword">this</span>.beanClass, <span class="keyword">this</span>.require));</span><br></pre></td></tr></table></figure></p>
 <p>AbstractClassGenerator.create(Object key) key是BeanMap对象实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (gen == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">byte</span>[] b = <span class="keyword">this</span>.strategy.generate(<span class="keyword">this</span>);</span><br><span class="line">    String className = ClassNameReader.getClassName(<span class="keyword">new</span> ClassReader(b));</span><br><span class="line">    <span class="keyword">this</span>.getClassNameCache(loader).add(className);</span><br><span class="line">    gen = ReflectUtils.defineClass(className, b, loader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>分析过程中建议debug，观察执行过程更为清晰。</p>
 
       
     </div>
