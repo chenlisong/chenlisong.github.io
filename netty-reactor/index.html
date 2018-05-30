@@ -87,16 +87,16 @@
 <meta property="og:site_name" content="一抹阳光丶">
 <meta property="og:description" content="reactor模型大量网络框架采用reactor模型进行设计和开发，reactor模式基于事件驱动，特别适合处理海量的I/O事件。 多线程模型  有专门的nio线程-acceptor线程用于监听服务端，接收客户端的tcp连接请求  网络io操作读写由一个nio线程池负责，包含一个队列和多个可用线程，由这些nio线程负责消息的读取，解码，编码，发送  一个nio线程可以同时处理n条链路，反之不可，防">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708002.png">
-<meta property="og:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708003.png">
-<meta property="og:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708004.png">
-<meta property="og:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708014.png">
+<meta property="og:image" content="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg">
+<meta property="og:image" content="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/%E4%B8%BB%E4%BB%8Ereactor%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg">
+<meta property="og:image" content="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/netty%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg">
+<meta property="og:image" content="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/netty%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg">
 <meta property="og:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708026.png">
-<meta property="og:updated_time" content="2018-05-30T07:08:26.622Z">
+<meta property="og:updated_time" content="2018-05-30T07:15:09.049Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="netty-reactor">
 <meta name="twitter:description" content="reactor模型大量网络框架采用reactor模型进行设计和开发，reactor模式基于事件驱动，特别适合处理海量的I/O事件。 多线程模型  有专门的nio线程-acceptor线程用于监听服务端，接收客户端的tcp连接请求  网络io操作读写由一个nio线程池负责，包含一个队列和多个可用线程，由这些nio线程负责消息的读取，解码，编码，发送  一个nio线程可以同时处理n条链路，反之不可，防">
-<meta name="twitter:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708002.png">
+<meta name="twitter:image" content="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg">
 
 
 
@@ -380,7 +380,7 @@
 
       
         <h2 id="reactor模型"><a href="#reactor模型" class="headerlink" title="reactor模型"></a>reactor模型</h2><p>大量网络框架采用reactor模型进行设计和开发，reactor模式基于事件驱动，特别适合处理海量的I/O事件。</p>
-<h3 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h3><p><img src="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708002.png" alt="reactor多线程模型"></p>
+<h3 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h3><p><img src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg" alt="reactor多线程模型"></p>
 <ul>
 <li><p>有专门的nio线程-acceptor线程用于监听服务端，接收客户端的tcp连接请求</p>
 </li>
@@ -393,7 +393,7 @@
 <p>例如百万客户端连接，or 服务端需要对客户端握手进行安全认证，本身非常损耗性能。</p>
 <p>为了解决性能问题，出现了主从reactor多线程模型。</p>
 <h3 id="主从reactor多线程模型"><a href="#主从reactor多线程模型" class="headerlink" title="主从reactor多线程模型"></a>主从reactor多线程模型</h3><a id="more"></a>
-<p><img src="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708003.png" alt="reactor主从多线程模型"></p>
+<p><img src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/%E4%B8%BB%E4%BB%8Ereactor%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg" alt="reactor主从多线程模型"></p>
 <p>特点</p>
 <ul>
 <li><p>服务端接收客户端的连接是一个独立的nio线程池</p>
@@ -410,7 +410,7 @@
 <li><p>将SocketChannel从主reactor线程摘除，重新注册到sub reactor线程池上，用于读取，解码，编码，发送操作</p>
 </li>
 </ul>
-<h2 id="netty的线程模型"><a href="#netty的线程模型" class="headerlink" title="netty的线程模型"></a>netty的线程模型</h2><h3 id="服务端执行过程"><a href="#服务端执行过程" class="headerlink" title="服务端执行过程"></a>服务端执行过程</h3><p><img src="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708004.png" alt="netty服务端流程"></p>
+<h2 id="netty的线程模型"><a href="#netty的线程模型" class="headerlink" title="netty的线程模型"></a>netty的线程模型</h2><h3 id="服务端执行过程"><a href="#服务端执行过程" class="headerlink" title="服务端执行过程"></a>服务端执行过程</h3><p><img src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/netty%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg" alt="netty服务端流程"></p>
 <ol>
 <li>从用户线程创建服务端</li>
 </ol>
@@ -438,7 +438,7 @@
 <li><p>处理io读写</p>
 </li>
 </ol>
-<h3 id="客户端线程模型"><a href="#客户端线程模型" class="headerlink" title="客户端线程模型"></a>客户端线程模型</h3><p><img src="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708014.png" alt="客户端线程模型"></p>
+<h3 id="客户端线程模型"><a href="#客户端线程模型" class="headerlink" title="客户端线程模型"></a>客户端线程模型</h3><p><img src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/java/netty%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B.jpg" alt="客户端线程模型"></p>
 <ol>
 <li>用户线程发起客户端连接</li>
 </ol>
