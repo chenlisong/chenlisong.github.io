@@ -272,6 +272,176 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/netty-reactor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一抹阳光丶">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一抹阳光丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/netty-reactor/" itemprop="url">netty-reactor</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-30T12:18:06+08:00">
+                2018-05-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/netty/" itemprop="url" rel="index">
+                    <span itemprop="name">netty</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/netty-reactor/" class="leancloud_visitors" data-flag-title="netty-reactor">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="reactor模型"><a href="#reactor模型" class="headerlink" title="reactor模型"></a>reactor模型</h2><p>大量网络框架采用reactor模型进行设计和开发，reactor模式基于事件驱动，特别适合处理海量的I/O事件。</p>
+<h3 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h3><p><img src="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708002.png" alt="reactor多线程模型"></p>
+<ul>
+<li><p>有专门的nio线程-acceptor线程用于监听服务端，接收客户端的tcp连接请求</p>
+</li>
+<li><p>网络io操作读写由一个nio线程池负责，包含一个队列和多个可用线程，由这些nio线程负责消息的读取，解码，编码，发送</p>
+</li>
+<li><p>一个nio线程可以同时处理n条链路，反之不可，防止出现并发操作问题</p>
+</li>
+</ul>
+<p>一个nio线程监听和处理客户端连接可能会存在性能问题。</p>
+<p>例如百万客户端连接，or 服务端需要对客户端握手进行安全认证，本身非常损耗性能。</p>
+<p>为了解决性能问题，出现了主从reactor多线程模型。</p>
+<h3 id="主从reactor多线程模型"><a href="#主从reactor多线程模型" class="headerlink" title="主从reactor多线程模型"></a>主从reactor多线程模型</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/netty-reactor/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/fastjson-convert-double/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -376,7 +546,8 @@
       
         
           <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。</p>
-<h2 id="代码测试"><a href="#代码测试" class="headerlink" title="代码测试"></a>代码测试</h2><p>有如下实体类<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fastjsonConvertDouble</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    TObj obj = <span class="keyword">new</span> TObj();</span><br><span class="line">    obj.setValue(<span class="number">1.0</span>d);</span><br><span class="line">    Map map = JSON.parseObject(JSON.toJSONString(obj), Map.class);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"output map: "</span> + map);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"value class: "</span> + map.get(<span class="string">"value"</span>).getClass());</span><br><span class="line">&#125;</span><br><span class="line">~~~ </span><br><span class="line"></span><br><span class="line">执行结果如下</span><br><span class="line">~~~ shell</span><br><span class="line">output map: &#123;value=<span class="number">1.0</span>&#125;</span><br><span class="line">value class: class java.math.BigDecimal</span><br></pre></td></tr></table></figure></p>
+<h2 id="代码测试"><a href="#代码测试" class="headerlink" title="代码测试"></a>代码测试</h2><p>有如下实体类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fastjsonConvertDouble</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    TObj obj = <span class="keyword">new</span> TObj();</span><br><span class="line">    obj.setValue(<span class="number">1.0</span>d);</span><br><span class="line">    Map map = JSON.parseObject(JSON.toJSONString(obj), Map.class);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"output map: "</span> + map);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"value class: "</span> + map.get(<span class="string">"value"</span>).getClass());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">output map: &#123;value=1.0&#125;</span><br><span class="line">value class: class java.math.BigDecimal</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/fastjson-convert-double/#more" rel="contents">
@@ -1481,7 +1652,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

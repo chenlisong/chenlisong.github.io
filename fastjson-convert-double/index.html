@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011121314151617@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);">
+<meta name="description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);    Map map =">
 <meta name="keywords" content="fastjson,cglib">
 <meta property="og:type" content="article">
 <meta property="og:title" content="fastjson的Double类型转换">
 <meta property="og:url" content="http://chenlisong.github.io/fastjson-convert-double/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011121314151617@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);">
+<meta property="og:description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);    Map map =">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-22T08:21:13.918Z">
+<meta property="og:updated_time" content="2018-05-28T01:22:45.292Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fastjson的Double类型转换">
-<meta name="twitter:description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011121314151617@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);">
+<meta name="twitter:description" content="介绍fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。 代码测试有如下实体类1234567891011@Testpublic void fastjsonConvertDouble() &amp;#123;    TObj obj = new TObj();    obj.setValue(1.0d);    Map map =">
 
 
 
@@ -374,7 +374,8 @@
 
       
         <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>fastjson在转换的过程中，如果对象存在Double类型的字段，在反转成Java对象时，类型会变成BigDecimal的情况。</p>
-<h2 id="代码测试"><a href="#代码测试" class="headerlink" title="代码测试"></a>代码测试</h2><p>有如下实体类<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fastjsonConvertDouble</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    TObj obj = <span class="keyword">new</span> TObj();</span><br><span class="line">    obj.setValue(<span class="number">1.0</span>d);</span><br><span class="line">    Map map = JSON.parseObject(JSON.toJSONString(obj), Map.class);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"output map: "</span> + map);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"value class: "</span> + map.get(<span class="string">"value"</span>).getClass());</span><br><span class="line">&#125;</span><br><span class="line">~~~ </span><br><span class="line"></span><br><span class="line">执行结果如下</span><br><span class="line">~~~ shell</span><br><span class="line">output map: &#123;value=<span class="number">1.0</span>&#125;</span><br><span class="line">value class: class java.math.BigDecimal</span><br></pre></td></tr></table></figure></p>
+<h2 id="代码测试"><a href="#代码测试" class="headerlink" title="代码测试"></a>代码测试</h2><p>有如下实体类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fastjsonConvertDouble</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    TObj obj = <span class="keyword">new</span> TObj();</span><br><span class="line">    obj.setValue(<span class="number">1.0</span>d);</span><br><span class="line">    Map map = JSON.parseObject(JSON.toJSONString(obj), Map.class);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"output map: "</span> + map);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"value class: "</span> + map.get(<span class="string">"value"</span>).getClass());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">output map: &#123;value=1.0&#125;</span><br><span class="line">value class: class java.math.BigDecimal</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ol>
 <li><p>fastjson第一次在将java对象转换成string的时候，保留了1.0的值；</p>
@@ -472,6 +473,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/netty-reactor/" rel="prev" title="netty-reactor">
+                netty-reactor <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -557,7 +562,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

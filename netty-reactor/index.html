@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,netty,nio," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="reactor模型大量网络框架采用reactor模型进行设计和开发，reactor模式基于事件驱动，特别适合处理海量的I/O事件。 多线程模型  有专门的nio线程-acceptor线程用于监听服务端，接收客户端的tcp连接请求  网络io操作读写由一个nio线程池负责，包含一个队列和多个可用线程，由这些nio线程负责消息的读取，解码，编码，发送  一个nio线程可以同时处理n条链路，反之不可，防">
+<meta name="keywords" content="java,netty,nio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="netty-reactor">
+<meta property="og:url" content="http://chenlisong.github.io/netty-reactor/index.html">
+<meta property="og:site_name" content="一抹阳光丶">
+<meta property="og:description" content="reactor模型大量网络框架采用reactor模型进行设计和开发，reactor模式基于事件驱动，特别适合处理海量的I/O事件。 多线程模型  有专门的nio线程-acceptor线程用于监听服务端，接收客户端的tcp连接请求  网络io操作读写由一个nio线程池负责，包含一个队列和多个可用线程，由这些nio线程负责消息的读取，解码，编码，发送  一个nio线程可以同时处理n条链路，反之不可，防">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708002.png">
+<meta property="og:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708003.png">
+<meta property="og:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708004.png">
+<meta property="og:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708014.png">
+<meta property="og:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708026.png">
+<meta property="og:updated_time" content="2018-05-30T07:08:26.622Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="netty-reactor">
+<meta name="twitter:description" content="reactor模型大量网络框架采用reactor模型进行设计和开发，reactor模式基于事件驱动，特别适合处理海量的I/O事件。 多线程模型  有专门的nio线程-acceptor线程用于监听服务端，接收客户端的tcp连接请求  网络io操作读写由一个nio线程池负责，包含一个队列和多个可用线程，由这些nio线程负责消息的读取，解码，编码，发送  一个nio线程可以同时处理n条链路，反之不可，防">
+<meta name="twitter:image" content="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708002.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenlisong.github.io/netty-reactor/"/>
+
+
+
+
+
+  <title>netty-reactor | 一抹阳光丶</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4017d56af796b6206a285ab35c559a01";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一抹阳光丶</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/netty-reactor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一抹阳光丶">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一抹阳光丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">netty-reactor</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-30T12:18:06+08:00">
+                2018-05-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/netty/" itemprop="url" rel="index">
+                    <span itemprop="name">netty</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/netty-reactor/" class="leancloud_visitors" data-flag-title="netty-reactor">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="reactor模型"><a href="#reactor模型" class="headerlink" title="reactor模型"></a>reactor模型</h2><p>大量网络框架采用reactor模型进行设计和开发，reactor模式基于事件驱动，特别适合处理海量的I/O事件。</p>
+<h3 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h3><p><img src="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708002.png" alt="reactor多线程模型"></p>
+<ul>
+<li><p>有专门的nio线程-acceptor线程用于监听服务端，接收客户端的tcp连接请求</p>
+</li>
+<li><p>网络io操作读写由一个nio线程池负责，包含一个队列和多个可用线程，由这些nio线程负责消息的读取，解码，编码，发送</p>
+</li>
+<li><p>一个nio线程可以同时处理n条链路，反之不可，防止出现并发操作问题</p>
+</li>
+</ul>
+<p>一个nio线程监听和处理客户端连接可能会存在性能问题。</p>
+<p>例如百万客户端连接，or 服务端需要对客户端握手进行安全认证，本身非常损耗性能。</p>
+<p>为了解决性能问题，出现了主从reactor多线程模型。</p>
+<h3 id="主从reactor多线程模型"><a href="#主从reactor多线程模型" class="headerlink" title="主从reactor多线程模型"></a>主从reactor多线程模型</h3><a id="more"></a>
+<p><img src="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708003.png" alt="reactor主从多线程模型"></p>
+<p>特点</p>
+<ul>
+<li><p>服务端接收客户端的连接是一个独立的nio线程池</p>
+</li>
+<li><p>accptor线程池仅只用于客户端的登录，握手和安全认证，成功后，将链路注册到subReactor线程池上</p>
+</li>
+</ul>
+<p>执行过程</p>
+<ul>
+<li><p>从主线程中随机选择一个reactor线程作为accptor线程，用于绑定监听端口，接收客户端连接</p>
+</li>
+<li><p>accptor线程接收客户端连接请求后创建新的SocketChannel，将其注册到主线程池的其他reactor线程，其负责接入认证，黑白名单，握手等操作</p>
+</li>
+<li><p>将SocketChannel从主reactor线程摘除，重新注册到sub reactor线程池上，用于读取，解码，编码，发送操作</p>
+</li>
+</ul>
+<h2 id="netty的线程模型"><a href="#netty的线程模型" class="headerlink" title="netty的线程模型"></a>netty的线程模型</h2><h3 id="服务端执行过程"><a href="#服务端执行过程" class="headerlink" title="服务端执行过程"></a>服务端执行过程</h3><p><img src="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708004.png" alt="netty服务端流程"></p>
+<ol>
+<li>从用户线程创建服务端</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">EventLoopGroup bossGroup = <span class="keyword">new</span> NioEventLoopGroup(<span class="number">1</span>);</span><br><span class="line">EventLoopGroup workerGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    ServerBootstrap b = <span class="keyword">new</span> ServerBootstrap();</span><br><span class="line">    b.group(bossGroup, workerGroup)</span><br><span class="line">     .channel(NioServerSocketChannel.class)</span><br><span class="line">     .option(ChannelOption.SO_BACKLOG, <span class="number">100</span>)</span><br><span class="line">     .handler(<span class="keyword">new</span> LoggingHandler(LogLevel.INFO))</span><br><span class="line">     .childHandler(<span class="keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">         <span class="meta">@Override</span></span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">             ChannelPipeline p = ch.pipeline();</span><br><span class="line">             p.addLast(<span class="keyword">new</span> EchoServerHandler());</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;);</span><br><span class="line"></span><br><span class="line">    ChannelFuture f = b.bind(PORT).sync();</span><br><span class="line">    f.channel().closeFuture().sync();</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    bossGroup.shutdownGracefully();</span><br><span class="line">    workerGroup.shutdownGracefully();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>EventLoopGroup管理的线程数可以通过构造函数设置，如无，默认取-Dio.netty.eventLoopThreads，如果未指定则取可用cpu内核数 * 2</p>
+</li>
+<li><p>bossGroup线程组实际是Acceptor线程池，负责处理客户端的tcp连接请求</p>
+</li>
+<li><p>workGroup是真正负责IO读写的线程组，通过ServerBootStrap的group方法进行设置，用于后续的channel绑定。</p>
+</li>
+</ul>
+<ol start="2">
+<li>acceptor线程绑定监听端口，启动nio服务端</li>
+</ol>
+<p>doBind &gt; initAndRegister &gt; newChannel</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> ChannelFuture <span class="title">initAndRegister</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Channel channel = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        channel = channelFactory.newChannel();</span><br><span class="line">        init(channel);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">        <span class="keyword">if</span> (channel != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// channel can be null if newChannel crashed (eg SocketException("too many open files"))</span></span><br><span class="line">            channel.unsafe().closeForcibly();</span><br><span class="line">            <span class="comment">// as the Channel is not registered yet we need to force the usage of the GlobalEventExecutor</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> DefaultChannelPromise(channel, GlobalEventExecutor.INSTANCE).setFailure(t);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// as the Channel is not registered yet we need to force the usage of the GlobalEventExecutor</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DefaultChannelPromise(<span class="keyword">new</span> FailedChannel(), GlobalEventExecutor.INSTANCE).setFailure(t);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ChannelFuture regFuture = config().group().register(channel);</span><br><span class="line">    <span class="keyword">if</span> (regFuture.cause() != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (channel.isRegistered()) &#123;</span><br><span class="line">            channel.close();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            channel.unsafe().closeForcibly();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> regFuture;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从bossGroup中选择一个Acceptor线程监听服务端。</p>
+<p>服务端创建完channel后，将其注册到多路复用器Selector上，用于接收客户端的tcp连接。</p>
+<ol start="3">
+<li><p>如果监听到客户端连接，则创建客户端SocketChannel连接，重新注册到workGroup线程上。负责读写io操作</p>
+</li>
+<li><p>选择io线程之后，将SocketChannel注册到多路复用器上，监听read操作</p>
+</li>
+<li><p>处理io读写</p>
+</li>
+</ol>
+<h3 id="客户端线程模型"><a href="#客户端线程模型" class="headerlink" title="客户端线程模型"></a>客户端线程模型</h3><p><img src="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708014.png" alt="客户端线程模型"></p>
+<ol>
+<li>用户线程发起客户端连接</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">EventLoopGroup group = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    Bootstrap b = <span class="keyword">new</span> Bootstrap();</span><br><span class="line">    b.group(group)</span><br><span class="line">     .channel(NioSocketChannel.class)</span><br><span class="line">     .option(ChannelOption.TCP_NODELAY, <span class="keyword">true</span>)</span><br><span class="line">     .handler(<span class="keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">         <span class="meta">@Override</span></span><br><span class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">             ChannelPipeline p = ch.pipeline();</span><br><span class="line">             p.addLast(<span class="keyword">new</span> EchoClientHandler());</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Start the client.</span></span><br><span class="line">    ChannelFuture f = b.connect(HOST, PORT).sync();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wait until the connection is closed.</span></span><br><span class="line">    f.channel().closeFuture().sync();</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// Shut down the event loop to terminate all threads.</span></span><br><span class="line">    group.shutdownGracefully();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>发起连接操作，判断连接结果</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> ChannelFuture <span class="title">doResolveAndConnect</span><span class="params">(<span class="keyword">final</span> SocketAddress remoteAddress, <span class="keyword">final</span> SocketAddress localAddress)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> ChannelFuture regFuture = initAndRegister();</span><br><span class="line">    <span class="keyword">final</span> Channel channel = regFuture.channel();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (regFuture.isDone()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!regFuture.isSuccess()) &#123;</span><br><span class="line">            <span class="keyword">return</span> regFuture;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> doResolveAndConnect0(channel, remoteAddress, localAddress, channel.newPromise());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Registration future is almost always fulfilled already, but just in case it's not.</span></span><br><span class="line">        <span class="keyword">final</span> PendingRegistrationPromise promise = <span class="keyword">new</span> PendingRegistrationPromise(channel);</span><br><span class="line">        regFuture.addListener(<span class="keyword">new</span> ChannelFutureListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operationComplete</span><span class="params">(ChannelFuture future)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                <span class="comment">// Directly obtain the cause and do a null check so we only need one volatile read in case of a</span></span><br><span class="line">                <span class="comment">// failure.</span></span><br><span class="line">                Throwable cause = future.cause();</span><br><span class="line">                <span class="keyword">if</span> (cause != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// Registration on the EventLoop failed so fail the ChannelPromise directly to not cause an</span></span><br><span class="line">                    <span class="comment">// IllegalStateException once we try to access the EventLoop of the Channel.</span></span><br><span class="line">                    promise.setFailure(cause);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// Registration was successful, so set the correct executor to use.</span></span><br><span class="line">                    <span class="comment">// See https://github.com/netty/netty/issues/2586</span></span><br><span class="line">                    promise.registered();</span><br><span class="line">                    doResolveAndConnect0(channel, remoteAddress, localAddress, promise);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> promise;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>由NioEventLoop的多路复用器轮询连接结果</p>
+</li>
+<li><p>由NioEventLoop负责io读写，同服务端</p>
+</li>
+</ol>
+<h2 id="NioEventLoop的设计原理"><a href="#NioEventLoop的设计原理" class="headerlink" title="NioEventLoop的设计原理"></a>NioEventLoop的设计原理</h2><p><img src="https://res.infoq.com/articles/netty-threading-model/zh/resources/0708026.png" alt="NioEventLoop执行过程"></p>
+<ul>
+<li><p>消息的读取，解码，后续handler的执行，始终由NioEventLoop负责，整个流程不会存在上下文的切换</p>
+</li>
+<li><p>一个NioEventLoop聚合了一个多路复用器Selector，因此可以处理成千上万的客户端连接</p>
+</li>
+<li><p>netty通过串行化线程水平并行处理，既能提升了多核并发处理能力，也避免了上下文切换和并发保护带来的额外性能损耗</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/wechat.jpg" alt="一抹阳光丶 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://eagle-file.oss-cn-shanghai.aliyuncs.com/img/alipay.jpg" alt="一抹阳光丶 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/netty/" rel="tag"># netty</a>
+          
+            <a href="/tags/nio/" rel="tag"># nio</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/fastjson-convert-double/" rel="next" title="fastjson的Double类型转换">
+                <i class="fa fa-chevron-left"></i> fastjson的Double类型转换
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://www.kehue.com/pic/cls.jpg"
+                alt="一抹阳光丶" />
+            
+              <p class="site-author-name" itemprop="name">一抹阳光丶</p>
+              <p class="site-description motion-element" itemprop="description">Java|理科男|编程</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#reactor模型"><span class="nav-text">reactor模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程模型"><span class="nav-text">多线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主从reactor多线程模型"><span class="nav-text">主从reactor多线程模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netty的线程模型"><span class="nav-text">netty的线程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端执行过程"><span class="nav-text">服务端执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端线程模型"><span class="nav-text">客户端线程模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NioEventLoop的设计原理"><span class="nav-text">NioEventLoop的设计原理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一抹阳光丶</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FI63hYfmopG1Ew1odC2fnj3L-gzGzoHsz", "TaKy2dPCbbbOP7vEkxCmWGVF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
