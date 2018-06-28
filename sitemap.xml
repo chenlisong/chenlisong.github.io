@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://chenlisong.github.io/java-annotation-invoke/</loc>
+    
+    <lastmod>2018-06-28T06:33:12.569Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://chenlisong.github.io/istio-service-mesh/</loc>
     
     <lastmod>2018-06-28T03:18:29.059Z</lastmod>

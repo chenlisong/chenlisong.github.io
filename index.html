@@ -272,6 +272,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/java-annotation-invoke/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一抹阳光丶">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一抹阳光丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/java-annotation-invoke/" itemprop="url">java的自定义注解+反射实现面向配置的规则校验，数据转换</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T14:00:00+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/java-annotation-invoke/" class="leancloud_visitors" data-flag-title="java的自定义注解+反射实现面向配置的规则校验，数据转换">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>最近遇到一个钉钉微应用的项目，前端自实现，后端数据操作需要对接其他系统。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总结一下后端需要做的事情。</p>
+<ul>
+<li><p>对前端参数进行校验。比如数值范围，字符串等类型，某些值要小于从其他系统查到的余额等场景。</p>
+</li>
+<li><p>请求转发。前端传递json类型，要传到某些其他系统中，类型不确定，有的是xml，有的是json类型。</p>
+</li>
+<li><p>请求响应。收到响应请求时，需要转成json类型。</p>
+</li>
+<li><p>收到的结构数据中，有字符串是json的类型，需要转成json类型</p>
+</li>
+<li><p>字段名称需要映射，比如jobNo对应其他系统的T_ABC</p>
+</li>
+</ul>
+<p>以上就是新系统需要做的事情，涉及的接口近百个左右。如果不出意外的场景。正常写代码的话。</p>
+<p>需要各种json解析，一对一的解析，拼装请求，http代码，解析响应，返回给前端。看了下demo，一个接口的代码量在100行以上完全不是问题。</p>
+<p>大量重复的代码堆积。开启了优化重构之路。</p>
+<h2 id="寻找共性"><a href="#寻找共性" class="headerlink" title="寻找共性"></a>寻找共性</h2><p>通过对上述接口的分解，不难看出其共性：字段映射，较强大的规则校验，，json转xml。</p>
+<h2 id="字段映射"><a href="#字段映射" class="headerlink" title="字段映射"></a>字段映射</h2><p>通过配置化json即可。</p>
+<h2 id="json和xml的互转"><a href="#json和xml的互转" class="headerlink" title="json和xml的互转"></a>json和xml的互转</h2><p>dom4j解析xml实现</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/java-annotation-invoke/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/istio-service-mesh/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1830,7 +2006,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
