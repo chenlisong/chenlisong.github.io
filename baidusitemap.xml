@@ -5,10 +5,10 @@
     
   <url>
     <loc>http://chenlisong.github.io/java-annotation-invoke/</loc>
-    <lastmod>2018-06-28T06:33:12.569Z</lastmod>
+    <lastmod>2018-06-28T06:40:44.861Z</lastmod>
     <data>
         <display>
-        <title>java的自定义注解+反射实现面向配置的规则校验，数据转换</title>
+        <title>java通过自定义注解+反射实现规则引擎</title>
         <pubTime>2018-06-28T06:00:00.000Z</pubTime>
         
         <tag>java</tag>
