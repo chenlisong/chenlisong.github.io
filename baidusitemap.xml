@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://chenlisong.github.io/redis-cluster-sentinel/</loc>
+    <lastmod>2018-07-04T07:29:07.071Z</lastmod>
+    <data>
+        <display>
+        <title>redis的集群模式和sentinel模式</title>
+        <pubTime>2018-07-03T10:00:00.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="redis" url="http://chenlisong.github.io/categories/redis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chenlisong.github.io/java-annotation-invoke/</loc>
     <lastmod>2018-06-28T07:17:23.372Z</lastmod>
     <data>

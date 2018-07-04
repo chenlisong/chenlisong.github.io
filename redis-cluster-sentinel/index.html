@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hi, chenlisong" />
+  <meta name="keywords" content="redis," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="介绍之前对redis的cluster，sentinel模式有个大概的了解，但是并未系统化的学习其细节。通过对redis.cn和redis.io的文章阅读。总结一下关键点，以期望以后回顾。 涉及的内容：cluster，sentinel，集群规范 版本：gt 3.0 主要归纳原理，简单的不再阐述。 cluster 集群介绍是一个提供在多个redis间节点共享数据的程序集。 优点：  自动分割数据到不同">
+<meta name="keywords" content="redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://chenlisong.github.io/hello-world/index.html">
+<meta property="og:title" content="redis的集群模式和sentinel模式">
+<meta property="og:url" content="http://chenlisong.github.io/redis-cluster-sentinel/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="介绍之前对redis的cluster，sentinel模式有个大概的了解，但是并未系统化的学习其细节。通过对redis.cn和redis.io的文章阅读。总结一下关键点，以期望以后回顾。 涉及的内容：cluster，sentinel，集群规范 版本：gt 3.0 主要归纳原理，简单的不再阐述。 cluster 集群介绍是一个提供在多个redis间节点共享数据的程序集。 优点：  自动分割数据到不同">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-12T09:03:37.358Z">
+<meta property="og:updated_time" content="2018-07-04T07:29:07.071Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="redis的集群模式和sentinel模式">
+<meta name="twitter:description" content="介绍之前对redis的cluster，sentinel模式有个大概的了解，但是并未系统化的学习其细节。通过对redis.cn和redis.io的文章阅读。总结一下关键点，以期望以后回顾。 涉及的内容：cluster，sentinel，集群规范 版本：gt 3.0 主要归纳原理，简单的不再阐述。 cluster 集群介绍是一个提供在多个redis间节点共享数据的程序集。 优点：  自动分割数据到不同">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/hello-world/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/redis-cluster-sentinel/"/>
 
 
 
 
 
-  <title>Hello World | 一抹阳光丶</title>
+  <title>redis的集群模式和sentinel模式 | 一抹阳光丶</title>
   
 
 
@@ -272,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/redis-cluster-sentinel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一抹阳光丶">
@@ -289,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">redis的集群模式和sentinel模式</h1>
         
 
         <div class="post-meta">
@@ -301,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T17:03:37+08:00">
-                2018-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-03T18:00:00+08:00">
+                2018-07-03
               </time>
             
 
@@ -312,6 +313,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -319,7 +342,7 @@
 
           
           
-             <span id="/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
+             <span id="/redis-cluster-sentinel/" class="leancloud_visitors" data-flag-title="redis的集群模式和sentinel模式">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -350,15 +373,163 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>之前对redis的cluster，sentinel模式有个大概的了解，但是并未系统化的学习其细节。通过对redis.cn和redis.io的文章阅读。总结一下关键点，以期望以后回顾。</p>
+<p>涉及的内容：cluster，sentinel，集群规范</p>
+<p>版本：gt 3.0</p>
+<p>主要归纳原理，简单的不再阐述。</p>
+<h2 id="cluster-集群"><a href="#cluster-集群" class="headerlink" title="cluster 集群"></a>cluster 集群</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p>是一个提供在多个redis间节点共享数据的程序集。</p>
+<p>优点：</p>
+<ul>
+<li><p>自动分割数据到不同的节点</p>
+</li>
+<li><p>整个集群的部分节点失败或不可达场景，能继续处理命令</p>
+</li>
+<li><p>性能提升</p>
+</li>
+</ul>
+<a id="more"></a>
+<p>缺点：</p>
+<ul>
+<li><p>不支持处理多个keys的命令，因为需要在节点之间移动数据</p>
+</li>
+<li><p>非安全写入</p>
+</li>
+</ul>
+<ol>
+<li><p>因为分区使一个主节点不可达</p>
+</li>
+<li><p>故障转移到主节点的一个从节点</p>
+</li>
+<li><p>过一段时间主节点再次可达</p>
+</li>
+<li><p>一个没有更新路由表的客户端，或许会在集群把主改成从之前对他进行写操作。</p>
+</li>
+</ol>
+<h3 id="数据分片"><a href="#数据分片" class="headerlink" title="数据分片"></a>数据分片</h3><p>redis集群使用16384个hash槽解决数据分片的问题。</p>
+<p>每个key进行crc16校验对16384取模决定其槽的位置，集群每个节点负责一部分hash槽。例如</p>
+<p>节点A,B,C</p>
+<p>A &gt; 0 - 5500<br>B &gt; 5501 - 11000<br>C &gt; 11001 - 16384</p>
+<p>这种设计对增删节点友好，不会停止服务。</p>
+<p>增加节点时：将A,B,C部分节点数据移动到新加的节点；<br>删除节点时：将需要删除的节点数据移动到其他节点上。</p>
+<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><p>为了使部分节点失败或者大部分节点无法通信的情况下集群任然可用。每个节点都会有1到n个复制节点。</p>
+<p>例如A,B,C节点对应A1,B1,C1，整个集群就是3个master，3个slave。</p>
+<p>这样节点A失败，A1成为新的master，但是如果A1失败，那么A的节点数据就是不可用的。</p>
+<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>redis不能保证数据的强一致性。集群采用的异步模式。举例场景</p>
+<ul>
+<li><p>客户端向主节点A写入一条数据</p>
+</li>
+<li><p>主节点A向客户端恢复命令状态</p>
+</li>
+<li><p>主节点将写操作复制给从节点A1，A2，A3</p>
+</li>
+</ul>
+<p>复制操作在返回响应之后，所以其一致性无法保证。</p>
+<p>网络分裂：当一个客户端和至少一个主节点被网络孤立时，变会出现数据丢失。</p>
+<p>场景：假如3个master，3个slave，A,B,C A1,B1,C1节点，还有客户端Z。Z正在向B节点写数据时，此时B被网络孤立，但是外网可访问。B1会被选为主master，那么Z写入B的数据就会丢失。</p>
+<h2 id="sentinel-哨兵"><a href="#sentinel-哨兵" class="headerlink" title="sentinel 哨兵"></a>sentinel 哨兵</h2><h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p>sentinel用于管理多个redis实例(instance)</p>
+<ul>
+<li><p>监控： 不断的监控主服务器，从服务器是否正常运行</p>
+</li>
+<li><p>提醒： 当被监控的某个redis实例发生问题，sentinel通过api发送通知</p>
+</li>
+<li><p>自动故障迁移： 当主服务异常时，sentinel会自动开始一次故障迁移，步骤如下。</p>
+</li>
+</ul>
+<ol>
+<li><p>将失效的master的slave服务，提升到master级别</p>
+</li>
+<li><p>修改其他slave服务，修改其master指向新的地址</p>
+</li>
+<li><p>客户端请求，返回新的master服务地址。</p>
+</li>
+</ol>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>启动一个以sentinel模式运行的redis-server实例<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server /path/to/sentinel.conf --sentinel</span><br></pre></td></tr></table></figure></p>
+<h3 id="sentinel配置"><a href="#sentinel配置" class="headerlink" title="sentinel配置"></a>sentinel配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor mymaster 127.0.0.1 6379 2</span><br><span class="line">sentinel down-after-milliseconds mymaster 60000</span><br><span class="line">sentinel failover-timeout mymaster 180000</span><br><span class="line">sentinel parallel-syncs mymaster 1</span><br><span class="line"></span><br><span class="line">sentinel monitor resque 192.168.1.3 6380 4</span><br><span class="line">sentinel down-after-milliseconds resque 10000</span><br><span class="line">sentinel failover-timeout resque 180000</span><br><span class="line">sentinel parallel-syncs resque 5</span><br></pre></td></tr></table></figure>
+<p>解释</p>
+<ul>
+<li><p>第一行监听一个名称是mymaster的主服务器，ip端口是127.0.0.1:6379，判断主服务器失效至少需要2个sentinel同意</p>
+</li>
+<li><p>无论需要sentinel同意的数量，都需要多数sentinel的同意</p>
+</li>
+</ul>
+<p>down-after-milliseconds mymaster：sentinel认为服务器已经断线所需要的毫秒数</p>
+<ul>
+<li><p>在给定的时间内，没返回sentinel发送ping命令的回复，或者错误。sentinel将redis服务标记主观下线</p>
+</li>
+<li><p>只有当足够数量的sentinel标记为主观下线，才会执行故障迁移</p>
+</li>
+</ul>
+<p>parallel-syncs： 在故障迁移过程中， 最多同时能有多少的从服务对新的主服务进行同步，该值越小，迁移时间越长。</p>
+<p>迁移过程小部分步骤会导致从服务不能处理命令请求，可以通过设置该值为1，来保障每次只有一个从服务不可用。</p>
+<h3 id="主观，客观下线"><a href="#主观，客观下线" class="headerlink" title="主观，客观下线"></a>主观，客观下线</h3><p>主观下线：指的是单个sentinel实例对服务器做出的下线判断</p>
+<p>客观下线：多个sentinel实例对同一个服务器做出sdown判断，并且通过sentinel is-master-down-by-addr 命令互相交流后，得出的服务器下线判断。</p>
+<p>服务器对ping的有效回复包含</p>
+<ul>
+<li><p>+PONG</p>
+</li>
+<li><p>-LOADING</p>
+</li>
+<li><p>-MASTERDOWN</p>
+</li>
+</ul>
+<p>对于</p>
+<p>主服务器：主观下线状态切换到客观下线状态，使用Gossip协议，在sentinel给定的时间内，从sentinel收集到了足够数量的主服务器下线报告，状态改成客观下线。</p>
+<p>客观下线只适合主服务器。</p>
+<p>其他类型的redis实例，sentinel判断下线无需协商。</p>
+<blockquote>
+<p>Gossip协议参考：<a href="http://kaiyuan.me/2015/07/08/Gossip/" target="_blank" rel="noopener">http://kaiyuan.me/2015/07/08/Gossip/</a></p>
+</blockquote>
+<p>sentinel做得事情</p>
+<ul>
+<li><p>每个sentinel以每秒一次的频率向他所知道的主，从，其他服务器发送PING命令</p>
+</li>
+<li><p>如果一个实例距离最后一次有效回复PING命令时间超过down-after-milliseconds，被标记主观下线</p>
+</li>
+<li><p>如果主服务被标记为主观下线，那么正在监视这个主服务器的所有sentinel要以每秒一次的频率确认主服务器的确进入了主观下线状态</p>
+</li>
+<li><p>如果主服务器进入主观下线状态，并且有足够数量的sentinel在指定的时间范围内同意这一判断，那么这个主服务器被标记为客观下线</p>
+</li>
+<li><p>当一个主服务器标记客观下线时，sentinel向下线主服务器和从服务器的INFO命令频率从10秒一次改成每秒一次</p>
+</li>
+<li><p>当没有足够数量sentinel同意主服务器下线，客观下线状态就被移除。</p>
+</li>
+</ul>
+<h3 id="自动发现"><a href="#自动发现" class="headerlink" title="自动发现"></a>自动发现</h3><p>一个sentinel可以与多个sentinel进行连接，各个sentinel之间可以互相检查对方的可用性，并进行信息交换。</p>
+<p>无需设置sentinel对应其他sentinel的地址，通过发布，订阅功能来自动发现正在监视相同主服务器的其他sentinel，这一功能是通过想频道 sentinel:hello发送信息来实现的。</p>
+<ul>
+<li><p>sentinel会以每两秒一次的频率，通过发布与订阅，向被他监视的所有主服务器，从服务器的 sentinel:hello频道发送消息，包含sentinel的ip，端口，pid</p>
+</li>
+<li><p>每个sentinel都会订阅被他监视服务的 sentinel:hello频道，如果有新的sentinel加入，更新自己的sentinel列表</p>
+</li>
+<li><p>sentinel发送的信息中包括完整的主服务器的配置，如果一个sentinel包含的配置比另一个要旧，那么会立即升级到新的配置</p>
+</li>
+<li><p>添加新的sentinel时，先检查列表中是否已存在相同id或者相同地址的sentinel，如有，先移除</p>
+</li>
+</ul>
+<h3 id="故障转移"><a href="#故障转移" class="headerlink" title="故障转移"></a>故障转移</h3><ul>
+<li><p>发现主服务器进入客观下线状态</p>
+</li>
+<li><p>选择一个从服务器，将之升级为主服务器，发送命令 SLAVEOF ON ONE</p>
+</li>
+<li><p>通过发布与订阅，将更新后的主服务器配置传播给其他的sentinel，其他sentinel更新自己的配置</p>
+</li>
+<li><p>向已下线的主服务器的从服务器发送SLAVEOF命令，让他们复制新的主服务器</p>
+</li>
+<li><p>当所有的从服务器开始复制新的主服务器时，领头的sentinel终止故障迁移</p>
+</li>
+</ul>
+<p>如何选择从服务器，将之升级为主服务器的依据是什么。</p>
+<ul>
+<li><p>那些标记主观下线，已断线，或者最后一次回复ping命令的时间大于5秒钟的从服务器被淘汰</p>
+</li>
+<li><p>断开时长超过down-after选项指定市场10倍的从服务器被淘汰</p>
+</li>
+<li><p>剩下的，选择复制偏移量(replication offset)最大的从服务器，如果复制偏移量不可用，选择id最小的从服务器升级为主服务器</p>
+</li>
+</ul>
+<blockquote>
+<p>参考文章：<a href="http://redis.cn/topics/cluster-tutorial.html" target="_blank" rel="noopener">http://redis.cn/topics/cluster-tutorial.html</a><br>参考文章：<a href="http://redis.cn/topics/sentinel.html" target="_blank" rel="noopener">http://redis.cn/topics/sentinel.html</a><br>redis cluster集群规范：<a href="http://redis.cn/topics/cluster-spec.html" target="_blank" rel="noopener">http://redis.cn/topics/cluster-spec.html</a></p>
+</blockquote>
 
       
     </div>
@@ -403,6 +574,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
 
       
       
@@ -412,15 +589,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/java-annotation-invoke/" rel="next" title="java通过自定义注解+反射实现规则引擎">
+                <i class="fa fa-chevron-left"></i> java通过自定义注解+反射实现规则引擎
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/java-wildcard-achieve/" rel="prev" title="java通配符替换的几种实现方式">
-                java通配符替换的几种实现方式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -562,7 +739,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cluster-集群"><span class="nav-text">cluster 集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍-1"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据分片"><span class="nav-text">数据分片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主从复制"><span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性"><span class="nav-text">一致性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sentinel-哨兵"><span class="nav-text">sentinel 哨兵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍-2"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动"><span class="nav-text">启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sentinel配置"><span class="nav-text">sentinel配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主观，客观下线"><span class="nav-text">主观，客观下线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动发现"><span class="nav-text">自动发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#故障转移"><span class="nav-text">故障转移</span></a></li></ol></li></ol></div>
             
 
           </div>
