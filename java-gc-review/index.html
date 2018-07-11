@@ -79,18 +79,21 @@
 
 
 
-<meta name="description" content="CMS gc常见垃圾回收器">
+<meta name="description" content="介绍长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。 CMS gc常见垃圾回收器 串行 Serial 单线程的一个回收器，简单，易实现，效率高  并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间  吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制  并发标记清除 CMS concurrent mark swe">
 <meta name="keywords" content="java,gc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java gc总结">
 <meta property="og:url" content="http://chenlisong.github.io/java-gc-review/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="CMS gc常见垃圾回收器">
+<meta property="og:description" content="介绍长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。 CMS gc常见垃圾回收器 串行 Serial 单线程的一个回收器，简单，易实现，效率高  并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间  吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制  并发标记清除 CMS concurrent mark swe">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-11T10:09:09.136Z">
+<meta property="og:image" content="https://tech.meituan.com/img/JVM-optimize/four.png">
+<meta property="og:image" content="https://tech.meituan.com/img/g1/g1_gc_layout.png">
+<meta property="og:updated_time" content="2018-07-11T18:04:16.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java gc总结">
-<meta name="twitter:description" content="CMS gc常见垃圾回收器">
+<meta name="twitter:description" content="介绍长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。 CMS gc常见垃圾回收器 串行 Serial 单线程的一个回收器，简单，易实现，效率高  并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间  吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制  并发标记清除 CMS concurrent mark swe">
+<meta name="twitter:image" content="https://tech.meituan.com/img/JVM-optimize/four.png">
 
 
 
@@ -302,8 +305,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-11T22:11:00+08:00">
-                2018-07-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T01:20:00+08:00">
+                2018-07-12
               </time>
             
 
@@ -373,7 +376,58 @@
       
 
       
-        <h2 id="CMS-gc"><a href="#CMS-gc" class="headerlink" title="CMS gc"></a>CMS gc</h2><h3 id="常见垃圾回收器"><a href="#常见垃圾回收器" class="headerlink" title="常见垃圾回收器"></a>常见垃圾回收器</h3>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。</p>
+<h2 id="CMS-gc"><a href="#CMS-gc" class="headerlink" title="CMS gc"></a>CMS gc</h2><h3 id="常见垃圾回收器"><a href="#常见垃圾回收器" class="headerlink" title="常见垃圾回收器"></a>常见垃圾回收器</h3><ul>
+<li><p>串行 Serial 单线程的一个回收器，简单，易实现，效率高</p>
+</li>
+<li><p>并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间</p>
+</li>
+<li><p>吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制</p>
+</li>
+<li><p>并发标记清除 CMS concurrent mark sweep 一种以获取最短回收停顿时间为目标的回收器，该回收器基于标记-清除算法</p>
+</li>
+</ul>
+<h3 id="cms的执行过程"><a href="#cms的执行过程" class="headerlink" title="cms的执行过程"></a>cms的执行过程</h3><ul>
+<li><p>init-mark初始标记 stw，该阶段进行可达性分析，标记gc root能直接关联到的对象，很快</p>
+</li>
+<li><p>concurrent-mark 并发标记，由前段标记过的绿色对象出发，所有可达到的对象都在本阶段标记</p>
+</li>
+<li><p>remakr重标记，stw，暂停所有用户线程，重新扫描用户堆对象，进行可达性分析，标记活着的对象</p>
+<p>  因为阶段2，可能有用户线程重新让一个对象变得可达。注意，当前阶段以新生代对象为根来判断对象是否存活</p>
+</li>
+<li><p>并发清理，进行并发的垃圾清理</p>
+</li>
+</ul>
+<a id="more"></a>
+<p><img src="https://tech.meituan.com/img/JVM-optimize/four.png" alt="cms-gc"></p>
+<h3 id="常用优化"><a href="#常用优化" class="headerlink" title="常用优化"></a>常用优化</h3><ul>
+<li><p>如果应用存在大量的短期对象，应该选择较大的年轻代；如果存在相对较多的持久对象，老年代应该适当增大。</p>
+</li>
+<li><p>CMS提供CMSScavengeBeforeRemark参数，用来保证Remark前强制进行一次Minor GC</p>
+</li>
+<li><p>通过把-XX:PermSize参数和-XX:MaxPermSize设置成一样，强制虚拟机在启动的时候就把永久代的容量固定下来，避免运行时自动扩容</p>
+</li>
+<li><p>CMS默认情况下不会回收Perm区，通过参数CMSPermGenSweepingEnabled、CMSClassUnloadingEnabled ，可以让CMS在Perm区容量不足时对其回收</p>
+</li>
+</ul>
+<p>注意：</p>
+<p>动态年龄计算：hotspot遍历所有对象时，按照年龄从小到大对其所占用的大小进行累积，当累积的某个年龄大小超过survivor区的一半，取这个年龄与MaxTenuringThreshold中更小的一个</p>
+<h2 id="G1-gc"><a href="#G1-gc" class="headerlink" title="G1 gc"></a>G1 gc</h2><p><img src="https://tech.meituan.com/img/g1/g1_gc_layout.png" alt="g1-gc"></p>
+<h3 id="region"><a href="#region" class="headerlink" title="region"></a>region</h3><p>每个region被标记成eden, old, survivor, humongous，其中humongous代表巨型对象。</p>
+<p>region大小设置 -XX:G1HeapRegionSize ，1，2，4，8，32M，默认值是堆的大小/2048</p>
+<h3 id="yong-gc"><a href="#yong-gc" class="headerlink" title="yong gc"></a>yong gc</h3><p>一般对象均在eden区分配内存，除了humongous对象，当所有eden区域被耗尽内存时，触发yong gc，活跃对象copy到survivor区和old区中，空闲的region会被放入空闲列表</p>
+<p>-XX:MaxGCPauseMillis    设置G1收集过程目标时间，默认值200ms</p>
+<p>-XX:G1NewSizePercent    新生代最小值，默认值5%</p>
+<p>-XX:G1MaxNewSizePercent 新生代最大值，默认值60%</p>
+<h3 id="mixed-gc"><a href="#mixed-gc" class="headerlink" title="mixed gc"></a>mixed gc</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:InitiatingHeapOccupancyPercent=80 -XX:+UseCMSInitiatingOccupancyOnly</span><br></pre></td></tr></table></figure>
+<p>触发机制：当老年代的大小占整个堆大小百分比达到该阀值时，会触发一次mixed gc</p>
+<p>执行过程：参考cms执行过程。类似。会优先考虑收益高的old区域执行gc。</p>
+<h3 id="full-gc"><a href="#full-gc" class="headerlink" title="full gc"></a>full gc</h3><p>如果对象内存分配过快，mixed gc来不及执行，导致年轻代被占满，就会触发full gc，serial old gc，导致长时间的暂停时间。</p>
+<h2 id="zgc"><a href="#zgc" class="headerlink" title="zgc"></a>zgc</h2><p>描述：并发，单代，基于区域的，numa感知的收集器。stw阶段仅限于gc root扫描。gc时间不会随着堆或者对象的大小而增加。</p>
+<p>核心设计：有色指针(colored pointers) 负载障碍(load barriers) 结合使用。</p>
+<p>zgc暂时不开放使用，除非在编译configuration时–with-jvm-features=zgc，并增加jvm选项XX:+UnlockExperimentalVMOptions -XX:+UseZGC</p>
+<p>更多zgc参考zgc的jep地址：<a href="http://openjdk.java.net/jeps/333" target="_blank" rel="noopener">http://openjdk.java.net/jeps/333</a></p>
+
       
     </div>
     
@@ -584,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS-gc"><span class="nav-text">CMS gc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见垃圾回收器"><span class="nav-text">常见垃圾回收器</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS-gc"><span class="nav-text">CMS gc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见垃圾回收器"><span class="nav-text">常见垃圾回收器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cms的执行过程"><span class="nav-text">cms的执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用优化"><span class="nav-text">常用优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G1-gc"><span class="nav-text">G1 gc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#region"><span class="nav-text">region</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yong-gc"><span class="nav-text">yong gc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mixed-gc"><span class="nav-text">mixed gc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#full-gc"><span class="nav-text">full gc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zgc"><span class="nav-text">zgc</span></a></li></ol></div>
             
 
           </div>

@@ -303,8 +303,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-11T22:11:00+08:00">
-                2018-07-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T01:20:00+08:00">
+                2018-07-12
               </time>
             
 
@@ -375,9 +375,35 @@
 
       
         
-          
-            <h2 id="CMS-gc"><a href="#CMS-gc" class="headerlink" title="CMS gc"></a>CMS gc</h2><h3 id="常见垃圾回收器"><a href="#常见垃圾回收器" class="headerlink" title="常见垃圾回收器"></a>常见垃圾回收器</h3>
-          
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。</p>
+<h2 id="CMS-gc"><a href="#CMS-gc" class="headerlink" title="CMS gc"></a>CMS gc</h2><h3 id="常见垃圾回收器"><a href="#常见垃圾回收器" class="headerlink" title="常见垃圾回收器"></a>常见垃圾回收器</h3><ul>
+<li><p>串行 Serial 单线程的一个回收器，简单，易实现，效率高</p>
+</li>
+<li><p>并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间</p>
+</li>
+<li><p>吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制</p>
+</li>
+<li><p>并发标记清除 CMS concurrent mark sweep 一种以获取最短回收停顿时间为目标的回收器，该回收器基于标记-清除算法</p>
+</li>
+</ul>
+<h3 id="cms的执行过程"><a href="#cms的执行过程" class="headerlink" title="cms的执行过程"></a>cms的执行过程</h3><ul>
+<li><p>init-mark初始标记 stw，该阶段进行可达性分析，标记gc root能直接关联到的对象，很快</p>
+</li>
+<li><p>concurrent-mark 并发标记，由前段标记过的绿色对象出发，所有可达到的对象都在本阶段标记</p>
+</li>
+<li><p>remakr重标记，stw，暂停所有用户线程，重新扫描用户堆对象，进行可达性分析，标记活着的对象</p>
+<p>  因为阶段2，可能有用户线程重新让一个对象变得可达。注意，当前阶段以新生代对象为根来判断对象是否存活</p>
+</li>
+<li><p>并发清理，进行并发的垃圾清理</p>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/java-gc-review/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

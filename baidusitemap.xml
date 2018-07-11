@@ -4,16 +4,16 @@
 
     
   <url>
-    <loc>http://chenlisong.github.io/java-annotation-common-log/</loc>
-    <lastmod>2018-07-11T17:06:43.406Z</lastmod>
+    <loc>http://chenlisong.github.io/java-gc-review/</loc>
+    <lastmod>2018-07-11T18:04:16.635Z</lastmod>
     <data>
         <display>
-        <title>业务数据/日志/快照/操作/统计的通用服务</title>
-        <pubTime>2018-07-10T14:11:00.000Z</pubTime>
+        <title>Java gc总结</title>
+        <pubTime>2018-07-11T17:20:00.000Z</pubTime>
         
         <tag>java</tag>
          
-        <tag>annotation</tag>
+        <tag>gc</tag>
          
          
            
@@ -26,16 +26,16 @@
 
     
   <url>
-    <loc>http://chenlisong.github.io/java-gc-review/</loc>
-    <lastmod>2018-07-11T10:09:09.136Z</lastmod>
+    <loc>http://chenlisong.github.io/java-annotation-common-log/</loc>
+    <lastmod>2018-07-11T17:06:43.406Z</lastmod>
     <data>
         <display>
-        <title>Java gc总结</title>
-        <pubTime>2018-07-11T14:11:00.000Z</pubTime>
+        <title>业务数据/日志/快照/操作/统计的通用服务</title>
+        <pubTime>2018-07-10T14:11:00.000Z</pubTime>
         
         <tag>java</tag>
          
-        <tag>gc</tag>
+        <tag>annotation</tag>
          
          
            
