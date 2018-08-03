@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://chenlisong.github.io/mycat-mysql-concurrent-lock/</loc>
+    
+    <lastmod>2018-08-03T03:00:32.174Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://chenlisong.github.io/java-gc-review/</loc>
     
     <lastmod>2018-07-11T18:04:16.635Z</lastmod>
