@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java,gc," />
+  <meta name="keywords" content="java," />
 
 
 
@@ -79,21 +79,18 @@
 
 
 
-<meta name="description" content="介绍长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。 CMS gc常见垃圾回收器 串行 Serial 单线程的一个回收器，简单，易实现，效率高  并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间  吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制  并发标记清除 CMS concurrent mark swe">
-<meta name="keywords" content="java,gc">
+<meta name="description" content="通过对堆外内存的分析，进程内本地方法的调用，追踪。找到Java进程占用大量内存的原因并解决。 使用的相关工具 jvisualVM：查看heap内存变化，堆外内存变化  pmap pid: 查看进程占用的内存  jemalloc: 查看进程对native方法的调用，以及对调用次数的统计，占比。  btrace: 拦截指定的本地方法，追踪调用链。   问题描述 进程启动时正常，进程的内存占用在600m">
+<meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java gc总结">
-<meta property="og:url" content="http://chenlisong.github.io/java-gc-review/index.html">
+<meta property="og:title" content="Java堆外内存，占用系统的os内存排查">
+<meta property="og:url" content="http://chenlisong.github.io/java-memory-troubleshoot/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="介绍长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。 CMS gc常见垃圾回收器 串行 Serial 单线程的一个回收器，简单，易实现，效率高  并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间  吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制  并发标记清除 CMS concurrent mark swe">
+<meta property="og:description" content="通过对堆外内存的分析，进程内本地方法的调用，追踪。找到Java进程占用大量内存的原因并解决。 使用的相关工具 jvisualVM：查看heap内存变化，堆外内存变化  pmap pid: 查看进程占用的内存  jemalloc: 查看进程对native方法的调用，以及对调用次数的统计，占比。  btrace: 拦截指定的本地方法，追踪调用链。   问题描述 进程启动时正常，进程的内存占用在600m">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://tech.meituan.com/img/JVM-optimize/four.png">
-<meta property="og:image" content="https://tech.meituan.com/img/g1/g1_gc_layout.png">
-<meta property="og:updated_time" content="2018-07-11T18:04:16.635Z">
+<meta property="og:updated_time" content="2018-09-10T02:20:30.405Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java gc总结">
-<meta name="twitter:description" content="介绍长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。 CMS gc常见垃圾回收器 串行 Serial 单线程的一个回收器，简单，易实现，效率高  并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间  吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制  并发标记清除 CMS concurrent mark swe">
-<meta name="twitter:image" content="https://tech.meituan.com/img/JVM-optimize/four.png">
+<meta name="twitter:title" content="Java堆外内存，占用系统的os内存排查">
+<meta name="twitter:description" content="通过对堆外内存的分析，进程内本地方法的调用，追踪。找到Java进程占用大量内存的原因并解决。 使用的相关工具 jvisualVM：查看heap内存变化，堆外内存变化  pmap pid: 查看进程占用的内存  jemalloc: 查看进程对native方法的调用，以及对调用次数的统计，占比。  btrace: 拦截指定的本地方法，追踪调用链。   问题描述 进程启动时正常，进程的内存占用在600m">
 
 
 
@@ -123,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/java-gc-review/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/java-memory-troubleshoot/"/>
 
 
 
 
 
-  <title>Java gc总结 | 一抹阳光丶</title>
+  <title>Java堆外内存，占用系统的os内存排查 | 一抹阳光丶</title>
   
 
 
@@ -276,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/java-gc-review/">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/java-memory-troubleshoot/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一抹阳光丶">
@@ -293,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java gc总结</h1>
+          <h1 class="post-title" itemprop="name headline">Java堆外内存，占用系统的os内存排查</h1>
         
 
         <div class="post-meta">
@@ -305,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T01:20:00+08:00">
-                2018-07-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T09:00:00+08:00">
+                2018-09-10
               </time>
             
 
@@ -345,7 +342,7 @@
 
           
           
-             <span id="/java-gc-review/" class="leancloud_visitors" data-flag-title="Java gc总结">
+             <span id="/java-memory-troubleshoot/" class="leancloud_visitors" data-flag-title="Java堆外内存，占用系统的os内存排查">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,57 +373,64 @@
       
 
       
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。</p>
-<h2 id="CMS-gc"><a href="#CMS-gc" class="headerlink" title="CMS gc"></a>CMS gc</h2><h3 id="常见垃圾回收器"><a href="#常见垃圾回收器" class="headerlink" title="常见垃圾回收器"></a>常见垃圾回收器</h3><ul>
-<li><p>串行 Serial 单线程的一个回收器，简单，易实现，效率高</p>
+        <p>通过对堆外内存的分析，进程内本地方法的调用，追踪。找到Java进程占用大量内存的原因并解决。</p>
+<h2 id="使用的相关工具"><a href="#使用的相关工具" class="headerlink" title="使用的相关工具"></a>使用的相关工具</h2><ul>
+<li><p>jvisualVM：查看heap内存变化，堆外内存变化</p>
 </li>
-<li><p>并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间</p>
+<li><p>pmap pid: 查看进程占用的内存</p>
 </li>
-<li><p>吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制</p>
+<li><p>jemalloc: 查看进程对native方法的调用，以及对调用次数的统计，占比。</p>
 </li>
-<li><p>并发标记清除 CMS concurrent mark sweep 一种以获取最短回收停顿时间为目标的回收器，该回收器基于标记-清除算法</p>
-</li>
-</ul>
-<h3 id="cms的执行过程"><a href="#cms的执行过程" class="headerlink" title="cms的执行过程"></a>cms的执行过程</h3><ul>
-<li><p>init-mark初始标记 stw，该阶段进行可达性分析，标记gc root能直接关联到的对象，很快</p>
-</li>
-<li><p>concurrent-mark 并发标记，由前段标记过的绿色对象出发，所有可达到的对象都在本阶段标记</p>
-</li>
-<li><p>remakr重标记，stw，暂停所有用户线程，重新扫描用户堆对象，进行可达性分析，标记活着的对象</p>
-<p>  因为阶段2，可能有用户线程重新让一个对象变得可达。注意，当前阶段以新生代对象为根来判断对象是否存活</p>
-</li>
-<li><p>并发清理，进行并发的垃圾清理</p>
+<li><p>btrace: 拦截指定的本地方法，追踪调用链。</p>
 </li>
 </ul>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><ol>
+<li><p>进程启动时正常，进程的内存占用在600m左右；</p>
+</li>
+<li><p>持续的烤机压测下，进程占用的内存持续线性上涨，内存到12g后，查看dmesg和/var/log/messages，被系统强杀；</p>
+</li>
+<li><p>cpu正常，负载正常 56%；</p>
+</li>
+<li><p>heap内存2g，gc正常，堆外内存17m，均正常；</p>
+</li>
+<li><p>top下res内存持续上涨，涨至12g，被系统自动杀掉。</p>
+</li>
+</ol>
+<p>推测：由Java进程发起调用linux native方法，导致进程额持有的os内存占用持续飙涨。</p>
 <a id="more"></a>
-<p><img src="https://tech.meituan.com/img/JVM-optimize/four.png" alt="cms-gc"></p>
-<h3 id="常用优化"><a href="#常用优化" class="headerlink" title="常用优化"></a>常用优化</h3><ul>
-<li><p>如果应用存在大量的短期对象，应该选择较大的年轻代；如果存在相对较多的持久对象，老年代应该适当增大。</p>
-</li>
-<li><p>CMS提供CMSScavengeBeforeRemark参数，用来保证Remark前强制进行一次Minor GC</p>
-</li>
-<li><p>通过把-XX:PermSize参数和-XX:MaxPermSize设置成一样，强制虚拟机在启动的时候就把永久代的容量固定下来，避免运行时自动扩容</p>
-</li>
-<li><p>CMS默认情况下不会回收Perm区，通过参数CMSPermGenSweepingEnabled、CMSClassUnloadingEnabled ，可以让CMS在Perm区容量不足时对其回收</p>
-</li>
-</ul>
-<p>注意：</p>
-<p>动态年龄计算：hotspot遍历所有对象时，按照年龄从小到大对其所占用的大小进行累积，当累积的某个年龄大小超过survivor区的一半，取这个年龄与MaxTenuringThreshold中更小的一个</p>
-<h2 id="G1-gc"><a href="#G1-gc" class="headerlink" title="G1 gc"></a>G1 gc</h2><p><img src="https://tech.meituan.com/img/g1/g1_gc_layout.png" alt="g1-gc"></p>
-<h3 id="region"><a href="#region" class="headerlink" title="region"></a>region</h3><p>每个region被标记成eden, old, survivor, humongous，其中humongous代表巨型对象。</p>
-<p>region大小设置 -XX:G1HeapRegionSize ，1，2，4，8，32M，默认值是堆的大小/2048</p>
-<h3 id="yong-gc"><a href="#yong-gc" class="headerlink" title="yong gc"></a>yong gc</h3><p>一般对象均在eden区分配内存，除了humongous对象，当所有eden区域被耗尽内存时，触发yong gc，活跃对象copy到survivor区和old区中，空闲的region会被放入空闲列表</p>
-<p>-XX:MaxGCPauseMillis    设置G1收集过程目标时间，默认值200ms</p>
-<p>-XX:G1NewSizePercent    新生代最小值，默认值5%</p>
-<p>-XX:G1MaxNewSizePercent 新生代最大值，默认值60%</p>
-<h3 id="mixed-gc"><a href="#mixed-gc" class="headerlink" title="mixed gc"></a>mixed gc</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:InitiatingHeapOccupancyPercent=80 -XX:+UseCMSInitiatingOccupancyOnly</span><br></pre></td></tr></table></figure>
-<p>触发机制：当老年代的大小占整个堆大小百分比达到该阀值时，会触发一次mixed gc</p>
-<p>执行过程：参考cms执行过程。类似。会优先考虑收益高的old区域执行gc。</p>
-<h3 id="full-gc"><a href="#full-gc" class="headerlink" title="full gc"></a>full gc</h3><p>如果对象内存分配过快，mixed gc来不及执行，导致年轻代被占满，就会触发full gc，serial old gc，导致长时间的暂停时间。</p>
-<h2 id="zgc"><a href="#zgc" class="headerlink" title="zgc"></a>zgc</h2><p>描述：并发，单代，基于区域的，numa感知的收集器。stw阶段仅限于gc root扫描。gc时间不会随着堆或者对象的大小而增加。</p>
-<p>核心设计：有色指针(colored pointers) 负载障碍(load barriers) 结合使用。</p>
-<p>zgc暂时不开放使用，除非在编译configuration时–with-jvm-features=zgc，并增加jvm选项XX:+UnlockExperimentalVMOptions -XX:+UseZGC</p>
-<p>更多zgc参考zgc的jep地址：<a href="http://openjdk.java.net/jeps/333" target="_blank" rel="noopener">http://openjdk.java.net/jeps/333</a></p>
+<h2 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h2><ol>
+<li>查看堆内对象是否正常</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -histo 61367 | more</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>安装jemalloc，需要ruby支持</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LD_PRELOAD=/usr/local/lib/libjemalloc.so.2</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">export</span> MALLOC_CONF=<span class="string">"prof:true,prof_gdump:true,prof_prefix:/root/jez,lg_prof_interval:30,lg_prof_sample:17"</span></span></span><br><span class="line">export MALLOC_CONF=prof:true,lg_prof_interval:30,lg_prof_sample:17</span><br></pre></td></tr></table></figure>
+<p>重启服务，在当前路径会生成jeprof.pid.xxx.x.xx.heap的采样文件，采样大小是2的17次方字节，每个文件是增量内存文件。</p>
+<ol start="3">
+<li>使用jeprof，查看内存增长中native方法占比</li>
+</ol>
+<p>使用jeprof –show_bytes <code>which w</code> jeprof.19678.0.f.heap可以进入控制台。</p>
+<p>top后可以看到内存占用比例和占用类：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">jeprof --show_bytes `which w` jeprof.19678.0.f.heap</span><br><span class="line">    Using local file /usr/bin/w.</span><br><span class="line">Using local file jeprof.19678.0.f.heap.</span><br><span class="line">Welcome to jeprof!  For help, type 'help'.</span><br><span class="line">(jeprof) top</span><br><span class="line">Total: 267184 B</span><br><span class="line">  258032  96.6%  96.6%   258032  96.6% _3_2_5</span><br><span class="line">    3616   1.4%  97.9%     3616   1.4% _nl_intern_locale_data</span><br><span class="line">    2048   0.8%  98.7%     2208   0.8% __tzfile_read</span><br><span class="line">    1024   0.4%  99.1%     1024   0.4% getpwnam</span><br><span class="line">    1024   0.4%  99.5%     1072   0.4% getpwuid</span><br><span class="line">     448   0.2%  99.6%      448   0.2% __gconv_lookup_cache</span><br><span class="line">     384   0.1%  99.8%      384   0.1% getutent</span><br><span class="line">     224   0.1%  99.9%      224   0.1% strdup</span><br><span class="line">     160   0.1%  99.9%      160   0.1% __tzstring</span><br><span class="line">     128   0.0% 100.0%     3760   1.4% _nl_load_locale_from_archive</span><br><span class="line">      48   0.0% 100.0%       48   0.0% get_mapping</span><br></pre></td></tr></table></figure>
+<p>生成pdf文件可以看到内存使用和类名情况<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jeprof --show_bytes --pdf `which w` jeprof.19678.0.f.heap &gt; w.pdf</span><br></pre></td></tr></table></figure></p>
+<p>结论：可以看到是Java_java_util_zip_Inflater类下的两个方法调用占用的全部增长内存</p>
+<ol start="4">
+<li>通过btace拦截调用链</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.BTrace;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@BTrace</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BtracerInflater</span> </span>&#123;</span><br><span class="line">    <span class="meta">@OnMethod</span>(</span><br><span class="line">            clazz=<span class="string">"java.util.zip.Inflater"</span>,</span><br><span class="line">            method=<span class="string">"/.*/"</span></span><br><span class="line">         )</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traceCacheBlock</span><span class="params">()</span></span>&#123;</span><br><span class="line">        println(<span class="string">"Who call java.util.zip.Inflater's methods :"</span>);</span><br><span class="line">        jstack();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/btrace -cp ./build pid BtracerInflater.java|more</span><br></pre></td></tr></table></figure>
+<p>输出内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Who call java.util.zip.Inflater's methods :</span><br><span class="line">java.util.zip.Inflater.&lt;init&gt;(Inflater.java:102)</span><br><span class="line">java.util.zip.ZipFile.getInflater(ZipFile.java:450)</span><br><span class="line">java.util.zip.ZipFile.getInputStream(ZipFile.java:369)</span><br><span class="line">java.util.jar.JarFile.getInputStream(JarFile.java:412)</span><br><span class="line">sun.net.www.protocol.jar.JarURLConnection.getInputStream(JarURLConnection.java:162)。   ---问题所在</span><br><span class="line">java.net.URLClassLoader.getResourceAsStream(URLClassLoader.java:233)</span><br><span class="line">org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:154)</span><br><span class="line">com.xxx.mobile.game.utils.CipherUtil.decryptWithBase64(CipherUtil.java:56)   ---业务调用</span><br><span class="line">com.xxx.mobile.game.utils.RequestValidationUtil.validateRequest(RequestValidationUtil.java:43)</span><br><span class="line">com.xxx.mobile.game.filter.SecurityAopController.validateRequest(SecurityAopController.java:41)</span><br><span class="line">com.xxx.mobile.game.filter.SecurityAopController.around(SecurityAopController.java:54)</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>得出结论</li>
+</ol>
+<p>最终定位在aop中使用base64解密算法时，使用了ClassPathResource.getInputStream后没有关闭导致的本地内存泄漏。</p>
+<ol start="6">
+<li>验证</li>
+</ol>
+<p>修改后，持续烤机压测，并未出现内存增长的现象。top res稳定在1g，cpu，磁盘io指标均低于之前。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">top</span><br><span class="line">iostat -d -k 1 10</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -446,8 +450,6 @@
           
             <a href="/tags/java/" rel="tag"># java</a>
           
-            <a href="/tags/gc/" rel="tag"># gc</a>
-          
         </div>
       
 
@@ -459,8 +461,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/java-annotation-common-log/" rel="next" title="业务数据/日志/快照/操作/统计的通用服务">
-                <i class="fa fa-chevron-left"></i> 业务数据/日志/快照/操作/统计的通用服务
+              <a href="/mycat-mysql-concurrent-lock/" rel="next" title="mycat与mysql在锁并发竞争场景下的问题">
+                <i class="fa fa-chevron-left"></i> mycat与mysql在锁并发竞争场景下的问题
               </a>
             
           </div>
@@ -468,10 +470,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/mycat-mysql-concurrent-lock/" rel="prev" title="mycat与mysql在锁并发竞争场景下的问题">
-                mycat与mysql在锁并发竞争场景下的问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -613,7 +611,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS-gc"><span class="nav-text">CMS gc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见垃圾回收器"><span class="nav-text">常见垃圾回收器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cms的执行过程"><span class="nav-text">cms的执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用优化"><span class="nav-text">常用优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G1-gc"><span class="nav-text">G1 gc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#region"><span class="nav-text">region</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yong-gc"><span class="nav-text">yong gc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mixed-gc"><span class="nav-text">mixed gc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#full-gc"><span class="nav-text">full gc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zgc"><span class="nav-text">zgc</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用的相关工具"><span class="nav-text">使用的相关工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题排查"><span class="nav-text">问题排查</span></a></li></ol></div>
             
 
           </div>
