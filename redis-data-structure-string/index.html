@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db590af5e8551?imageslim">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db4dcdac7e7f9?imageslim">
-<meta property="og:updated_time" content="2018-09-18T13:09:08.061Z">
+<meta property="og:updated_time" content="2018-09-18T13:13:54.142Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis常用的数据结构之string">
 <meta name="twitter:description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt; 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits    i">
@@ -396,10 +396,9 @@
 </li>
 <li><p>创建字符串len和capacity一样长</p>
 </li>
-<li><p>长度小于1m，扩容*2；超过1m，每次扩容+1m</p>
+<li><p>长度小于1m，扩容*2；超过1m，每次扩容+1m<br>~~~</p>
 </li>
 </ul>
-<h2 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h2><p>todo<br>~~~</p>
 
       
     </div>
@@ -580,7 +579,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RedisObject"><span class="nav-text">RedisObject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#embstr-amp-raw"><span class="nav-text">embstr &amp; raw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string-keys"><span class="nav-text">string-keys</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩列表"><span class="nav-text">压缩列表</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RedisObject"><span class="nav-text">RedisObject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#embstr-amp-raw"><span class="nav-text">embstr &amp; raw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string-keys"><span class="nav-text">string-keys</span></a></li></ol></div>
             
 
           </div>
