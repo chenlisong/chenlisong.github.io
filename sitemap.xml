@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://chenlisong.github.io/redis-data-structure-string/</loc>
+    
+    <lastmod>2018-09-18T13:09:08.061Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://chenlisong.github.io/java-readwrite-lock/</loc>
+    
+    <lastmod>2018-09-18T12:26:53.553Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://chenlisong.github.io/java-memory-troubleshoot/</loc>
     
     <lastmod>2018-09-10T02:20:30.405Z</lastmod>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hi, chenlisong" />
+  <meta name="keywords" content="redis," />
 
 
 
@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="Java|理科男|编程">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一抹阳光丶">
-<meta property="og:url" content="http://chenlisong.github.io/archives/2018/page/2/index.html">
+<meta name="description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt; 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits    i">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis常用的数据结构之string">
+<meta property="og:url" content="http://chenlisong.github.io/redis-data-structure-string/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="Java|理科男|编程">
+<meta property="og:description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt; 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits    i">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db590af5e8551?imageslim">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db4dcdac7e7f9?imageslim">
+<meta property="og:updated_time" content="2018-09-18T13:09:08.061Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一抹阳光丶">
-<meta name="twitter:description" content="Java|理科男|编程">
+<meta name="twitter:title" content="redis常用的数据结构之string">
+<meta name="twitter:description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt; 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits    i">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db590af5e8551?imageslim">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/archives/2018/page/2/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/redis-data-structure-string/"/>
 
 
 
 
 
-  <title>归档 | 一抹阳光丶</title>
+  <title>redis常用的数据结构之string | 一抹阳光丶</title>
   
 
 
@@ -153,7 +158,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -257,300 +262,209 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/redis-data-structure-string/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一抹阳光丶">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一抹阳光丶">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">redis常用的数据结构之string</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-18T22:00:00+08:00">
+                2018-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 17 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/redis-data-structure-string/" class="leancloud_visitors" data-flag-title="redis常用的数据结构之string">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/fastjson-convert-double/" itemprop="url">
-              
-                <span itemprop="name">fastjson的Double类型转换</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-22T15:17:06+08:00"
-              content="2018-05-22" >
-          05-22
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/mycat-sql-parser/" itemprop="url">
-              
-                <span itemprop="name">mycat的sql解析</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-26T16:46:06+08:00"
-              content="2018-04-26" >
-          04-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/shell-awk/" itemprop="url">
-              
-                <span itemprop="name">shell-awk命令</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-17T11:56:09+08:00"
-              content="2018-04-17" >
-          04-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/shell-start/" itemprop="url">
-              
-                <span itemprop="name">shell编程入门</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-16T11:07:06+08:00"
-              content="2018-04-16" >
-          04-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>redis常用的数据结构string，及其底层数据结构实现。</p>
+<p>涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell</p>
+<p>版本：&gt; 4.0</p>
+<h2 id="RedisObject"><a href="#RedisObject" class="headerlink" title="RedisObject"></a>RedisObject</h2><p>redis对象头的数据结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">RedisObject</span> &#123;</span></span><br><span class="line">    int4 type; <span class="comment">// 4bits</span></span><br><span class="line">    int4 encoding; <span class="comment">// 4bits</span></span><br><span class="line">    int24 lru; <span class="comment">// 24bits</span></span><br><span class="line">    int32 refcount; <span class="comment">// 4bytes</span></span><br><span class="line">    <span class="keyword">void</span> *ptr; <span class="comment">// 8bytes，64-bit system</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一个RedisObject占用16个bytes。</p>
+<h2 id="embstr-amp-raw"><a href="#embstr-amp-raw" class="headerlink" title="embstr &amp; raw"></a>embstr &amp; raw</h2><p>string的存储结构。</p>
+<a id="more"></a>
+<p>string长度小于44时，采用的紧凑string结构。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/27/164db590af5e8551?imageslim" alt="redis-string"></p>
+<p>embstr将RedisObject对象头和sds连续存储，只需要一次malloc，占用内存更少。但是每次改变需要重新分配内存。</p>
+<p>raw需要两次malloc，两个对象头在内存地址不连续。</p>
+<p>因为jemalloc分配内存的单位是2的指数。如果长度超过64bytes，redis认为是大字符串。不再使用embstr存储，改用raw形式。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/27/164db4dcdac7e7f9?imageslim" alt="redis-embstr-raw"></p>
+<p>看上面这张图可以算出，留给 content 的长度最多只有 45(64-19) 字节了。字符串又是以\0结尾，所以 embstr 最大能容纳的字符串长度就是 44。</p>
+<h2 id="string-keys"><a href="#string-keys" class="headerlink" title="string-keys"></a>string-keys</h2><ul>
+<li><p>字符串最大长度512m</p>
+</li>
+<li><p>创建字符串len和capacity一样长</p>
+</li>
+<li><p>长度小于1m，扩容*2；超过1m，每次扩容+1m</p>
+</li>
+</ul>
+<h2 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h2><p>todo<br>~~~</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/netty-start/" itemprop="url">
-              
-                <span itemprop="name">netty-start</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-14T12:18:06+08:00"
-              content="2018-04-14" >
-          04-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/java-wildcard-achieve/" itemprop="url">
-              
-                <span itemprop="name">java通配符替换的几种实现方式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-12T20:22:47+08:00"
-              content="2018-04-12" >
-          04-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-12T17:03:37+08:00"
-              content="2018-04-12" >
-          04-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/java-readwrite-lock/" rel="next" title="Java读写锁的实现">
+                <i class="fa fa-chevron-left"></i> Java读写锁的实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2018/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2018/">1</a><span class="page-number current">2</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -558,6 +472,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -578,8 +496,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -643,6 +570,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RedisObject"><span class="nav-text">RedisObject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#embstr-amp-raw"><span class="nav-text">embstr &amp; raw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string-keys"><span class="nav-text">string-keys</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩列表"><span class="nav-text">压缩列表</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -783,6 +726,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
