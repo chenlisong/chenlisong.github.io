@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hi, chenlisong" />
+  <meta name="keywords" content="redis," />
 
 
 
@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="Java|理科男|编程">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一抹阳光丶">
-<meta property="og:url" content="http://chenlisong.github.io/archives/2018/04/index.html">
+<meta name="description" content="介绍redis常用的数据结构dict，及其底层数据结构实现。用于hash。 版本：&amp;gt;= 4.0 数据结构 hash结构使用dict  redis所有的key-value组成一个全局dict  带过期时间的key也是一个dict  zset存储value和score值映射关系使用dict   12345678910struct RedisDb &amp;#123;    dict* dict; //">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis常用的数据结构之dict">
+<meta property="og:url" content="http://chenlisong.github.io/redis-data-structure-dict/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="Java|理科男|编程">
+<meta property="og:description" content="介绍redis常用的数据结构dict，及其底层数据结构实现。用于hash。 版本：&amp;gt;= 4.0 数据结构 hash结构使用dict  redis所有的key-value组成一个全局dict  带过期时间的key也是一个dict  zset存储value和score值映射关系使用dict   12345678910struct RedisDb &amp;#123;    dict* dict; //">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/28/164dc873b2a899a8?imageslim">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/28/164dcaac6cec3483?imageslim">
+<meta property="og:updated_time" content="2018-09-19T12:09:04.368Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一抹阳光丶">
-<meta name="twitter:description" content="Java|理科男|编程">
+<meta name="twitter:title" content="redis常用的数据结构之dict">
+<meta name="twitter:description" content="介绍redis常用的数据结构dict，及其底层数据结构实现。用于hash。 版本：&amp;gt;= 4.0 数据结构 hash结构使用dict  redis所有的key-value组成一个全局dict  带过期时间的key也是一个dict  zset存储value和score值映射关系使用dict   12345678910struct RedisDb &amp;#123;    dict* dict; //">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/28/164dc873b2a899a8?imageslim">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/archives/2018/04/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/redis-data-structure-dict/"/>
 
 
 
 
 
-  <title>归档 | 一抹阳光丶</title>
+  <title>redis常用的数据结构之dict | 一抹阳光丶</title>
   
 
 
@@ -153,7 +158,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -257,259 +262,229 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/redis-data-structure-dict/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一抹阳光丶">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一抹阳光丶">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">redis常用的数据结构之dict</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-19T18:00:00+08:00">
+                2018-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 21 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/redis-data-structure-dict/" class="leancloud_visitors" data-flag-title="redis常用的数据结构之dict">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/mycat-sql-parser/" itemprop="url">
-              
-                <span itemprop="name">mycat的sql解析</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-26T16:46:06+08:00"
-              content="2018-04-26" >
-          04-26
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/shell-awk/" itemprop="url">
-              
-                <span itemprop="name">shell-awk命令</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-17T11:56:09+08:00"
-              content="2018-04-17" >
-          04-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/shell-start/" itemprop="url">
-              
-                <span itemprop="name">shell编程入门</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-16T11:07:06+08:00"
-              content="2018-04-16" >
-          04-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/netty-start/" itemprop="url">
-              
-                <span itemprop="name">netty-start</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-14T12:18:06+08:00"
-              content="2018-04-14" >
-          04-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>redis常用的数据结构dict，及其底层数据结构实现。用于hash。</p>
+<p>版本：&gt;= 4.0</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ul>
+<li><p>hash结构使用dict</p>
+</li>
+<li><p>redis所有的key-value组成一个全局dict</p>
+</li>
+<li><p>带过期时间的key也是一个dict</p>
+</li>
+<li><p>zset存储value和score值映射关系使用dict</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">RedisDb</span> &#123;</span></span><br><span class="line">    dict* dict; <span class="comment">// all keys  key=&gt;value</span></span><br><span class="line">    dict* expires; <span class="comment">// all expired keys key=&gt;long(timestamp)</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">zset</span> &#123;</span></span><br><span class="line">    dict *dict; <span class="comment">// all values  value=&gt;score</span></span><br><span class="line">    zskiplist *zsl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/28/164dc873b2a899a8?imageslim" alt="redis-dict"></p>
+<p>dict有两个hashtable，通常只有一个有值，但是在扩容缩容时，会触发渐进式搬迁。搬迁结束后，旧的被删除。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/28/164dcaac6cec3483?imageslim" alt="redis-dict-struc"></p>
+<p>类似Java的HashMap，数组+链表的形式。</p>
+<h2 id="渐进式rehash"><a href="#渐进式rehash" class="headerlink" title="渐进式rehash"></a>渐进式rehash</h2><p>大字典的扩容是遍历链表中所有旧元素，copy到新的数组下，O(n)的操作，所以redis执行渐进式搬迁。</p>
+<ul>
+<li><p>当前dict的hset，hdel会触发搬迁操作</p>
+</li>
+<li><p>redis定时任务中主动进行搬迁</p>
+</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>扩容场景</p>
+<ul>
+<li><p>正常情况下，hash表元素个数等于数组长度时，扩容*2</p>
+</li>
+<li><p>如果上述情况，redis正在bgsave，为了减少内存页的过多分离，redis不会做rehash dict。除非元素个数等于数组长度的5倍，强制扩容</p>
+</li>
+</ul>
+<p>缩容</p>
+<ul>
+<li><p>元素个数小于一维数组长度，缩容</p>
+</li>
+<li><p>如果上述场景正在bgsave，除非元素个数达到数组长度的10%，强制缩容</p>
+</li>
+</ul>
+<p>bgsave：fork一个子进程来创建rdb文件，并将内容数据写入到rdb中，父进程继续处理请求命令。内存*2</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/java-wildcard-achieve/" itemprop="url">
-              
-                <span itemprop="name">java通配符替换的几种实现方式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-12T20:22:47+08:00"
-              content="2018-04-12" >
-          04-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-12T17:03:37+08:00"
-              content="2018-04-12" >
-          04-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/redis-data-structure-quicklist/" rel="next" title="redis常用的数据结构之quicklist">
+                <i class="fa fa-chevron-left"></i> redis常用的数据结构之quicklist
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/redis-data-structure-skiplist/" rel="prev" title="redis常用的数据结构之skiplist">
+                redis常用的数据结构之skiplist <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -517,6 +492,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -537,8 +516,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -602,6 +590,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#渐进式rehash"><span class="nav-text">渐进式rehash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -742,6 +746,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

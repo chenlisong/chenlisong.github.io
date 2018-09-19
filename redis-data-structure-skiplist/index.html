@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hi, chenlisong" />
+  <meta name="keywords" content="redis," />
 
 
 
@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="Java|理科男|编程">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一抹阳光丶">
-<meta property="og:url" content="http://chenlisong.github.io/archives/2018/04/index.html">
+<meta name="description" content="介绍redis常用的数据结构skiplist，及其底层数据结构实现。 版本：&amp;gt;= 4.0 数据结构redis的zset是一个复合结构，  需要hash存储value和score的关系  还需要score排序，指定score范围查找，跳跃链表">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis常用的数据结构之skiplist">
+<meta property="og:url" content="http://chenlisong.github.io/redis-data-structure-skiplist/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="Java|理科男|编程">
+<meta property="og:description" content="介绍redis常用的数据结构skiplist，及其底层数据结构实现。 版本：&amp;gt;= 4.0 数据结构redis的zset是一个复合结构，  需要hash存储value和score的关系  还需要score排序，指定score范围查找，跳跃链表">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164d9f96ed4e1a0d?imageslim">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164dc52ae7e6444c?imageslim">
+<meta property="og:updated_time" content="2018-09-19T13:27:09.367Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一抹阳光丶">
-<meta name="twitter:description" content="Java|理科男|编程">
+<meta name="twitter:title" content="redis常用的数据结构之skiplist">
+<meta name="twitter:description" content="介绍redis常用的数据结构skiplist，及其底层数据结构实现。 版本：&amp;gt;= 4.0 数据结构redis的zset是一个复合结构，  需要hash存储value和score的关系  还需要score排序，指定score范围查找，跳跃链表">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164d9f96ed4e1a0d?imageslim">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/archives/2018/04/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/redis-data-structure-skiplist/"/>
 
 
 
 
 
-  <title>归档 | 一抹阳光丶</title>
+  <title>redis常用的数据结构之skiplist | 一抹阳光丶</title>
   
 
 
@@ -153,7 +158,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -257,259 +262,226 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/redis-data-structure-skiplist/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一抹阳光丶">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一抹阳光丶">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">redis常用的数据结构之skiplist</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-19T21:00:00+08:00">
+                2018-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 21 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/redis-data-structure-skiplist/" class="leancloud_visitors" data-flag-title="redis常用的数据结构之skiplist">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/mycat-sql-parser/" itemprop="url">
-              
-                <span itemprop="name">mycat的sql解析</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-26T16:46:06+08:00"
-              content="2018-04-26" >
-          04-26
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/shell-awk/" itemprop="url">
-              
-                <span itemprop="name">shell-awk命令</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-17T11:56:09+08:00"
-              content="2018-04-17" >
-          04-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/shell-start/" itemprop="url">
-              
-                <span itemprop="name">shell编程入门</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-16T11:07:06+08:00"
-              content="2018-04-16" >
-          04-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/netty-start/" itemprop="url">
-              
-                <span itemprop="name">netty-start</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-14T12:18:06+08:00"
-              content="2018-04-14" >
-          04-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>redis常用的数据结构skiplist，及其底层数据结构实现。</p>
+<p>版本：&gt;= 4.0</p>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><p>redis的zset是一个复合结构，</p>
+<ul>
+<li><p>需要hash存储value和score的关系</p>
+</li>
+<li><p>还需要score排序，指定score范围查找，跳跃链表</p>
+</li>
+</ul>
+<a id="more"></a>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/27/164d9f96ed4e1a0d?imageslim" alt="redis-skiplist"></p>
+<p>思路</p>
+<ul>
+<li><p>最底层双向链表，保证数据存储</p>
+</li>
+<li><p>概率分层结构保证二分查找，范围查找</p>
+</li>
+<li><p>redis分层64层</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">zslnode</span> &#123;</span></span><br><span class="line">  <span class="built_in">string</span> value;</span><br><span class="line">  <span class="keyword">double</span> score;</span><br><span class="line">  zslnode*[] forwards;  <span class="comment">// 多层连接指针</span></span><br><span class="line">  zslnode* backward;  <span class="comment">// 回溯指针</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">zsl</span> &#123;</span></span><br><span class="line">  zslnode* header; <span class="comment">// 跳跃列表头指针</span></span><br><span class="line">  <span class="keyword">int</span> maxLevel; <span class="comment">// 跳跃列表当前的最高层</span></span><br><span class="line">  <span class="built_in">map</span>&lt;<span class="built_in">string</span>, zslnode*&gt; ht; <span class="comment">// hash 结构的所有键值对</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="查找，插入，更新"><a href="#查找，插入，更新" class="headerlink" title="查找，插入，更新"></a>查找，插入，更新</h2><p><img src="https://user-gold-cdn.xitu.io/2018/7/27/164dc52ae7e6444c?imageslim" alt="redis-skiplist-search"></p>
+<ul>
+<li><p>二分查找</p>
+</li>
+<li><p>逐层下降，搜索路径</p>
+</li>
+</ul>
+<p>随机层数：每插入一个节点，需要随机一个合理的层数，level1是50%，level2是25%</p>
+<p>插入数据</p>
+<ul>
+<li><p>查找到位置，如果score相等判断value</p>
+</li>
+<li><p>创建节点，分配随机层数，</p>
+</li>
+<li><p>将搜索路径上的节点和新节点通过前后指针串起来</p>
+</li>
+</ul>
+<p>删除数据：类似插入数据</p>
+<p>更新：先删除，再插入</p>
+<p>排名计算：每个forward指针增加span，表示当前层的forward跳到当前节点有多少个节点。将搜索路径想加即可。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/java-wildcard-achieve/" itemprop="url">
-              
-                <span itemprop="name">java通配符替换的几种实现方式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-12T20:22:47+08:00"
-              content="2018-04-12" >
-          04-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-12T17:03:37+08:00"
-              content="2018-04-12" >
-          04-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/redis-data-structure-dict/" rel="next" title="redis常用的数据结构之dict">
+                <i class="fa fa-chevron-left"></i> redis常用的数据结构之dict
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -517,6 +489,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -537,8 +513,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -602,6 +587,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找，插入，更新"><span class="nav-text">查找，插入，更新</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -742,6 +743,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

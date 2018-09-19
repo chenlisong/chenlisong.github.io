@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt; 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits    i">
+<meta name="description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt;= 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis常用的数据结构之string">
 <meta property="og:url" content="http://chenlisong.github.io/redis-data-structure-string/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt; 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits    i">
+<meta property="og:description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt;= 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db4dcdac7e7f9?imageslim">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db590af5e8551?imageslim">
-<meta property="og:updated_time" content="2018-09-19T06:40:43.054Z">
+<meta property="og:updated_time" content="2018-09-19T09:20:49.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis常用的数据结构之string">
-<meta name="twitter:description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt; 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits    i">
+<meta name="twitter:description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt;= 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db4dcdac7e7f9?imageslim">
 
 
@@ -378,7 +378,7 @@
       
         <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>redis常用的数据结构string，及其底层数据结构实现。</p>
 <p>涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell</p>
-<p>版本：&gt; 4.0</p>
+<p>版本：&gt;= 4.0</p>
 <h2 id="RedisObject"><a href="#RedisObject" class="headerlink" title="RedisObject"></a>RedisObject</h2><p>redis对象头的数据结构</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">RedisObject</span> &#123;</span></span><br><span class="line">    int4 type; <span class="comment">// 4bits</span></span><br><span class="line">    int4 encoding; <span class="comment">// 4bits</span></span><br><span class="line">    int24 lru; <span class="comment">// 24bits</span></span><br><span class="line">    int32 refcount; <span class="comment">// 4bytes</span></span><br><span class="line">    <span class="keyword">void</span> *ptr; <span class="comment">// 8bytes，64-bit system</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>一个RedisObject占用16个bytes。</p>
@@ -528,7 +528,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

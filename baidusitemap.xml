@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>http://chenlisong.github.io/redis-data-structure-skiplist/</loc>
+    <lastmod>2018-09-19T13:27:09.367Z</lastmod>
+    <data>
+        <display>
+        <title>redis常用的数据结构之skiplist</title>
+        <pubTime>2018-09-19T13:00:00.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="redis" url="http://chenlisong.github.io/categories/redis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chenlisong.github.io/redis-data-structure-quicklist/</loc>
-    <lastmod>2018-09-19T09:17:34.352Z</lastmod>
+    <lastmod>2018-09-19T12:09:08.917Z</lastmod>
     <data>
         <display>
         <title>redis常用的数据结构之quicklist</title>
@@ -24,12 +44,12 @@
 
     
   <url>
-    <loc>http://chenlisong.github.io/redis-data-structure-ziplist/</loc>
-    <lastmod>2018-09-19T09:07:28.657Z</lastmod>
+    <loc>http://chenlisong.github.io/redis-data-structure-dict/</loc>
+    <lastmod>2018-09-19T12:09:04.368Z</lastmod>
     <data>
         <display>
-        <title>redis常用的数据结构之ziplist</title>
-        <pubTime>2018-09-19T08:00:00.000Z</pubTime>
+        <title>redis常用的数据结构之dict</title>
+        <pubTime>2018-09-19T10:00:00.000Z</pubTime>
         
         <tag>redis</tag>
          
@@ -45,11 +65,31 @@
     
   <url>
     <loc>http://chenlisong.github.io/redis-data-structure-string/</loc>
-    <lastmod>2018-09-19T06:40:43.054Z</lastmod>
+    <lastmod>2018-09-19T09:20:49.336Z</lastmod>
     <data>
         <display>
         <title>redis常用的数据结构之string</title>
         <pubTime>2018-09-18T14:00:00.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="redis" url="http://chenlisong.github.io/categories/redis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenlisong.github.io/redis-data-structure-ziplist/</loc>
+    <lastmod>2018-09-19T09:20:43.295Z</lastmod>
+    <data>
+        <display>
+        <title>redis常用的数据结构之ziplist</title>
+        <pubTime>2018-09-19T08:00:00.000Z</pubTime>
         
         <tag>redis</tag>
          
