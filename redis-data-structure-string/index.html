@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="一抹阳光丶">
 <meta property="og:description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt; 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits    i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db590af5e8551?imageslim">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db4dcdac7e7f9?imageslim">
-<meta property="og:updated_time" content="2018-09-18T13:13:54.142Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db590af5e8551?imageslim">
+<meta property="og:updated_time" content="2018-09-19T02:39:17.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis常用的数据结构之string">
 <meta name="twitter:description" content="介绍redis常用的数据结构string，及其底层数据结构实现。 涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell 版本：&amp;gt; 4.0 RedisObjectredis对象头的数据结构 1234567struct RedisObject &amp;#123;    int4 type; // 4bits    i">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db590af5e8551?imageslim">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/27/164db4dcdac7e7f9?imageslim">
 
 
 
@@ -385,11 +385,11 @@
 <h2 id="embstr-amp-raw"><a href="#embstr-amp-raw" class="headerlink" title="embstr &amp; raw"></a>embstr &amp; raw</h2><p>string的存储结构。</p>
 <a id="more"></a>
 <p>string长度小于44时，采用的紧凑string结构。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/27/164db590af5e8551?imageslim" alt="redis-string"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/27/164db4dcdac7e7f9?imageslim" alt="redis-embstr-raw"></p>
 <p>embstr将RedisObject对象头和sds连续存储，只需要一次malloc，占用内存更少。但是每次改变需要重新分配内存。</p>
 <p>raw需要两次malloc，两个对象头在内存地址不连续。</p>
 <p>因为jemalloc分配内存的单位是2的指数。如果长度超过64bytes，redis认为是大字符串。不再使用embstr存储，改用raw形式。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/27/164db4dcdac7e7f9?imageslim" alt="redis-embstr-raw"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/27/164db590af5e8551?imageslim" alt="redis-string"></p>
 <p>看上面这张图可以算出，留给 content 的长度最多只有 45(64-19) 字节了。字符串又是以\0结尾，所以 embstr 最大能容纳的字符串长度就是 44。</p>
 <h2 id="string-keys"><a href="#string-keys" class="headerlink" title="string-keys"></a>string-keys</h2><ul>
 <li><p>字符串最大长度512m</p>
