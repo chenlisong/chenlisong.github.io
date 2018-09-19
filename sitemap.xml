@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://chenlisong.github.io/redis-data-structure-ziplist/</loc>
+    
+    <lastmod>2018-09-19T08:13:27.221Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://chenlisong.github.io/redis-data-structure-string/</loc>
     
-    <lastmod>2018-09-19T02:39:17.462Z</lastmod>
+    <lastmod>2018-09-19T06:40:43.054Z</lastmod>
     
   </url>
   

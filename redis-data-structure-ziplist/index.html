@@ -79,18 +79,21 @@
 
 
 
-<meta name="description" content="介绍之前对redis的cluster，sentinel模式有个大概的了解，但是并未系统化的学习其细节。通过对redis.cn和redis.io的文章阅读。总结一下关键点，以期望以后回顾。 涉及的内容：cluster，sentinel，集群规范 版本：gt 3.0 主要归纳原理，简单的不再阐述。 cluster 集群介绍是一个提供在多个redis间节点共享数据的程序集。 优点：  自动分割数据到不同">
+<meta name="description" content="介绍redis常用的数据结构ziplist，及其底层数据结构实现。 涉及的内容：ziplist, intset 版本：&amp;gt; 4.0 ziplistRedis 为了节约内存空间使用，zset 和 hash 容器对象在元素个数较少的时候，采用压缩列表 (ziplist) 进行存储。压缩列表是一块连续的内存空间，元素之间紧挨着存储，没有任何冗余空隙。 ziplist的数据结构 12345678910">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="redis的集群模式和sentinel模式">
-<meta property="og:url" content="http://chenlisong.github.io/redis-cluster-sentinel/index.html">
+<meta property="og:title" content="redis常用的数据结构之ziplist">
+<meta property="og:url" content="http://chenlisong.github.io/redis-data-structure-ziplist/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="介绍之前对redis的cluster，sentinel模式有个大概的了解，但是并未系统化的学习其细节。通过对redis.cn和redis.io的文章阅读。总结一下关键点，以期望以后回顾。 涉及的内容：cluster，sentinel，集群规范 版本：gt 3.0 主要归纳原理，简单的不再阐述。 cluster 集群介绍是一个提供在多个redis间节点共享数据的程序集。 优点：  自动分割数据到不同">
+<meta property="og:description" content="介绍redis常用的数据结构ziplist，及其底层数据结构实现。 涉及的内容：ziplist, intset 版本：&amp;gt; 4.0 ziplistRedis 为了节约内存空间使用，zset 和 hash 容器对象在元素个数较少的时候，采用压缩列表 (ziplist) 进行存储。压缩列表是一块连续的内存空间，元素之间紧挨着存储，没有任何冗余空隙。 ziplist的数据结构 12345678910">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-04T07:29:07.071Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/28/164df01c1c7579e7?imageslim">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/29/164e1a049ea6ea41?imageslim">
+<meta property="og:updated_time" content="2018-09-19T08:13:27.221Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redis的集群模式和sentinel模式">
-<meta name="twitter:description" content="介绍之前对redis的cluster，sentinel模式有个大概的了解，但是并未系统化的学习其细节。通过对redis.cn和redis.io的文章阅读。总结一下关键点，以期望以后回顾。 涉及的内容：cluster，sentinel，集群规范 版本：gt 3.0 主要归纳原理，简单的不再阐述。 cluster 集群介绍是一个提供在多个redis间节点共享数据的程序集。 优点：  自动分割数据到不同">
+<meta name="twitter:title" content="redis常用的数据结构之ziplist">
+<meta name="twitter:description" content="介绍redis常用的数据结构ziplist，及其底层数据结构实现。 涉及的内容：ziplist, intset 版本：&amp;gt; 4.0 ziplistRedis 为了节约内存空间使用，zset 和 hash 容器对象在元素个数较少的时候，采用压缩列表 (ziplist) 进行存储。压缩列表是一块连续的内存空间，元素之间紧挨着存储，没有任何冗余空隙。 ziplist的数据结构 12345678910">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/28/164df01c1c7579e7?imageslim">
 
 
 
@@ -120,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/redis-cluster-sentinel/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/redis-data-structure-ziplist/"/>
 
 
 
 
 
-  <title>redis的集群模式和sentinel模式 | 一抹阳光丶</title>
+  <title>redis常用的数据结构之ziplist | 一抹阳光丶</title>
   
 
 
@@ -273,7 +276,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/redis-cluster-sentinel/">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/redis-data-structure-ziplist/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一抹阳光丶">
@@ -290,7 +293,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">redis的集群模式和sentinel模式</h1>
+          <h1 class="post-title" itemprop="name headline">redis常用的数据结构之ziplist</h1>
         
 
         <div class="post-meta">
@@ -302,8 +305,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-03T18:00:00+08:00">
-                2018-07-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-19T16:00:00+08:00">
+                2018-09-19
               </time>
             
 
@@ -342,7 +345,7 @@
 
           
           
-             <span id="/redis-cluster-sentinel/" class="leancloud_visitors" data-flag-title="redis的集群模式和sentinel模式">
+             <span id="/redis-data-structure-ziplist/" class="leancloud_visitors" data-flag-title="redis常用的数据结构之ziplist">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -373,163 +376,26 @@
       
 
       
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>之前对redis的cluster，sentinel模式有个大概的了解，但是并未系统化的学习其细节。通过对redis.cn和redis.io的文章阅读。总结一下关键点，以期望以后回顾。</p>
-<p>涉及的内容：cluster，sentinel，集群规范</p>
-<p>版本：gt 3.0</p>
-<p>主要归纳原理，简单的不再阐述。</p>
-<h2 id="cluster-集群"><a href="#cluster-集群" class="headerlink" title="cluster 集群"></a>cluster 集群</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><p>是一个提供在多个redis间节点共享数据的程序集。</p>
-<p>优点：</p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>redis常用的数据结构ziplist，及其底层数据结构实现。</p>
+<p>涉及的内容：ziplist, intset</p>
+<p>版本：&gt; 4.0</p>
+<h2 id="ziplist"><a href="#ziplist" class="headerlink" title="ziplist"></a>ziplist</h2><p>Redis 为了节约内存空间使用，zset 和 hash 容器对象在元素个数较少的时候，采用压缩列表 (ziplist) 进行存储。压缩列表是一块连续的内存空间，元素之间紧挨着存储，没有任何冗余空隙。</p>
+<p>ziplist的数据结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ziplist</span>&lt;T&gt; &#123;</span></span><br><span class="line">    int32 zlbytes; <span class="comment">// 整个压缩列表占用字节数</span></span><br><span class="line">    int32 zltail_offset; <span class="comment">// 最后一个元素距离压缩列表起始位置的偏移量，用于快速定位到最后一个节点</span></span><br><span class="line">    int16 zllength; <span class="comment">// 元素个数</span></span><br><span class="line">    T[] entries; <span class="comment">// 元素内容列表，挨个挨个紧凑存储</span></span><br><span class="line">    int8 zlend; <span class="comment">// 标志压缩列表的结束，值恒为 0xFF</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">entry</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span>&lt;var&gt; prevlen; <span class="comment">// 前一个 entry 的字节长度</span></span><br><span class="line">    <span class="keyword">int</span>&lt;var&gt; encoding; <span class="comment">// 元素类型编码</span></span><br><span class="line">    optional byte[] content; <span class="comment">// 元素内容</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/28/164df01c1c7579e7?imageslim" alt="redis-ziplist"></p>
+<p>因为ziplist是紧凑存储，所以插入元素时需要remalloc</p>
+<p>keys</p>
 <ul>
-<li><p>自动分割数据到不同的节点</p>
+<li><p>压缩列表为了支持双向遍历，所以才会有 ztail_offset 这个字段，用来快速定位到最后一个元素，然后倒着遍历。</p>
 </li>
-<li><p>整个集群的部分节点失败或不可达场景，能继续处理命令</p>
-</li>
-<li><p>性能提升</p>
+<li><p>如果entry.content小于254字节，prevlen是1个字节，内容大于254则prevlen是5个字节。所以list中内容变化可能导致级联更新的问题。</p>
 </li>
 </ul>
-<a id="more"></a>
-<p>缺点：</p>
-<ul>
-<li><p>不支持处理多个keys的命令，因为需要在节点之间移动数据</p>
-</li>
-<li><p>非安全写入</p>
-</li>
-</ul>
-<ol>
-<li><p>因为分区使一个主节点不可达</p>
-</li>
-<li><p>故障转移到主节点的一个从节点</p>
-</li>
-<li><p>过一段时间主节点再次可达</p>
-</li>
-<li><p>一个没有更新路由表的客户端，或许会在集群把主改成从之前对他进行写操作。</p>
-</li>
-</ol>
-<h3 id="数据分片"><a href="#数据分片" class="headerlink" title="数据分片"></a>数据分片</h3><p>redis集群使用16384个hash槽解决数据分片的问题。</p>
-<p>每个key进行crc16校验对16384取模决定其槽的位置，集群每个节点负责一部分hash槽。例如</p>
-<p>节点A,B,C</p>
-<p>A &gt; 0 - 5500<br>B &gt; 5501 - 11000<br>C &gt; 11001 - 16384</p>
-<p>这种设计对增删节点友好，不会停止服务。</p>
-<p>增加节点时：将A,B,C部分节点数据移动到新加的节点；<br>删除节点时：将需要删除的节点数据移动到其他节点上。</p>
-<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><p>为了使部分节点失败或者大部分节点无法通信的情况下集群任然可用。每个节点都会有1到n个复制节点。</p>
-<p>例如A,B,C节点对应A1,B1,C1，整个集群就是3个master，3个slave。</p>
-<p>这样节点A失败，A1成为新的master，但是如果A1失败，那么A的节点数据就是不可用的。</p>
-<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>redis不能保证数据的强一致性。集群采用的异步模式。举例场景</p>
-<ul>
-<li><p>客户端向主节点A写入一条数据</p>
-</li>
-<li><p>主节点A向客户端恢复命令状态</p>
-</li>
-<li><p>主节点将写操作复制给从节点A1，A2，A3</p>
-</li>
-</ul>
-<p>复制操作在返回响应之后，所以其一致性无法保证。</p>
-<p>网络分裂：当一个客户端和至少一个主节点被网络孤立时，变会出现数据丢失。</p>
-<p>场景：假如3个master，3个slave，A,B,C A1,B1,C1节点，还有客户端Z。Z正在向B节点写数据时，此时B被网络孤立，但是外网可访问。B1会被选为主master，那么Z写入B的数据就会丢失。</p>
-<h2 id="sentinel-哨兵"><a href="#sentinel-哨兵" class="headerlink" title="sentinel 哨兵"></a>sentinel 哨兵</h2><h3 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h3><p>sentinel用于管理多个redis实例(instance)</p>
-<ul>
-<li><p>监控： 不断的监控主服务器，从服务器是否正常运行</p>
-</li>
-<li><p>提醒： 当被监控的某个redis实例发生问题，sentinel通过api发送通知</p>
-</li>
-<li><p>自动故障迁移： 当主服务异常时，sentinel会自动开始一次故障迁移，步骤如下。</p>
-</li>
-</ul>
-<ol>
-<li><p>将失效的master的slave服务，提升到master级别</p>
-</li>
-<li><p>修改其他slave服务，修改其master指向新的地址</p>
-</li>
-<li><p>客户端请求，返回新的master服务地址。</p>
-</li>
-</ol>
-<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>启动一个以sentinel模式运行的redis-server实例<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server /path/to/sentinel.conf --sentinel</span><br></pre></td></tr></table></figure></p>
-<h3 id="sentinel配置"><a href="#sentinel配置" class="headerlink" title="sentinel配置"></a>sentinel配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor mymaster 127.0.0.1 6379 2</span><br><span class="line">sentinel down-after-milliseconds mymaster 60000</span><br><span class="line">sentinel failover-timeout mymaster 180000</span><br><span class="line">sentinel parallel-syncs mymaster 1</span><br><span class="line"></span><br><span class="line">sentinel monitor resque 192.168.1.3 6380 4</span><br><span class="line">sentinel down-after-milliseconds resque 10000</span><br><span class="line">sentinel failover-timeout resque 180000</span><br><span class="line">sentinel parallel-syncs resque 5</span><br></pre></td></tr></table></figure>
-<p>解释</p>
-<ul>
-<li><p>第一行监听一个名称是mymaster的主服务器，ip端口是127.0.0.1:6379，判断主服务器失效至少需要2个sentinel同意</p>
-</li>
-<li><p>无论需要sentinel同意的数量，都需要多数sentinel的同意</p>
-</li>
-</ul>
-<p>down-after-milliseconds mymaster：sentinel认为服务器已经断线所需要的毫秒数</p>
-<ul>
-<li><p>在给定的时间内，没返回sentinel发送ping命令的回复，或者错误。sentinel将redis服务标记主观下线</p>
-</li>
-<li><p>只有当足够数量的sentinel标记为主观下线，才会执行故障迁移</p>
-</li>
-</ul>
-<p>parallel-syncs： 在故障迁移过程中， 最多同时能有多少的从服务对新的主服务进行同步，该值越小，迁移时间越长。</p>
-<p>迁移过程小部分步骤会导致从服务不能处理命令请求，可以通过设置该值为1，来保障每次只有一个从服务不可用。</p>
-<h3 id="主观，客观下线"><a href="#主观，客观下线" class="headerlink" title="主观，客观下线"></a>主观，客观下线</h3><p>主观下线：指的是单个sentinel实例对服务器做出的下线判断</p>
-<p>客观下线：多个sentinel实例对同一个服务器做出sdown判断，并且通过sentinel is-master-down-by-addr 命令互相交流后，得出的服务器下线判断。</p>
-<p>服务器对ping的有效回复包含</p>
-<ul>
-<li><p>+PONG</p>
-</li>
-<li><p>-LOADING</p>
-</li>
-<li><p>-MASTERDOWN</p>
-</li>
-</ul>
-<p>对于</p>
-<p>主服务器：主观下线状态切换到客观下线状态，使用Gossip协议，在sentinel给定的时间内，从sentinel收集到了足够数量的主服务器下线报告，状态改成客观下线。</p>
-<p>客观下线只适合主服务器。</p>
-<p>其他类型的redis实例，sentinel判断下线无需协商。</p>
-<blockquote>
-<p>Gossip协议参考：<a href="http://kaiyuan.me/2015/07/08/Gossip/" target="_blank" rel="noopener">http://kaiyuan.me/2015/07/08/Gossip/</a></p>
-</blockquote>
-<p>sentinel做得事情</p>
-<ul>
-<li><p>每个sentinel以每秒一次的频率向他所知道的主，从，其他服务器发送PING命令</p>
-</li>
-<li><p>如果一个实例距离最后一次有效回复PING命令时间超过down-after-milliseconds，被标记主观下线</p>
-</li>
-<li><p>如果主服务被标记为主观下线，那么正在监视这个主服务器的所有sentinel要以每秒一次的频率确认主服务器的确进入了主观下线状态</p>
-</li>
-<li><p>如果主服务器进入主观下线状态，并且有足够数量的sentinel在指定的时间范围内同意这一判断，那么这个主服务器被标记为客观下线</p>
-</li>
-<li><p>当一个主服务器标记客观下线时，sentinel向下线主服务器和从服务器的INFO命令频率从10秒一次改成每秒一次</p>
-</li>
-<li><p>当没有足够数量sentinel同意主服务器下线，客观下线状态就被移除。</p>
-</li>
-</ul>
-<h3 id="自动发现"><a href="#自动发现" class="headerlink" title="自动发现"></a>自动发现</h3><p>一个sentinel可以与多个sentinel进行连接，各个sentinel之间可以互相检查对方的可用性，并进行信息交换。</p>
-<p>无需设置sentinel对应其他sentinel的地址，通过发布，订阅功能来自动发现正在监视相同主服务器的其他sentinel，这一功能是通过想频道 sentinel:hello发送信息来实现的。</p>
-<ul>
-<li><p>sentinel会以每两秒一次的频率，通过发布与订阅，向被他监视的所有主服务器，从服务器的 sentinel:hello频道发送消息，包含sentinel的ip，端口，pid</p>
-</li>
-<li><p>每个sentinel都会订阅被他监视服务的 sentinel:hello频道，如果有新的sentinel加入，更新自己的sentinel列表</p>
-</li>
-<li><p>sentinel发送的信息中包括完整的主服务器的配置，如果一个sentinel包含的配置比另一个要旧，那么会立即升级到新的配置</p>
-</li>
-<li><p>添加新的sentinel时，先检查列表中是否已存在相同id或者相同地址的sentinel，如有，先移除</p>
-</li>
-</ul>
-<h3 id="故障转移"><a href="#故障转移" class="headerlink" title="故障转移"></a>故障转移</h3><ul>
-<li><p>发现主服务器进入客观下线状态</p>
-</li>
-<li><p>选择一个从服务器，将之升级为主服务器，发送命令 SLAVEOF ON ONE</p>
-</li>
-<li><p>通过发布与订阅，将更新后的主服务器配置传播给其他的sentinel，其他sentinel更新自己的配置</p>
-</li>
-<li><p>向已下线的主服务器的从服务器发送SLAVEOF命令，让他们复制新的主服务器</p>
-</li>
-<li><p>当所有的从服务器开始复制新的主服务器时，领头的sentinel终止故障迁移</p>
-</li>
-</ul>
-<p>如何选择从服务器，将之升级为主服务器的依据是什么。</p>
-<ul>
-<li><p>那些标记主观下线，已断线，或者最后一次回复ping命令的时间大于5秒钟的从服务器被淘汰</p>
-</li>
-<li><p>断开时长超过down-after选项指定市场10倍的从服务器被淘汰</p>
-</li>
-<li><p>剩下的，选择复制偏移量(replication offset)最大的从服务器，如果复制偏移量不可用，选择id最小的从服务器升级为主服务器</p>
-</li>
-</ul>
-<blockquote>
-<p>参考文章：<a href="http://redis.cn/topics/cluster-tutorial.html" target="_blank" rel="noopener">http://redis.cn/topics/cluster-tutorial.html</a><br>参考文章：<a href="http://redis.cn/topics/sentinel.html" target="_blank" rel="noopener">http://redis.cn/topics/sentinel.html</a><br>redis cluster集群规范：<a href="http://redis.cn/topics/cluster-spec.html" target="_blank" rel="noopener">http://redis.cn/topics/cluster-spec.html</a></p>
-</blockquote>
+<h2 id="intset"><a href="#intset" class="headerlink" title="intset"></a>intset</h2><p>数据结构如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">intset</span>&lt;T&gt; &#123;</span></span><br><span class="line">    int32 encoding; <span class="comment">// 决定整数位宽是 16 位、32 位还是 64 位</span></span><br><span class="line">    int32 length; <span class="comment">// 元素个数</span></span><br><span class="line">    <span class="keyword">int</span>&lt;T&gt; contents; <span class="comment">// 整数数组，可以是 16 位、32 位和 64 位</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当 set 集合容纳的元素都是整数并且元素个数较小时，Redis 会使用 intset 来存储结合元素。intset 是紧凑的数组结构，同时支持 16 位、32 位和 64 位整数。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/29/164e1a049ea6ea41?imageslim" alt="redis-intset"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; debug object cls:test</span><br><span class="line">Value at:0x7fe079828810 refcount:1 encoding:intset serializedlength:17 lru:10618083 lru_seconds_idle:4</span><br><span class="line">127.0.0.1:6379&gt; sadd cls:test 255</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; debug object cls:test</span><br><span class="line">Value at:0x7fe079828810 refcount:1 encoding:intset serializedlength:19 lru:10618095 lru_seconds_idle:1</span><br><span class="line">127.0.0.1:6379&gt; sadd cls:test 25500000000000000</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; debug object cls:test</span><br><span class="line">Value at:0x7fe079828810 refcount:1 encoding:intset serializedlength:49 lru:10618102 lru_seconds_idle:1</span><br><span class="line">127.0.0.1:6379&gt; sadd cls:test hi</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; debug object cls:test</span><br><span class="line">Value at:0x7fe079828810 refcount:1 encoding:hashtable serializedlength:33 lru:10618115 lru_seconds_idle:2</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -560,8 +426,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/java-annotation-invoke/" rel="next" title="java通过自定义注解+反射实现规则引擎">
-                <i class="fa fa-chevron-left"></i> java通过自定义注解+反射实现规则引擎
+              <a href="/redis-data-structure-string/" rel="next" title="redis常用的数据结构之string">
+                <i class="fa fa-chevron-left"></i> redis常用的数据结构之string
               </a>
             
           </div>
@@ -569,10 +435,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/java-annotation-common-log/" rel="prev" title="业务数据/日志/快照/操作/统计的通用服务">
-                业务数据/日志/快照/操作/统计的通用服务 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -714,7 +576,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cluster-集群"><span class="nav-text">cluster 集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍-1"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据分片"><span class="nav-text">数据分片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主从复制"><span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性"><span class="nav-text">一致性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sentinel-哨兵"><span class="nav-text">sentinel 哨兵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍-2"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动"><span class="nav-text">启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sentinel配置"><span class="nav-text">sentinel配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主观，客观下线"><span class="nav-text">主观，客观下线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动发现"><span class="nav-text">自动发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#故障转移"><span class="nav-text">故障转移</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ziplist"><span class="nav-text">ziplist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#intset"><span class="nav-text">intset</span></a></li></ol></div>
             
 
           </div>
