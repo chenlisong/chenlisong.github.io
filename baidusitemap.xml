@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>http://chenlisong.github.io/redis-functions/</loc>
+    <lastmod>2018-09-20T03:23:53.291Z</lastmod>
+    <data>
+        <display>
+        <title>redis高阶特性</title>
+        <pubTime>2018-09-20T02:00:00.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="redis" url="http://chenlisong.github.io/categories/redis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chenlisong.github.io/redis-data-structure-skiplist/</loc>
-    <lastmod>2018-09-19T13:27:09.367Z</lastmod>
+    <lastmod>2018-09-19T13:31:37.202Z</lastmod>
     <data>
         <display>
         <title>redis常用的数据结构之skiplist</title>

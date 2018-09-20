@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://chenlisong.github.io/redis-functions/</loc>
+    
+    <lastmod>2018-09-20T03:23:53.291Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://chenlisong.github.io/redis-data-structure-skiplist/</loc>
     
-    <lastmod>2018-09-19T13:27:09.367Z</lastmod>
+    <lastmod>2018-09-19T13:31:37.202Z</lastmod>
     
   </url>
   

@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="介绍redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash 版本：&amp;gt;= 4.0 分布式lock 加过期时间，防止进程挂掉，导致锁一直被占用，无法释放  setnx ex需要原子操作执行。新版本的set方法，老版本的SetParam，lua都可以实现  value值随机，unlock时对">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redis高阶特性">
+<meta property="og:url" content="http://chenlisong.github.io/redis-functions/index.html">
+<meta property="og:site_name" content="一抹阳光丶">
+<meta property="og:description" content="介绍redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash 版本：&amp;gt;= 4.0 分布式lock 加过期时间，防止进程挂掉，导致锁一直被占用，无法释放  setnx ex需要原子操作执行。新版本的set方法，老版本的SetParam，lua都可以实现  value值随机，unlock时对">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/1645987653a2b337?imageslim">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/4/16464301a0e26416?imageslim">
+<meta property="og:updated_time" content="2018-09-20T03:23:53.291Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redis高阶特性">
+<meta name="twitter:description" content="介绍redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash 版本：&amp;gt;= 4.0 分布式lock 加过期时间，防止进程挂掉，导致锁一直被占用，无法释放  setnx ex需要原子操作执行。新版本的set方法，老版本的SetParam，lua都可以实现  value值随机，unlock时对">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/2/1645987653a2b337?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chenlisong.github.io/redis-functions/"/>
+
+
+
+
+
+  <title>redis高阶特性 | 一抹阳光丶</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4017d56af796b6206a285ab35c559a01";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一抹阳光丶</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/redis-functions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一抹阳光丶">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一抹阳光丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">redis高阶特性</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-20T10:00:00+08:00">
+                2018-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/redis-functions/" class="leancloud_visitors" data-flag-title="redis高阶特性">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash</p>
+<p>版本：&gt;= 4.0</p>
+<h2 id="分布式lock"><a href="#分布式lock" class="headerlink" title="分布式lock"></a>分布式lock</h2><ul>
+<li><p>加过期时间，防止进程挂掉，导致锁一直被占用，无法释放</p>
+</li>
+<li><p>setnx ex需要原子操作执行。新版本的set方法，老版本的SetParam，lua都可以实现</p>
+</li>
+<li><p>value值随机，unlock时对比。防止出现其他进程unlock另外一个进程的lock，比如执行时间 &gt; expireTime。</p>
+</li>
+<li><p>关于预计ex时间不准的问题，因为ex解决的是锁一直被占用的问题，可以考虑使用daemon进程心跳ex</p>
+</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcurrentLock</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;String&gt; lockRandomValue = <span class="keyword">new</span> ThreadLocal&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Jedis jedis = JedisUtil.getJedis();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dosomethingWithLock</span><span class="params">(String key, <span class="keyword">int</span> timeout, RedisLockCallBack callBack)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        lockLoop(key, timeout);</span><br><span class="line"></span><br><span class="line">        callBack.work();</span><br><span class="line">        unlock(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">lockLoop</span><span class="params">(String key, <span class="keyword">int</span> timeout)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(!lock(key, timeout)) &#123;</span><br><span class="line">            <span class="comment">//System.out.println(String.format("%s not get lock key, sleep 1s, try again", Thread.currentThread().getName()));</span></span><br><span class="line">            Thread.sleep(<span class="number">1000L</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">lock</span><span class="params">(String key, <span class="keyword">int</span> timeout)</span> </span>&#123;</span><br><span class="line">        lockRandomValue.set(random.nextInt()+<span class="string">""</span>);</span><br><span class="line">        String result = jedis.set(key, lockRandomValue.get()+<span class="string">""</span>, <span class="string">"nx"</span>, <span class="string">"ex"</span>, timeout);</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">"OK"</span>.equals(result)) &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">"%s lock success, randome: %s"</span>, Thread.currentThread().getName(), lockRandomValue.get()));</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">unlock</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        String value = jedis.get(key);</span><br><span class="line">        <span class="keyword">if</span>(value != <span class="keyword">null</span> &amp;&amp; value.equals(lockRandomValue.get())) &#123;</span><br><span class="line">            jedis.del(key);</span><br><span class="line">            System.out.println(String.format(<span class="string">"%s unlock success"</span>, Thread.currentThread().getName()));</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">"%s unlock fail, not match self thread value. random: %s, redis value: %s"</span>,</span><br><span class="line">                    Thread.currentThread().getName(), lockRandomValue.get(), value));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="delay-queue"><a href="#delay-queue" class="headerlink" title="delay queue"></a>delay queue</h2><ul>
+<li><p>redis的list可以当成异步消息队列使用，lpop，rpush</p>
+</li>
+<li><p>blpop，阻塞读，在没数据的时候休眠，有数据时立刻醒过来，降低延迟。需要捕获异常，重试</p>
+</li>
+</ul>
+<p>使用zset结构实现一个延迟队列</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DelayingQueue</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String key;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Jedis jedis;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// fastjson 序列化对象中存在 generic 类型时，需要使用 TypeReference</span></span><br><span class="line">    <span class="keyword">private</span> Type TaskType = <span class="keyword">new</span> TypeReference&lt;TaskItem&lt;T&gt;&gt;() &#123;</span><br><span class="line">    &#125;.getType();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DelayingQueue</span><span class="params">(Jedis jedis, String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">        <span class="keyword">this</span>.jedis = jedis;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delay</span><span class="params">(T msg, <span class="keyword">int</span> seconds)</span> </span>&#123;</span><br><span class="line">        TaskItem&lt;T&gt; taskItem = <span class="keyword">new</span> TaskItem&lt;T&gt;();</span><br><span class="line">        taskItem.id = UUID.randomUUID().toString();</span><br><span class="line">        taskItem.msg = msg;</span><br><span class="line">        String value = JSON.toJSONString(taskItem);</span><br><span class="line">        jedis.zadd(key, System.currentTimeMillis()+(seconds * <span class="number">1000L</span>), value);</span><br><span class="line">        System.out.println(String.format(<span class="string">"produce msg: %s, delay time: %d"</span>, value, seconds));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        loopFlag: <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                Set&lt;String&gt; values = jedis.zrangeByScore(key, <span class="number">0</span>, System.currentTimeMillis(), <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">                <span class="keyword">if</span>(values.isEmpty()) &#123;</span><br><span class="line">                    Thread.sleep(<span class="number">500L</span>);</span><br><span class="line">                    <span class="keyword">continue</span> loopFlag;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                String value = values.iterator().next();</span><br><span class="line">                <span class="keyword">if</span>(jedis.zrem(key, value) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    TaskItem&lt;T&gt; taskItem = JSON.parseObject(value, TaskType);</span><br><span class="line">                    System.out.println(<span class="string">"consume msg: "</span> + value);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                <span class="keyword">break</span> loopFlag;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Jedis jedis = JedisUtil.getJedis();</span><br><span class="line"></span><br><span class="line">        DelayingQueue&lt;String&gt; delayingQueue = <span class="keyword">new</span> DelayingQueue(jedis, <span class="string">"cls:delayqueue"</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            Random random = <span class="keyword">new</span> Random();</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) &#123;</span><br><span class="line">                delayingQueue.delay(<span class="string">"clstest:"</span>+i, random.nextInt(<span class="number">5</span>));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            delayingQueue.loop();</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">            Thread.sleep(<span class="number">1000L</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TaskItem</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> String id;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> T msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="bitmap"><a href="#bitmap" class="headerlink" title="bitmap"></a>bitmap</h2><p>每一位值只有0或者1，例如setbit field index 1。</p>
+<ul>
+<li><p>bitfield w get u4 0  # 从第一个位开始取 4 个位，结果是无符号数 (u)</p>
+</li>
+<li><p>bitfield w get u3 2  # 从第三个位开始取 3 个位，结果是无符号数 (u)</p>
+</li>
+<li><p>bitfield w get i4 0  # 从第一个位开始取 4 个位，结果是有符号数 (i)</p>
+</li>
+<li><p>bitfield w get i3 2  # 从第三个位开始取 3 个位，结果是有符号数 (i)</p>
+</li>
+</ul>
+<p>通过bitfield能获取从index1到index2的数值。但是，因为要保留低位的零，所以他的值是反转的。如下图</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/2/1645987653a2b337?imageslim" alt="redis-bitmap"></p>
+<p>如果存储用户签到数据，一年的签到数据只需要365bit，46bytes。100w用户占用44m左右，实现如下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 基于redis位图实现的签到功能</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BitFieldUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Jedis jedis;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String key;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BitFieldUtil</span><span class="params">(Jedis jedis, String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.jedis = jedis;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setbit</span><span class="params">(<span class="keyword">long</span> offset)</span> </span>&#123;</span><br><span class="line">        jedis.setbit(key, offset, <span class="string">"1"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">bitcount</span><span class="params">(<span class="keyword">long</span> offset, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">long</span> value = bitField(offset, count);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(value &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(value % <span class="number">2</span> == <span class="number">1</span>) &#123; result++; &#125;</span><br><span class="line">            value = value &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBitvalue</span><span class="params">(<span class="keyword">long</span> offset)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"1"</span>.equals(jedis.getbit(key, offset));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Map&lt;Integer, Boolean&gt; <span class="title">bitMap</span><span class="params">(<span class="keyword">long</span> offset, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">        Map&lt;Integer, Boolean&gt; result = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">long</span> value = bitField(offset, count);</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(index &lt;= count) &#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line">            <span class="keyword">if</span>((value &amp; <span class="number">1</span>) == <span class="number">1</span>) &#123; flag = <span class="keyword">true</span>; &#125;</span><br><span class="line">            value = value &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            result.put(count-index, flag);</span><br><span class="line">            index ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">bitField</span><span class="params">(<span class="keyword">long</span> offset, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">        List&lt;Long&gt; values = jedis.bitfield(key, <span class="string">"get"</span>, <span class="string">"u"</span>+count, <span class="string">""</span>+offset);</span><br><span class="line">        <span class="keyword">long</span> value = values.iterator().next();</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">reverseBinary</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> length = Integer.toBinaryString(value).length();</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> unit = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=length-<span class="number">1</span>; i&gt;=<span class="number">0</span>; i--) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>((value &gt;&gt; i &amp; <span class="number">1</span>) == <span class="number">1</span>) &#123;</span><br><span class="line">                result += unit;</span><br><span class="line">            &#125;</span><br><span class="line">            unit *= <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">convert2Bit</span><span class="params">(String day)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>);</span><br><span class="line">        Date date = sdf.parse(day);</span><br><span class="line">        Calendar calendar = Calendar.getInstance();</span><br><span class="line">        calendar.setTime(date);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> calendar.get(Calendar.DAY_OF_YEAR) - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">convert2Day</span><span class="params">(<span class="keyword">int</span> offset)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd"</span>);</span><br><span class="line">        Calendar calendar = Calendar.getInstance();</span><br><span class="line">        calendar.set(Calendar.DAY_OF_YEAR, offset+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> sdf.format(calendar.getTime());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addDay</span><span class="params">(String day)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">long</span> offset = convert2Bit(day);</span><br><span class="line">        setbit(offset);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">queryDay</span><span class="params">(String day, <span class="keyword">int</span> count)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="keyword">long</span> offset = convert2Bit(day);</span><br><span class="line">        <span class="keyword">int</span> number = bitcount(offset, count);</span><br><span class="line"></span><br><span class="line">        System.out.println(String.format(<span class="string">"count: %d"</span>, number));</span><br><span class="line"></span><br><span class="line">        Map&lt;Integer, Boolean&gt; map = bitMap(offset, count);</span><br><span class="line">        System.out.println(<span class="string">"map: "</span> + map);</span><br><span class="line">        <span class="keyword">for</span>(Integer key: map.keySet()) &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">"day: %s, sign: %b"</span>, convert2Day(key+(<span class="keyword">int</span>)offset), map.get(key)));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        Jedis jedis = JedisUtil.getJedis();</span><br><span class="line">        BitFieldUtil util = <span class="keyword">new</span> BitFieldUtil(jedis, <span class="string">"w"</span>);</span><br><span class="line">        System.out.println(util.bitField(<span class="number">0</span>, <span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">        System.out.println(util.bitcount(<span class="number">0</span>, <span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">        System.out.println(util.bitMap(<span class="number">0</span>, <span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">        System.out.println(Integer.toBinaryString(<span class="number">11</span>));</span><br><span class="line">        System.out.println(Integer.toBinaryString(util.reverseBinary(<span class="number">11</span>)));</span><br><span class="line"></span><br><span class="line">        util.addDay(<span class="string">"2018-06-01"</span>);</span><br><span class="line">        util.addDay(<span class="string">"2018-06-03"</span>);</span><br><span class="line">        util.addDay(<span class="string">"2018-06-04"</span>);</span><br><span class="line">        util.addDay(<span class="string">"2018-06-07"</span>);</span><br><span class="line">        util.queryDay(<span class="string">"2018-06-02"</span>, <span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="HyperLogLog"><a href="#HyperLogLog" class="headerlink" title="HyperLogLog"></a>HyperLogLog</h2><ul>
+<li><p>add元素，count数量，非精确，适合大量统计，允许丢失精度。</p>
+</li>
+<li><p>存储空间少，需要12k。16384桶 * 6bits /8 = 12k</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; pfadd cls:test user1</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; pfadd cls:test user2</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; pfadd cls:test user3</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; pfcount cls:test</span><br><span class="line">(integer) 3</span><br></pre></td></tr></table></figure>
+<h2 id="rebloom"><a href="#rebloom" class="headerlink" title="rebloom"></a>rebloom</h2><p>HyperLogLog能解决count的问题，但是不能解决contains的问题。rebloom就是解决contains的问题。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; bf.add cls:test user1</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; bf.add cls:test user2</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; bf.exists cls:test user1</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; bf.exists cls:test user2</span><br><span class="line">(integer) 1</span><br><span class="line">127.0.0.1:6379&gt; bf.exists cls:test user3</span><br><span class="line">(integer) 0</span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/4/16464301a0e26416?imageslim" alt="redis-rebloom"></p>
+<ul>
+<li><p>添加key时，通过m次f(n)计算出几个数组index，写上1</p>
+</li>
+<li><p>判断是否存在时，执行同样m次f(n)，如果都是1，代表存在</p>
+</li>
+<li><p>有误杀，但是不会放过曾经写入的</p>
+</li>
+<li><p>误差率可以通过内存的增大，配置修改进行调整。<a href="https://krisives.github.io/bloom-calculator/" target="_blank" rel="noopener">布隆计算器</a></p>
+</li>
+</ul>
+<h2 id="geohash"><a href="#geohash" class="headerlink" title="geohash"></a>geohash</h2><ul>
+<li><p>将世界地图不断的缩小2倍分割，直到分割的面积到足够小</p>
+</li>
+<li><p>计算两点距离，计算附近的点，支持排序</p>
+</li>
+</ul>
+<p>geoadd geopos geolist georadiusbymember</p>
+<h2 id="redis-cell"><a href="#redis-cell" class="headerlink" title="redis-cell"></a>redis-cell</h2><p>redis4支持module插件，redis-cell是以第三方插件，安装后更新redis配置，支持漏斗限流。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> cl.throttle laoqian:reply 15 30 60 1</span></span><br><span class="line">                      ▲     ▲  ▲  ▲  ▲</span><br><span class="line">                      |     |  |  |  └───── need 1 quota (可选参数，默认值也是1)</span><br><span class="line">                      |     |  └──┴─────── 30 operations / 60 seconds 这是漏水速率</span><br><span class="line">                      |     └───────────── 15 capacity 这是漏斗容量</span><br><span class="line">                      └─────────────────── key</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/redis-data-structure-skiplist/" rel="next" title="redis常用的数据结构之skiplist">
+                <i class="fa fa-chevron-left"></i> redis常用的数据结构之skiplist
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://www.kehue.com/pic/cls.jpg"
+                alt="一抹阳光丶" />
+            
+              <p class="site-author-name" itemprop="name">一抹阳光丶</p>
+              <p class="site-description motion-element" itemprop="description">Java|理科男|编程</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式lock"><span class="nav-text">分布式lock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#delay-queue"><span class="nav-text">delay queue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bitmap"><span class="nav-text">bitmap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HyperLogLog"><span class="nav-text">HyperLogLog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rebloom"><span class="nav-text">rebloom</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#geohash"><span class="nav-text">geohash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-cell"><span class="nav-text">redis-cell</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一抹阳光丶</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("FI63hYfmopG1Ew1odC2fnj3L-gzGzoHsz", "TaKy2dPCbbbOP7vEkxCmWGVF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
