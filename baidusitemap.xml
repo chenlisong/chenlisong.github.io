@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://chenlisong.github.io/redis-devops/</loc>
+    <lastmod>2018-09-21T07:27:27.963Z</lastmod>
+    <data>
+        <display>
+        <title>redis运维常用命令</title>
+        <pubTime>2018-09-21T08:00:00.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="redis" url="http://chenlisong.github.io/categories/redis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chenlisong.github.io/redis-functions/</loc>
     <lastmod>2018-09-20T03:23:53.291Z</lastmod>
     <data>

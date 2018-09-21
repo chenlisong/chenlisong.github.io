@@ -405,7 +405,7 @@
 <ol start="2">
 <li>安装jemalloc，需要ruby支持</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LD_PRELOAD=/usr/local/lib/libjemalloc.so.2</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">export</span> MALLOC_CONF=<span class="string">"prof:true,prof_gdump:true,prof_prefix:/root/jez,lg_prof_interval:30,lg_prof_sample:17"</span></span></span><br><span class="line">export MALLOC_CONF=prof:true,lg_prof_interval:30,lg_prof_sample:17</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export LD_PRELOAD=/usr/local/lib/libjemalloc.so.2</span><br><span class="line"><span class="meta">#</span>export MALLOC_CONF="prof:true,prof_gdump:true,prof_prefix:/root/jez,lg_prof_interval:30,lg_prof_sample:17"</span><br><span class="line">export MALLOC_CONF=prof:true,lg_prof_interval:30,lg_prof_sample:17</span><br></pre></td></tr></table></figure>
 <p>重启服务，在当前路径会生成jeprof.pid.xxx.x.xx.heap的采样文件，采样大小是2的17次方字节，每个文件是增量内存文件。</p>
 <ol start="3">
 <li>使用jeprof，查看内存增长中native方法占比</li>
@@ -560,7 +560,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

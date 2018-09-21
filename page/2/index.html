@@ -272,6 +272,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/java-gc-review/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一抹阳光丶">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一抹阳光丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/java-gc-review/" itemprop="url">Java gc总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T01:20:00+08:00">
+                2018-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/java-gc-review/" class="leancloud_visitors" data-flag-title="Java gc总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。</p>
+<h2 id="CMS-gc"><a href="#CMS-gc" class="headerlink" title="CMS gc"></a>CMS gc</h2><h3 id="常见垃圾回收器"><a href="#常见垃圾回收器" class="headerlink" title="常见垃圾回收器"></a>常见垃圾回收器</h3><ul>
+<li><p>串行 Serial 单线程的一个回收器，简单，易实现，效率高</p>
+</li>
+<li><p>并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间</p>
+</li>
+<li><p>吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制</p>
+</li>
+<li><p>并发标记清除 CMS concurrent mark sweep 一种以获取最短回收停顿时间为目标的回收器，该回收器基于标记-清除算法</p>
+</li>
+</ul>
+<h3 id="cms的执行过程"><a href="#cms的执行过程" class="headerlink" title="cms的执行过程"></a>cms的执行过程</h3><ul>
+<li><p>init-mark初始标记 stw，该阶段进行可达性分析，标记gc root能直接关联到的对象，很快</p>
+</li>
+<li><p>concurrent-mark 并发标记，由前段标记过的绿色对象出发，所有可达到的对象都在本阶段标记</p>
+</li>
+<li><p>remakr重标记，stw，暂停所有用户线程，重新扫描用户堆对象，进行可达性分析，标记活着的对象</p>
+<p>  因为阶段2，可能有用户线程重新让一个对象变得可达。注意，当前阶段以新生代对象为根来判断对象是否存活</p>
+</li>
+<li><p>并发清理，进行并发的垃圾清理</p>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/java-gc-review/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/java-annotation-common-log/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1819,185 +1997,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/netty-start/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="一抹阳光丶">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一抹阳光丶">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/netty-start/" itemprop="url">netty-start</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-14T12:18:06+08:00">
-                2018-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/netty/" itemprop="url" rel="index">
-                    <span itemprop="name">netty</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/netty-start/" class="leancloud_visitors" data-flag-title="netty-start">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>netty是一个异步事件驱动的网络应用框架，用来快速开发可维护的高性能协议服务器和客户端。极大的简化了tcp和udp的socket编程。</p>
-<p>支持ftp, smtp, http以及各种基于二进制和基于文本的传统协议，因此netty能实现轻松的开发，性能，稳定性，灵活性。</p>
-<h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><ul>
-<li><p>支持各种通信类型的统一API，阻塞和非阻塞socket</p>
-</li>
-<li><p>基于灵活和可扩展的线程模型，可以清晰的分离问题</p>
-</li>
-<li><p>高度可定制化的线程模型，单线程或者多线程</p>
-</li>
-<li><p>真正的无连接数据包socket支持</p>
-</li>
-</ul>
-<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><ul>
-<li><p>吞吐量更好，延迟更低</p>
-</li>
-<li><p>更少的资源消耗</p>
-</li>
-<li><p>最小化不必要的内存copy</p>
-</li>
-</ul>
-<h3 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h3><blockquote>
-<p>官网文档：<a href="https://netty.io/wiki/index.html" target="_blank" rel="noopener">https://netty.io/wiki/index.html</a></p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/netty-start/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2052,7 +2051,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
