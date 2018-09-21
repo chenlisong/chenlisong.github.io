@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="介绍redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash 版本：&amp;gt;= 4.0 分布式lock 加过期时间，防止进程挂掉，导致锁一直被占用，无法释放  setnx ex需要原子操作执行。新版本的set方法，老版本的SetParam，lua都可以实现  value值随机，unlock时对">
+<meta name="description" content="介绍redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash github代码：https://github.com/chenlisong/projects/tree/master/redis4util 版本：&amp;gt;= 4.0 分布式lock 加过期时间，防止进程挂掉，导致锁一直被占用，无法">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis高阶特性">
 <meta property="og:url" content="http://chenlisong.github.io/redis-functions/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="介绍redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash 版本：&amp;gt;= 4.0 分布式lock 加过期时间，防止进程挂掉，导致锁一直被占用，无法释放  setnx ex需要原子操作执行。新版本的set方法，老版本的SetParam，lua都可以实现  value值随机，unlock时对">
+<meta property="og:description" content="介绍redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash github代码：https://github.com/chenlisong/projects/tree/master/redis4util 版本：&amp;gt;= 4.0 分布式lock 加过期时间，防止进程挂掉，导致锁一直被占用，无法">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/1645987653a2b337?imageslim">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/4/16464301a0e26416?imageslim">
-<meta property="og:updated_time" content="2018-09-20T03:23:53.291Z">
+<meta property="og:updated_time" content="2018-09-21T07:46:46.816Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis高阶特性">
-<meta name="twitter:description" content="介绍redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash 版本：&amp;gt;= 4.0 分布式lock 加过期时间，防止进程挂掉，导致锁一直被占用，无法释放  setnx ex需要原子操作执行。新版本的set方法，老版本的SetParam，lua都可以实现  value值随机，unlock时对">
+<meta name="twitter:description" content="介绍redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash github代码：https://github.com/chenlisong/projects/tree/master/redis4util 版本：&amp;gt;= 4.0 分布式lock 加过期时间，防止进程挂掉，导致锁一直被占用，无法">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/2/1645987653a2b337?imageslim">
 
 
@@ -377,6 +377,7 @@
 
       
         <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>redis的高阶特性：分布式lock，delay queue, bitmap, hyperloglog, rebloom, redis-cell, geohash</p>
+<p>github代码：<a href="https://github.com/chenlisong/projects/tree/master/redis4util" target="_blank" rel="noopener">https://github.com/chenlisong/projects/tree/master/redis4util</a></p>
 <p>版本：&gt;= 4.0</p>
 <h2 id="分布式lock"><a href="#分布式lock" class="headerlink" title="分布式lock"></a>分布式lock</h2><ul>
 <li><p>加过期时间，防止进程挂掉，导致锁一直被占用，无法释放</p>
