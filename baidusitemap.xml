@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://chenlisong.github.io/redis-data-structure-ziplist/</loc>
+    <lastmod>2018-09-21T07:48:02.146Z</lastmod>
+    <data>
+        <display>
+        <title>redis常用的数据结构之ziplist</title>
+        <pubTime>2018-09-19T08:00:00.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="redis" url="http://chenlisong.github.io/categories/redis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chenlisong.github.io/redis-functions/</loc>
     <lastmod>2018-09-21T07:46:46.816Z</lastmod>
     <data>
@@ -110,26 +130,6 @@
         <display>
         <title>redis常用的数据结构之string</title>
         <pubTime>2018-09-18T14:00:00.000Z</pubTime>
-        
-        <tag>redis</tag>
-         
-         
-           
-             
-              <breadCrumb title="redis" url="http://chenlisong.github.io/categories/redis/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://chenlisong.github.io/redis-data-structure-ziplist/</loc>
-    <lastmod>2018-09-19T09:20:43.295Z</lastmod>
-    <data>
-        <display>
-        <title>redis常用的数据结构之ziplist</title>
-        <pubTime>2018-09-19T08:00:00.000Z</pubTime>
         
         <tag>redis</tag>
          
