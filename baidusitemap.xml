@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://chenlisong.github.io/design-behavior/</loc>
+    <lastmod>2018-10-11T10:06:39.555Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式-行为型</title>
+        <pubTime>2018-10-11T12:00:00.000Z</pubTime>
+        
+        <tag>design</tag>
+         
+         
+           
+             
+              <breadCrumb title="design" url="http://chenlisong.github.io/categories/design/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenlisong.github.io/design-struct/</loc>
+    <lastmod>2018-10-11T09:36:35.539Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式-结构型</title>
+        <pubTime>2018-10-11T10:00:00.000Z</pubTime>
+        
+        <tag>design</tag>
+         
+         
+           
+             
+              <breadCrumb title="design" url="http://chenlisong.github.io/categories/design/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chenlisong.github.io/design-create/</loc>
     <lastmod>2018-10-11T07:52:38.393Z</lastmod>
     <data>

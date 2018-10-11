@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://chenlisong.github.io/design-behavior/</loc>
+    
+    <lastmod>2018-10-11T10:06:39.555Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://chenlisong.github.io/design-struct/</loc>
+    
+    <lastmod>2018-10-11T09:36:35.539Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://chenlisong.github.io/design-create/</loc>
     
     <lastmod>2018-10-11T07:52:38.393Z</lastmod>

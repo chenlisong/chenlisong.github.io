@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="shell,awk,cat," />
+  <meta name="keywords" content="design," />
 
 
 
@@ -79,18 +79,27 @@
 
 
 
-<meta name="description" content="介绍awk是处理文件文本的语言，是一个强大的文本分析工具 awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。 awk命令语法123awk [选项参数] &apos;script&apos; var=value file(s)awk [选项参数] -f scriptfile var=value files(s) 选项参数：  -F fs or">
-<meta name="keywords" content="shell,awk,cat">
+<meta name="description" content="介绍行为型模式(Behavioral Pattern)是对在不同的对象之间划分责任和算法的抽象化。 行为型模式不仅仅关注类和对象的结构，而且重点关注它们之间的相互作用。通过行为型模式，可以更加清晰地划分类与对象的职责，并研究系统在运行时实例对象之间的交互。在系统运行时，对象并不是孤立的，它们可以通过相互通信与协作完成某些复杂功能，一个对象在运行时也将影响到其他对象的运行。  类行为型模式：类的行为">
+<meta name="keywords" content="design">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell-awk命令">
-<meta property="og:url" content="http://chenlisong.github.io/shell-awk/index.html">
+<meta property="og:title" content="设计模式-行为型">
+<meta property="og:url" content="http://chenlisong.github.io/design-behavior/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="介绍awk是处理文件文本的语言，是一个强大的文本分析工具 awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。 awk命令语法123awk [选项参数] &apos;script&apos; var=value file(s)awk [选项参数] -f scriptfile var=value files(s) 选项参数：  -F fs or">
+<meta property="og:description" content="介绍行为型模式(Behavioral Pattern)是对在不同的对象之间划分责任和算法的抽象化。 行为型模式不仅仅关注类和对象的结构，而且重点关注它们之间的相互作用。通过行为型模式，可以更加清晰地划分类与对象的职责，并研究系统在运行时实例对象之间的交互。在系统运行时，对象并不是孤立的，它们可以通过相互通信与协作完成某些复杂功能，一个对象在运行时也将影响到其他对象的运行。  类行为型模式：类的行为">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-17T03:51:05.432Z">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Command.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Command.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Command_eg.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Command_eg.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Obeserver.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Obeserver.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Strategy.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Strategy.jpg">
+<meta property="og:updated_time" content="2018-10-11T10:06:39.555Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell-awk命令">
-<meta name="twitter:description" content="介绍awk是处理文件文本的语言，是一个强大的文本分析工具 awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。 awk命令语法123awk [选项参数] &apos;script&apos; var=value file(s)awk [选项参数] -f scriptfile var=value files(s) 选项参数：  -F fs or">
+<meta name="twitter:title" content="设计模式-行为型">
+<meta name="twitter:description" content="介绍行为型模式(Behavioral Pattern)是对在不同的对象之间划分责任和算法的抽象化。 行为型模式不仅仅关注类和对象的结构，而且重点关注它们之间的相互作用。通过行为型模式，可以更加清晰地划分类与对象的职责，并研究系统在运行时实例对象之间的交互。在系统运行时，对象并不是孤立的，它们可以通过相互通信与协作完成某些复杂功能，一个对象在运行时也将影响到其他对象的运行。  类行为型模式：类的行为">
+<meta name="twitter:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Command.jpg">
 
 
 
@@ -120,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/shell-awk/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/design-behavior/"/>
 
 
 
 
 
-  <title>shell-awk命令 | 一抹阳光丶</title>
+  <title>设计模式-行为型 | 一抹阳光丶</title>
   
 
 
@@ -273,7 +282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/shell-awk/">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/design-behavior/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一抹阳光丶">
@@ -290,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">shell-awk命令</h1>
+          <h1 class="post-title" itemprop="name headline">设计模式-行为型</h1>
         
 
         <div class="post-meta">
@@ -302,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-17T11:56:09+08:00">
-                2018-04-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-11T20:00:00+08:00">
+                2018-10-11
               </time>
             
 
@@ -325,8 +334,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/shell/" itemprop="url" rel="index">
-                    <span itemprop="name">shell</span>
+                  <a href="/categories/design/" itemprop="url" rel="index">
+                    <span itemprop="name">design</span>
                   </a>
                 </span>
 
@@ -342,7 +351,7 @@
 
           
           
-             <span id="/shell-awk/" class="leancloud_visitors" data-flag-title="shell-awk命令">
+             <span id="/design-behavior/" class="leancloud_visitors" data-flag-title="设计模式-行为型">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -373,48 +382,122 @@
       
 
       
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>awk是处理文件文本的语言，是一个强大的文本分析工具</p>
-<p>awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。</p>
-<h2 id="awk命令"><a href="#awk命令" class="headerlink" title="awk命令"></a>awk命令</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">awk [选项参数] <span class="string">'script'</span> var=value file(s)</span><br><span class="line"></span><br><span class="line">awk [选项参数] -f scriptfile var=value files(s)</span><br></pre></td></tr></table></figure>
-<p>选项参数：</p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>行为型模式(Behavioral Pattern)是对在不同的对象之间划分责任和算法的抽象化。</p>
+<p>行为型模式不仅仅关注类和对象的结构，而且重点关注它们之间的相互作用。通过行为型模式，可以更加清晰地划分类与对象的职责，并研究系统在运行时实例对象之间的交互。在系统运行时，对象并不是孤立的，它们可以通过相互通信与协作完成某些复杂功能，一个对象在运行时也将影响到其他对象的运行。</p>
 <ul>
-<li><p>-F fs or –field-separator fs 指定输入文件拆分隔符，fs是一个字符串或者是一个正则表达式，如 -f</p>
+<li><p>类行为型模式：类的行为型模式使用继承关系在几个类之间分配行为，类行为型模式主要通过多态等方式来分配父类与子类的职责。</p>
 </li>
-<li><p>-V var=value or –asign var=value 赋值一个用户定义变量</p>
-</li>
-<li><p>-S scrptfile or –file scriptfile 从脚本文件中读取awk命令</p>
-</li>
-<li><p>-W compright or –copyright 打印简短版权信息</p>
-</li>
-<li><p>-W help or –help 打印全部awk选项和每个选项的简短说明</p>
+<li><p>对象行为型模式：对象的行为型模式则使用对象的聚合关联关系来分配行为，对象行为型模式主要是通过对象关联等方式来分配两个或多个类的职责。根据“合成复用原则”，系统中要尽量使用关联关系来取代继承关系，因此大部分行为型设计模式都属于对象行为型设计模式。</p>
 </li>
 </ul>
-<a id="more"></a>
-<h3 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h3><p>1.txt文本内容如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2 this is a test</span><br><span class="line">3 Are you like awk</span><br><span class="line">This&apos;s a test</span><br><span class="line">10 There are orange,apple,mongo</span><br></pre></td></tr></table></figure>
-<ol>
-<li>输出文件内容/使用pattern方式</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;[pattern] action&#125;'</span> &#123;filename&#125; <span class="comment">#行匹配语句 awk '' 只能用单引号</span></span><br><span class="line"></span><br><span class="line">awk <span class="string">'&#123;print $1, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line">awk <span class="string">'&#123;printf "%-8s %-10s\n", $1, $4&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2 a</span><br><span class="line">3 like</span><br><span class="line">This<span class="string">'s </span></span><br><span class="line"><span class="string">10 orange,apple,mongo</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2        a         </span></span><br><span class="line"><span class="string">3        like      </span></span><br><span class="line"><span class="string">This'</span>s             </span><br><span class="line">10       orange,apple,mongo</span><br></pre></td></tr></table></figure></p>
-<ol start="2">
-<li>输出文件内容/使用-F方式</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">awk -F <span class="comment">#-F相当于内置变量FS，指定分割字符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用逗号分割</span></span><br><span class="line">awk -F, <span class="string">'&#123;print $1, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用内建变量</span></span><br><span class="line">awk <span class="string">'BEGIN&#123;FS=","&#125; &#123;print $1, $2&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用多个分隔符，先用空格分割，再用逗号分割</span></span><br><span class="line">awk -F <span class="string">'[ ,]'</span> <span class="string">'&#123;print $1, $2, $5&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">2 this is a <span class="built_in">test</span> </span><br><span class="line">3 Are you like awk </span><br><span class="line">This<span class="string">'s a test </span></span><br><span class="line"><span class="string">10 There are orange</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2 this is a test </span></span><br><span class="line"><span class="string">3 Are you like awk </span></span><br><span class="line"><span class="string">This'</span>s a <span class="built_in">test</span> </span><br><span class="line">10 There are orange apple</span><br><span class="line"></span><br><span class="line">2 this <span class="built_in">test</span></span><br><span class="line">3 Are awk</span><br><span class="line">This<span class="string">'s a </span></span><br><span class="line"><span class="string">10 There apple</span></span><br></pre></td></tr></table></figure></p>
-<ol start="3">
-<li>输出文件内容/使用-v方式</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk -v <span class="comment">#设置变量</span></span><br><span class="line"></span><br><span class="line">awk -va=1 <span class="string">'&#123;print $1, $1+a&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line">awk -va=1 -vb=s <span class="string">'&#123;print $1, $1+a, $1b&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2 3</span><br><span class="line">3 4</span><br><span class="line">This<span class="string">'s 1</span></span><br><span class="line"><span class="string">10 11</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2 3 2s</span></span><br><span class="line"><span class="string">3 4 3s</span></span><br><span class="line"><span class="string">This'</span>s 1 This<span class="string">'ss</span></span><br><span class="line"><span class="string">10 11 10s</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>执行命令脚本</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -f cal.awk 1.txt</span><br></pre></td></tr></table></figure>
-<p>例子如下<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#过滤第一列大于2的行</span></span><br><span class="line">awk <span class="string">'$1&gt;2'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#过滤第一列等于2的行</span></span><br><span class="line">awk <span class="string">'$1==2 &#123;print $1, $3&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#过滤第一列大于2并且第二列等于Are的行</span></span><br><span class="line">awk <span class="string">'$1&gt;2 &amp;&amp; $2=="Are" &#123;print $1, $2, $3&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用正则匹配</span></span><br><span class="line"><span class="comment">#输出第二列包含“th”，并打印第二列与第四列</span></span><br><span class="line">awk <span class="string">'$2 ~ /th/ &#123;print $2, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出包含re的行</span></span><br><span class="line">awk <span class="string">'/re/'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#忽略大小写</span></span><br><span class="line">awk <span class="string">'BEGIN&#123;IGNORECASE=1&#125; /this/'</span> 1.txt</span><br></pre></td></tr></table></figure></p>
-<p>其他的一些实例</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#从文件中找到长度大于20的行</span></span><br><span class="line">awk <span class="string">'length&gt;20'</span> 1.txt</span><br></pre></td></tr></table></figure>
+<p>包含</p>
+<ul>
+<li><p>命令模式(Command)</p>
+</li>
+<li><p>观察者模式(Observer)</p>
+</li>
+<li><p>策略模式(Strategy)</p>
+</li>
+</ul>
+<p>其他：解释器模式(Interpreter)，中介者模式(Mediator)，备忘录模式(Memento)，状态模式(State)，模板方法模式(Template Method)，访问者模式(Visitor)</p>
+<h2 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h2><p>动机：在软件设计中，我们经常需要向某些对象发送请求，但是并不知道请求的接收者是谁，也不知道被请求的操作是哪个，我们只需在程序运行时指定具体的请求接收者即可，此时，可以使用命令模式来进行设计，使得请求发送者与请求接收者消除彼此之间的耦合，让对象之间的调用关系更加灵活。</p>
+<p>命令模式可以对发送者和接收者完全解耦，发送者与接收者之间没有直接引用关系，发送请求的对象只需要知道如何发送请求，而不必知道如何完成请求。这就是命令模式的模式动机。</p>
+<p>定义：将一个请求封装为一个对象，从而使我们可用不同的请求对客户进行参数化；对请求排队或者记录请求日志，以及支持可撤销的操作。命令模式是一种对象行为型模式，其别名为动作(Action)模式或事务(Transaction)模式。</p>
+<p>角色</p>
+<ul>
+<li>Command: 抽象命令类</li>
+<li>ConcreteCommand: 具体命令类</li>
+<li>Invoker: 调用者</li>
+<li>Receiver: 接收者</li>
+<li>Client:客户类</li>
+</ul>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Command.jpg" alt="Command"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Command.jpg" alt="seq_Command"></p>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Command_eg.jpg" alt="Command_eg"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Command_eg.jpg" alt="seq_Command_eg"></p>
+<p>优点</p>
+<ul>
+<li><p>降低系统的耦合度。</p>
+</li>
+<li><p>新的命令可以很容易地加入到系统中。</p>
+</li>
+<li><p>可以比较容易地设计一个命令队列和宏命令（组合命令）。</p>
+</li>
+<li><p>可以方便地实现对请求的Undo和Redo。</p>
+</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>使用命令模式可能会导致某些系统有过多的具体命令类。因为针对每一个命令都需要设计一个具体命令类，因此某些系统可能需要大量具体命令类，这将影响命令模式的使用。</li>
+</ul>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><p>动机：建立一种对象与对象之间的依赖关系，一个对象发生改变时将自动通知其他对象，其他对象将相应做出反应。在此，发生改变的对象称为观察目标，而被通知的对象称为观察者，一个观察目标可以对应多个观察者，而且这些观察者之间没有相互联系，可以根据需要增加和删除观察者，使得系统更易于扩展，这就是观察者模式的模式动机。</p>
+<p>定义：定义对象间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象皆得到通知并被自动更新。观察者模式又叫做发布-订阅（Publish/Subscribe）模式、模型-视图（Model/View）模式、源-监听器（Source/Listener）模式或从属者（Dependents）模式。</p>
+<p>角色</p>
+<ul>
+<li>Subject: 目标</li>
+<li>ConcreteSubject: 具体目标</li>
+<li>Observer: 观察者</li>
+<li>ConcreteObserver: 具体观察者</li>
+</ul>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Obeserver.jpg" alt="Obeserver"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Obeserver.jpg" alt="seq_Obeserver"></p>
+<p>优点</p>
+<ul>
+<li><p>观察者模式可以实现表示层和数据逻辑层的分离，并定义了稳定的消息更新传递机制，抽象了更新接口，使得可以有各种各样不同的表示层作为具体观察者角色。</p>
+</li>
+<li><p>观察者模式在观察目标和观察者之间建立一个抽象的耦合。</p>
+</li>
+<li><p>观察者模式支持广播通信。</p>
+</li>
+<li><p>观察者模式符合“开闭原则”的要求。</p>
+</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li><p>如果一个观察目标对象有很多直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。</p>
+</li>
+<li><p>如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。</p>
+</li>
+<li><p>观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</p>
+</li>
+</ul>
+<h2 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h2><p>动机</p>
+<ul>
+<li><p>完成一项任务，往往可以有多种不同的方式，每一种方式称为一个策略，我们可以根据环境或者条件的不同选择不同的策略来完成该项任务。</p>
+</li>
+<li><p>在软件开发中也常常遇到类似的情况，实现某一个功能有多个途径，此时可以使用一种设计模式来使得系统可以灵活地选择解决途径，也能够方便地增加新的解决途径。</p>
+</li>
+<li><p>在软件系统中，有许多算法可以实现某一功能，如查找、排序等，一种常用的方法是硬编码(Hard Coding)在一个类中，如需要提供多种查找算法，可以将这些算法写到一个类中，在该类中提供多个方法，每一个方法对应一个具体的查找算法；当然也可以将这些查找算法封装在一个统一的方法中，通过if…else…等条件判断语句来进行选择。这两种实现方法我们都可以称之为硬编码，如果需要增加一种新的查找算法，需要修改封装算法类的源代码；更换查找算法，也需要修改客户端调用代码。在这个算法类中封装了大量查找算法，该类代码将较复杂，维护较为困难。</p>
+</li>
+<li><p>除了提供专门的查找算法类之外，还可以在客户端程序中直接包含算法代码，这种做法更不可取，将导致客户端程序庞大而且难以维护，如果存在大量可供选择的算法时问题将变得更加严重。</p>
+</li>
+<li><p>为了解决这些问题，可以定义一些独立的类来封装不同的算法，每一个类封装一个具体的算法，在这里，每一个封装算法的类我们都可以称之为策略(Strategy)，为了保证这些策略的一致性，一般会用一个抽象的策略类来做算法的定义，而具体每种算法则对应于一个具体策略类。</p>
+</li>
+</ul>
+<p>定义：定义一系列算法，将每一个算法封装起来，并让它们可以相互替换。策略模式让算法独立于使用它的客户而变化，也称为政策模式(Policy)。</p>
+<p>角色</p>
+<ul>
+<li>Context: 环境类</li>
+<li>Strategy: 抽象策略类</li>
+<li>ConcreteStrategy: 具体策略类</li>
+</ul>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Strategy.jpg" alt="Strategy"></p>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Strategy.jpg" alt="seq_Strategy"></p>
+<p>优点</p>
+<ul>
+<li><p>策略模式提供了对“开闭原则”的完美支持，用户可以在不修改原有系统的基础上选择算法或行为，也可以灵活地增加新的算法或行为。</p>
+</li>
+<li><p>策略模式提供了管理相关的算法族的办法。</p>
+</li>
+<li><p>策略模式提供了可以替换继承关系的办法。</p>
+</li>
+<li><p>使用策略模式可以避免使用多重条件转移语句。</p>
+</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li><p>客户端必须知道所有的策略类，并自行决定使用哪一个策略类。</p>
+</li>
+<li><p>策略模式将造成产生很多策略类，可以通过使用享元模式在一定程度上减少对象的数量。</p>
+</li>
+</ul>
 
       
     </div>
@@ -432,11 +515,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/shell/" rel="tag"># shell</a>
-          
-            <a href="/tags/awk/" rel="tag"># awk</a>
-          
-            <a href="/tags/cat/" rel="tag"># cat</a>
+            <a href="/tags/design/" rel="tag"># design</a>
           
         </div>
       
@@ -449,8 +528,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/shell-start/" rel="next" title="shell编程入门">
-                <i class="fa fa-chevron-left"></i> shell编程入门
+              <a href="/design-struct/" rel="next" title="设计模式-结构型">
+                <i class="fa fa-chevron-left"></i> 设计模式-结构型
               </a>
             
           </div>
@@ -458,10 +537,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/mycat-sql-parser/" rel="prev" title="mycat的sql解析">
-                mycat的sql解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -603,7 +678,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#awk命令"><span class="nav-text">awk命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础用法"><span class="nav-text">基础用法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令模式"><span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#观察者模式"><span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#策略模式"><span class="nav-text">策略模式</span></a></li></ol></div>
             
 
           </div>

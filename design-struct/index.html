@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="shell,awk,cat," />
+  <meta name="keywords" content="design," />
 
 
 
@@ -79,18 +79,26 @@
 
 
 
-<meta name="description" content="介绍awk是处理文件文本的语言，是一个强大的文本分析工具 awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。 awk命令语法123awk [选项参数] &apos;script&apos; var=value file(s)awk [选项参数] -f scriptfile var=value files(s) 选项参数：  -F fs or">
-<meta name="keywords" content="shell,awk,cat">
+<meta name="description" content="介绍结构型模式(Structural Pattern)描述如何将类或者对 象结合在一起形成更大的结构，就像搭积木，可以通过 简单积木的组合形成复杂的、功能更为强大的结构。 类结构型模式关心类的组合，由多个类可以组合成一个更大的系统，在类结构型模式中一般只存在继承关系和实现关系。对象结构型模式关心类与对象的组合，通过关联关系使得在一个类中定义另一个类的实例对象，然后通过该对象调用其方法。 根据“合成">
+<meta name="keywords" content="design">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell-awk命令">
-<meta property="og:url" content="http://chenlisong.github.io/shell-awk/index.html">
+<meta property="og:title" content="设计模式-结构型">
+<meta property="og:url" content="http://chenlisong.github.io/design-struct/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="介绍awk是处理文件文本的语言，是一个强大的文本分析工具 awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。 awk命令语法123awk [选项参数] &apos;script&apos; var=value file(s)awk [选项参数] -f scriptfile var=value files(s) 选项参数：  -F fs or">
+<meta property="og:description" content="介绍结构型模式(Structural Pattern)描述如何将类或者对 象结合在一起形成更大的结构，就像搭积木，可以通过 简单积木的组合形成复杂的、功能更为强大的结构。 类结构型模式关心类的组合，由多个类可以组合成一个更大的系统，在类结构型模式中一般只存在继承关系和实现关系。对象结构型模式关心类与对象的组合，通过关联关系使得在一个类中定义另一个类的实例对象，然后通过该对象调用其方法。 根据“合成">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-17T03:51:05.432Z">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Adapter.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Adapter_classModel.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Adapter.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Facade.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Facade.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Proxy.jpg">
+<meta property="og:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Proxy.jpg">
+<meta property="og:updated_time" content="2018-10-11T09:36:35.539Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell-awk命令">
-<meta name="twitter:description" content="介绍awk是处理文件文本的语言，是一个强大的文本分析工具 awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。 awk命令语法123awk [选项参数] &apos;script&apos; var=value file(s)awk [选项参数] -f scriptfile var=value files(s) 选项参数：  -F fs or">
+<meta name="twitter:title" content="设计模式-结构型">
+<meta name="twitter:description" content="介绍结构型模式(Structural Pattern)描述如何将类或者对 象结合在一起形成更大的结构，就像搭积木，可以通过 简单积木的组合形成复杂的、功能更为强大的结构。 类结构型模式关心类的组合，由多个类可以组合成一个更大的系统，在类结构型模式中一般只存在继承关系和实现关系。对象结构型模式关心类与对象的组合，通过关联关系使得在一个类中定义另一个类的实例对象，然后通过该对象调用其方法。 根据“合成">
+<meta name="twitter:image" content="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Adapter.jpg">
 
 
 
@@ -120,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/shell-awk/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/design-struct/"/>
 
 
 
 
 
-  <title>shell-awk命令 | 一抹阳光丶</title>
+  <title>设计模式-结构型 | 一抹阳光丶</title>
   
 
 
@@ -273,7 +281,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/shell-awk/">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/design-struct/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一抹阳光丶">
@@ -290,7 +298,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">shell-awk命令</h1>
+          <h1 class="post-title" itemprop="name headline">设计模式-结构型</h1>
         
 
         <div class="post-meta">
@@ -302,8 +310,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-17T11:56:09+08:00">
-                2018-04-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-11T18:00:00+08:00">
+                2018-10-11
               </time>
             
 
@@ -325,8 +333,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/shell/" itemprop="url" rel="index">
-                    <span itemprop="name">shell</span>
+                  <a href="/categories/design/" itemprop="url" rel="index">
+                    <span itemprop="name">design</span>
                   </a>
                 </span>
 
@@ -342,7 +350,7 @@
 
           
           
-             <span id="/shell-awk/" class="leancloud_visitors" data-flag-title="shell-awk命令">
+             <span id="/design-struct/" class="leancloud_visitors" data-flag-title="设计模式-结构型">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -373,48 +381,118 @@
       
 
       
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>awk是处理文件文本的语言，是一个强大的文本分析工具</p>
-<p>awk取自三个创始人名字的首字母。Alfred Aho，Peter Weinberger, 和 Brian Kernighan。</p>
-<h2 id="awk命令"><a href="#awk命令" class="headerlink" title="awk命令"></a>awk命令</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">awk [选项参数] <span class="string">'script'</span> var=value file(s)</span><br><span class="line"></span><br><span class="line">awk [选项参数] -f scriptfile var=value files(s)</span><br></pre></td></tr></table></figure>
-<p>选项参数：</p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>结构型模式(Structural Pattern)描述如何将类或者对 象结合在一起形成更大的结构，就像搭积木，可以通过 简单积木的组合形成复杂的、功能更为强大的结构。</p>
+<p>类结构型模式关心类的组合，由多个类可以组合成一个更大的系统，在类结构型模式中一般只存在继承关系和实现关系。对象结构型模式关心类与对象的组合，通过关联关系使得在一个类中定义另一个类的实例对象，然后通过该对象调用其方法。 根据“合成复用原则”，在系统中尽量使用关联关系来替代继 承关系，因此大部分结构型模式都是对象结构型模式。</p>
+<p>包含</p>
 <ul>
-<li><p>-F fs or –field-separator fs 指定输入文件拆分隔符，fs是一个字符串或者是一个正则表达式，如 -f</p>
+<li><p>适配器模式(Adapter)</p>
 </li>
-<li><p>-V var=value or –asign var=value 赋值一个用户定义变量</p>
+<li><p>组合模式(Composite)</p>
 </li>
-<li><p>-S scrptfile or –file scriptfile 从脚本文件中读取awk命令</p>
+<li><p>外观模式(Facade)</p>
 </li>
-<li><p>-W compright or –copyright 打印简短版权信息</p>
-</li>
-<li><p>-W help or –help 打印全部awk选项和每个选项的简短说明</p>
+<li><p>代理模式(Proxy)</p>
 </li>
 </ul>
+<p>其他：桥接模式(Bridge)， 装饰模式(Decorator)， 享元模式(Flyweight)</p>
+<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><p>动机</p>
+<ul>
+<li><p>在软件开发中采用类似于电源适配器的设计和编码技巧被称为适配器模式。</p>
+</li>
+<li><p>通常情况下，客户端可以通过目标类的接口访问它所提供的服务。有时，现有的类可以满足客户类的功能需要，但是它所提供的接口不一定是客户类所期望的，这可能是因为现有类中方法名与目标类中定义的方法名不一致等原因所导致的。</p>
+</li>
+<li><p>在这种情况下，现有的接口需要转化为客户类期望的接口，这样保证了对现有类的重用。如果不进行这样的转化，客户类就不能利用现有类所提供的功能，适配器模式可以完成这样的转化。</p>
+</li>
+<li><p>在适配器模式中可以定义一个包装类，包装不兼容接口的对象，这个包装类指的就是适配器(Adapter)，它所包装的对象就是适配者(Adaptee)，即被适配的类。</p>
+</li>
+<li><p>适配器提供客户类需要的接口，适配器的实现就是把客户类的请求转化为对适配者的相应接口的调用。也就是说：当客户类调用适配器的方法时，在适配器类的内部将调用适配者类的方法，而这个过程对客户类是透明的，客户类并不直接访问适配者类。因此，适配器可以使由于接口不兼容而不能交互的类可以一起工作。这就是适配器模式的模式动机。</p>
+</li>
+</ul>
+<p>定义：将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。适配器模式既可以作为类结构型模式，也可以作为对象结构型模式。</p>
 <a id="more"></a>
-<h3 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h3><p>1.txt文本内容如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2 this is a test</span><br><span class="line">3 Are you like awk</span><br><span class="line">This&apos;s a test</span><br><span class="line">10 There are orange,apple,mongo</span><br></pre></td></tr></table></figure>
-<ol>
-<li>输出文件内容/使用pattern方式</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;[pattern] action&#125;'</span> &#123;filename&#125; <span class="comment">#行匹配语句 awk '' 只能用单引号</span></span><br><span class="line"></span><br><span class="line">awk <span class="string">'&#123;print $1, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line">awk <span class="string">'&#123;printf "%-8s %-10s\n", $1, $4&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2 a</span><br><span class="line">3 like</span><br><span class="line">This<span class="string">'s </span></span><br><span class="line"><span class="string">10 orange,apple,mongo</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2        a         </span></span><br><span class="line"><span class="string">3        like      </span></span><br><span class="line"><span class="string">This'</span>s             </span><br><span class="line">10       orange,apple,mongo</span><br></pre></td></tr></table></figure></p>
-<ol start="2">
-<li>输出文件内容/使用-F方式</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">awk -F <span class="comment">#-F相当于内置变量FS，指定分割字符</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#使用逗号分割</span></span><br><span class="line">awk -F, <span class="string">'&#123;print $1, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用内建变量</span></span><br><span class="line">awk <span class="string">'BEGIN&#123;FS=","&#125; &#123;print $1, $2&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用多个分隔符，先用空格分割，再用逗号分割</span></span><br><span class="line">awk -F <span class="string">'[ ,]'</span> <span class="string">'&#123;print $1, $2, $5&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">2 this is a <span class="built_in">test</span> </span><br><span class="line">3 Are you like awk </span><br><span class="line">This<span class="string">'s a test </span></span><br><span class="line"><span class="string">10 There are orange</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2 this is a test </span></span><br><span class="line"><span class="string">3 Are you like awk </span></span><br><span class="line"><span class="string">This'</span>s a <span class="built_in">test</span> </span><br><span class="line">10 There are orange apple</span><br><span class="line"></span><br><span class="line">2 this <span class="built_in">test</span></span><br><span class="line">3 Are awk</span><br><span class="line">This<span class="string">'s a </span></span><br><span class="line"><span class="string">10 There apple</span></span><br></pre></td></tr></table></figure></p>
-<ol start="3">
-<li>输出文件内容/使用-v方式</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">awk -v <span class="comment">#设置变量</span></span><br><span class="line"></span><br><span class="line">awk -va=1 <span class="string">'&#123;print $1, $1+a&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line">awk -va=1 -vb=s <span class="string">'&#123;print $1, $1+a, $1b&#125;'</span> 1.txt</span><br></pre></td></tr></table></figure>
-<p>执行结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2 3</span><br><span class="line">3 4</span><br><span class="line">This<span class="string">'s 1</span></span><br><span class="line"><span class="string">10 11</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2 3 2s</span></span><br><span class="line"><span class="string">3 4 3s</span></span><br><span class="line"><span class="string">This'</span>s 1 This<span class="string">'ss</span></span><br><span class="line"><span class="string">10 11 10s</span></span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>执行命令脚本</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -f cal.awk 1.txt</span><br></pre></td></tr></table></figure>
-<p>例子如下<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#过滤第一列大于2的行</span></span><br><span class="line">awk <span class="string">'$1&gt;2'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#过滤第一列等于2的行</span></span><br><span class="line">awk <span class="string">'$1==2 &#123;print $1, $3&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#过滤第一列大于2并且第二列等于Are的行</span></span><br><span class="line">awk <span class="string">'$1&gt;2 &amp;&amp; $2=="Are" &#123;print $1, $2, $3&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用正则匹配</span></span><br><span class="line"><span class="comment">#输出第二列包含“th”，并打印第二列与第四列</span></span><br><span class="line">awk <span class="string">'$2 ~ /th/ &#123;print $2, $4&#125;'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出包含re的行</span></span><br><span class="line">awk <span class="string">'/re/'</span> 1.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#忽略大小写</span></span><br><span class="line">awk <span class="string">'BEGIN&#123;IGNORECASE=1&#125; /this/'</span> 1.txt</span><br></pre></td></tr></table></figure></p>
-<p>其他的一些实例</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#从文件中找到长度大于20的行</span></span><br><span class="line">awk <span class="string">'length&gt;20'</span> 1.txt</span><br></pre></td></tr></table></figure>
+<p>角色</p>
+<ul>
+<li><p>Target：目标抽象类</p>
+</li>
+<li><p>Adapter：适配器类</p>
+</li>
+<li><p>Adaptee：适配者类</p>
+</li>
+<li><p>Client：客户类</p>
+</li>
+</ul>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Adapter.jpg" alt="Adapter"></p>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Adapter_classModel.jpg" alt="Adapter_classModel"></p>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Adapter.jpg" alt="seq_Adapter"></p>
+<p>优点</p>
+<ul>
+<li><p>将目标类和适配者类解耦，通过引入一个适配器类来重用现有的适配者类，而无须修改原有代码。</p>
+</li>
+<li><p>增加了类的透明性和复用性，将具体的实现封装在适配者类中，对于客户端类来说是透明的，而且提高了适配者的复用性。</p>
+</li>
+<li><p>灵活性和扩展性都非常好，通过使用配置文件，可以很方便地更换适配器，也可以在不修改原有代码的基础上增加新的适配器类，完全符合“开闭原则”。</p>
+</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li><p>对于Java、C#等不支持多重继承的语言，一次最多只能适配一个适配者类，而且目标抽象类只能为抽象类，不能为具体类，其使用有一定的局限性，不能将一个适配者类和它的子类都适配到目标接口。</p>
+</li>
+<li><p>与类适配器模式相比，要想置换适配者类的方法就不容易。如果一定要置换掉适配者类的一个或多个方法，就只好先做一个适配者类的子类，将适配者类的方法置换掉，然后再把适配者类的子类当做真正的适配者进行适配，实现过程较为复杂。</p>
+</li>
+</ul>
+<h2 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h2><p>动机：外部与一个子系统的通信必须通过一个统一的外观对象进行，为子系统中的一组接口提供一个一致的界面，外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。外观模式又称为门面模式，它是一种对象结构型模式。</p>
+<p>角色</p>
+<ul>
+<li>Facade: 外观角色</li>
+<li>SubSystem:子系统角色</li>
+</ul>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Facade.jpg" alt="Facade"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Facade.jpg" alt="seq_Facade"></p>
+<p>优点</p>
+<ul>
+<li><p>对客户屏蔽子系统组件，减少了客户处理的对象数目并使得子系统使用起来更加容易。通过引入外观模式，客户代码将变得很简单，与之关联的对象也很少。</p>
+</li>
+<li><p>实现了子系统与客户之间的松耦合关系，这使得子系统的组件变化不会影响到调用它的客户类，只需要调整外观类即可。</p>
+</li>
+<li><p>降低了大型软件系统中的编译依赖性，并简化了系统在不同平台之间的移植过程，因为编译一个子系统一般不需要编译所有其他的子系统。一个子系统的修改对其他子系统没有任何影响，而且子系统内部变化也不会影响到外观对象。</p>
+</li>
+<li><p>只是提供了一个访问子系统的统一入口，并不影响用户直接使用子系统类。</p>
+</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li><p>不能很好地限制客户使用子系统类，如果对客户访问子系统类做太多的限制则减少了可变性和灵活性。</p>
+</li>
+<li><p>在不引入抽象外观类的情况下，增加新的子系统可能需要修改外观类或客户端的源代码，违背了“开闭原则”。</p>
+</li>
+</ul>
+<h2 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h2><p>动机：在某些情况下，一个客户不想或者不能直接引用一个对 象，此时可以通过一个称之为“代理”的第三者来实现 间接引用。代理对象可以在客户端和目标对象之间起到 中介的作用，并且可以通过代理对象去掉客户不能看到 的内容和服务或者添加客户需要的额外服务。</p>
+<p>通过引入一个新的对象（如小图片和远程代理 对象）来实现对真实对象的操作或者将新的对 象作为真实对象的一个替身，这种实现机制即 为代理模式，通过引入代理对象来间接访问一 个对象，这就是代理模式的模式动机。</p>
+<p>定义：给某一个对象提供一个代理，并由代理对象控制对原对象的引用。代理模式的英 文叫做Proxy或Surrogate，它是一种对象结构型模式。</p>
+<p>角色</p>
+<ul>
+<li>Subject: 抽象主题角色</li>
+<li>Proxy: 代理主题角色</li>
+<li>RealSubject: 真实主题角色</li>
+</ul>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Proxy.jpg" alt="Facade"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Proxy.jpg" alt="seq_Facade"></p>
+<p>优点</p>
+<ul>
+<li><p>代理模式能够协调调用者和被调用者，在一定程度上降低了系统的耦合度。</p>
+</li>
+<li><p>远程代理使得客户端可以访问在远程机器上的对象，远程机器可能具有更好的计算性能与处理速度，可以快速响应并处理客户端请求。</p>
+</li>
+<li><p>虚拟代理通过使用一个小对象来代表一个大对象，可以减少系 统资源的消耗，对系统进行优化并提高运行速度。</p>
+</li>
+<li><p>保护代理可以控制对真实对象的使用权限。</p>
+</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li><p>由于在客户端和真实主题之间增加了代理对象，因此 有些类型的代理模式可能会造成请求的处理速度变慢。</p>
+</li>
+<li><p>实现代理模式需要额外的工作，有些代理模式的实现非常复杂。</p>
+</li>
+</ul>
 
       
     </div>
@@ -432,11 +510,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/shell/" rel="tag"># shell</a>
-          
-            <a href="/tags/awk/" rel="tag"># awk</a>
-          
-            <a href="/tags/cat/" rel="tag"># cat</a>
+            <a href="/tags/design/" rel="tag"># design</a>
           
         </div>
       
@@ -449,8 +523,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/shell-start/" rel="next" title="shell编程入门">
-                <i class="fa fa-chevron-left"></i> shell编程入门
+              <a href="/design-create/" rel="next" title="设计模式-创建型">
+                <i class="fa fa-chevron-left"></i> 设计模式-创建型
               </a>
             
           </div>
@@ -459,8 +533,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/mycat-sql-parser/" rel="prev" title="mycat的sql解析">
-                mycat的sql解析 <i class="fa fa-chevron-right"></i>
+              <a href="/design-behavior/" rel="prev" title="设计模式-行为型">
+                设计模式-行为型 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -603,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#awk命令"><span class="nav-text">awk命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础用法"><span class="nav-text">基础用法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适配器模式"><span class="nav-text">适配器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外观模式"><span class="nav-text">外观模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理模式"><span class="nav-text">代理模式</span></a></li></ol></div>
             
 
           </div>

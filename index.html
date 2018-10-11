@@ -272,6 +272,458 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/design-behavior/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一抹阳光丶">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一抹阳光丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/design-behavior/" itemprop="url">设计模式-行为型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-11T20:00:00+08:00">
+                2018-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/design/" itemprop="url" rel="index">
+                    <span itemprop="name">design</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/design-behavior/" class="leancloud_visitors" data-flag-title="设计模式-行为型">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>行为型模式(Behavioral Pattern)是对在不同的对象之间划分责任和算法的抽象化。</p>
+<p>行为型模式不仅仅关注类和对象的结构，而且重点关注它们之间的相互作用。通过行为型模式，可以更加清晰地划分类与对象的职责，并研究系统在运行时实例对象之间的交互。在系统运行时，对象并不是孤立的，它们可以通过相互通信与协作完成某些复杂功能，一个对象在运行时也将影响到其他对象的运行。</p>
+<ul>
+<li><p>类行为型模式：类的行为型模式使用继承关系在几个类之间分配行为，类行为型模式主要通过多态等方式来分配父类与子类的职责。</p>
+</li>
+<li><p>对象行为型模式：对象的行为型模式则使用对象的聚合关联关系来分配行为，对象行为型模式主要是通过对象关联等方式来分配两个或多个类的职责。根据“合成复用原则”，系统中要尽量使用关联关系来取代继承关系，因此大部分行为型设计模式都属于对象行为型设计模式。</p>
+</li>
+</ul>
+<p>包含</p>
+<ul>
+<li><p>命令模式(Command)</p>
+</li>
+<li><p>观察者模式(Observer)</p>
+</li>
+<li><p>策略模式(Strategy)</p>
+</li>
+</ul>
+<p>其他：解释器模式(Interpreter)，中介者模式(Mediator)，备忘录模式(Memento)，状态模式(State)，模板方法模式(Template Method)，访问者模式(Visitor)</p>
+<h2 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h2><p>动机：在软件设计中，我们经常需要向某些对象发送请求，但是并不知道请求的接收者是谁，也不知道被请求的操作是哪个，我们只需在程序运行时指定具体的请求接收者即可，此时，可以使用命令模式来进行设计，使得请求发送者与请求接收者消除彼此之间的耦合，让对象之间的调用关系更加灵活。</p>
+<p>命令模式可以对发送者和接收者完全解耦，发送者与接收者之间没有直接引用关系，发送请求的对象只需要知道如何发送请求，而不必知道如何完成请求。这就是命令模式的模式动机。</p>
+<p>定义：将一个请求封装为一个对象，从而使我们可用不同的请求对客户进行参数化；对请求排队或者记录请求日志，以及支持可撤销的操作。命令模式是一种对象行为型模式，其别名为动作(Action)模式或事务(Transaction)模式。</p>
+<p>角色</p>
+<ul>
+<li>Command: 抽象命令类</li>
+<li>ConcreteCommand: 具体命令类</li>
+<li>Invoker: 调用者</li>
+<li>Receiver: 接收者</li>
+<li>Client:客户类</li>
+</ul>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Command.jpg" alt="Command"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Command.jpg" alt="seq_Command"></p>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Command_eg.jpg" alt="Command_eg"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Command_eg.jpg" alt="seq_Command_eg"></p>
+<p>优点</p>
+<ul>
+<li><p>降低系统的耦合度。</p>
+</li>
+<li><p>新的命令可以很容易地加入到系统中。</p>
+</li>
+<li><p>可以比较容易地设计一个命令队列和宏命令（组合命令）。</p>
+</li>
+<li><p>可以方便地实现对请求的Undo和Redo。</p>
+</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>使用命令模式可能会导致某些系统有过多的具体命令类。因为针对每一个命令都需要设计一个具体命令类，因此某些系统可能需要大量具体命令类，这将影响命令模式的使用。</li>
+</ul>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><p>动机：建立一种对象与对象之间的依赖关系，一个对象发生改变时将自动通知其他对象，其他对象将相应做出反应。在此，发生改变的对象称为观察目标，而被通知的对象称为观察者，一个观察目标可以对应多个观察者，而且这些观察者之间没有相互联系，可以根据需要增加和删除观察者，使得系统更易于扩展，这就是观察者模式的模式动机。</p>
+<p>定义：定义对象间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象皆得到通知并被自动更新。观察者模式又叫做发布-订阅（Publish/Subscribe）模式、模型-视图（Model/View）模式、源-监听器（Source/Listener）模式或从属者（Dependents）模式。</p>
+<p>角色</p>
+<ul>
+<li>Subject: 目标</li>
+<li>ConcreteSubject: 具体目标</li>
+<li>Observer: 观察者</li>
+<li>ConcreteObserver: 具体观察者</li>
+</ul>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Obeserver.jpg" alt="Obeserver"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Obeserver.jpg" alt="seq_Obeserver"></p>
+<p>优点</p>
+<ul>
+<li><p>观察者模式可以实现表示层和数据逻辑层的分离，并定义了稳定的消息更新传递机制，抽象了更新接口，使得可以有各种各样不同的表示层作为具体观察者角色。</p>
+</li>
+<li><p>观察者模式在观察目标和观察者之间建立一个抽象的耦合。</p>
+</li>
+<li><p>观察者模式支持广播通信。</p>
+</li>
+<li><p>观察者模式符合“开闭原则”的要求。</p>
+</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li><p>如果一个观察目标对象有很多直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。</p>
+</li>
+<li><p>如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。</p>
+</li>
+<li><p>观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</p>
+</li>
+</ul>
+<h2 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h2><p>动机</p>
+<ul>
+<li><p>完成一项任务，往往可以有多种不同的方式，每一种方式称为一个策略，我们可以根据环境或者条件的不同选择不同的策略来完成该项任务。</p>
+</li>
+<li><p>在软件开发中也常常遇到类似的情况，实现某一个功能有多个途径，此时可以使用一种设计模式来使得系统可以灵活地选择解决途径，也能够方便地增加新的解决途径。</p>
+</li>
+<li><p>在软件系统中，有许多算法可以实现某一功能，如查找、排序等，一种常用的方法是硬编码(Hard Coding)在一个类中，如需要提供多种查找算法，可以将这些算法写到一个类中，在该类中提供多个方法，每一个方法对应一个具体的查找算法；当然也可以将这些查找算法封装在一个统一的方法中，通过if…else…等条件判断语句来进行选择。这两种实现方法我们都可以称之为硬编码，如果需要增加一种新的查找算法，需要修改封装算法类的源代码；更换查找算法，也需要修改客户端调用代码。在这个算法类中封装了大量查找算法，该类代码将较复杂，维护较为困难。</p>
+</li>
+<li><p>除了提供专门的查找算法类之外，还可以在客户端程序中直接包含算法代码，这种做法更不可取，将导致客户端程序庞大而且难以维护，如果存在大量可供选择的算法时问题将变得更加严重。</p>
+</li>
+<li><p>为了解决这些问题，可以定义一些独立的类来封装不同的算法，每一个类封装一个具体的算法，在这里，每一个封装算法的类我们都可以称之为策略(Strategy)，为了保证这些策略的一致性，一般会用一个抽象的策略类来做算法的定义，而具体每种算法则对应于一个具体策略类。</p>
+</li>
+</ul>
+<p>定义：定义一系列算法，将每一个算法封装起来，并让它们可以相互替换。策略模式让算法独立于使用它的客户而变化，也称为政策模式(Policy)。</p>
+<p>角色</p>
+<ul>
+<li>Context: 环境类</li>
+<li>Strategy: 抽象策略类</li>
+<li>ConcreteStrategy: 具体策略类</li>
+</ul>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Strategy.jpg" alt="Strategy"></p>
+<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Strategy.jpg" alt="seq_Strategy"></p>
+<p>优点</p>
+<ul>
+<li><p>策略模式提供了对“开闭原则”的完美支持，用户可以在不修改原有系统的基础上选择算法或行为，也可以灵活地增加新的算法或行为。</p>
+</li>
+<li><p>策略模式提供了管理相关的算法族的办法。</p>
+</li>
+<li><p>策略模式提供了可以替换继承关系的办法。</p>
+</li>
+<li><p>使用策略模式可以避免使用多重条件转移语句。</p>
+</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li><p>客户端必须知道所有的策略类，并自行决定使用哪一个策略类。</p>
+</li>
+<li><p>策略模式将造成产生很多策略类，可以通过使用享元模式在一定程度上减少对象的数量。</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/design-struct/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="一抹阳光丶">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一抹阳光丶">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/design-struct/" itemprop="url">设计模式-结构型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-11T18:00:00+08:00">
+                2018-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/design/" itemprop="url" rel="index">
+                    <span itemprop="name">design</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/design-struct/" class="leancloud_visitors" data-flag-title="设计模式-结构型">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>结构型模式(Structural Pattern)描述如何将类或者对 象结合在一起形成更大的结构，就像搭积木，可以通过 简单积木的组合形成复杂的、功能更为强大的结构。</p>
+<p>类结构型模式关心类的组合，由多个类可以组合成一个更大的系统，在类结构型模式中一般只存在继承关系和实现关系。对象结构型模式关心类与对象的组合，通过关联关系使得在一个类中定义另一个类的实例对象，然后通过该对象调用其方法。 根据“合成复用原则”，在系统中尽量使用关联关系来替代继 承关系，因此大部分结构型模式都是对象结构型模式。</p>
+<p>包含</p>
+<ul>
+<li><p>适配器模式(Adapter)</p>
+</li>
+<li><p>组合模式(Composite)</p>
+</li>
+<li><p>外观模式(Facade)</p>
+</li>
+<li><p>代理模式(Proxy)</p>
+</li>
+</ul>
+<p>其他：桥接模式(Bridge)， 装饰模式(Decorator)， 享元模式(Flyweight)</p>
+<h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><p>动机</p>
+<ul>
+<li><p>在软件开发中采用类似于电源适配器的设计和编码技巧被称为适配器模式。</p>
+</li>
+<li><p>通常情况下，客户端可以通过目标类的接口访问它所提供的服务。有时，现有的类可以满足客户类的功能需要，但是它所提供的接口不一定是客户类所期望的，这可能是因为现有类中方法名与目标类中定义的方法名不一致等原因所导致的。</p>
+</li>
+<li><p>在这种情况下，现有的接口需要转化为客户类期望的接口，这样保证了对现有类的重用。如果不进行这样的转化，客户类就不能利用现有类所提供的功能，适配器模式可以完成这样的转化。</p>
+</li>
+<li><p>在适配器模式中可以定义一个包装类，包装不兼容接口的对象，这个包装类指的就是适配器(Adapter)，它所包装的对象就是适配者(Adaptee)，即被适配的类。</p>
+</li>
+<li><p>适配器提供客户类需要的接口，适配器的实现就是把客户类的请求转化为对适配者的相应接口的调用。也就是说：当客户类调用适配器的方法时，在适配器类的内部将调用适配者类的方法，而这个过程对客户类是透明的，客户类并不直接访问适配者类。因此，适配器可以使由于接口不兼容而不能交互的类可以一起工作。这就是适配器模式的模式动机。</p>
+</li>
+</ul>
+<p>定义：将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器(Wrapper)。适配器模式既可以作为类结构型模式，也可以作为对象结构型模式。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/design-struct/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/design-create/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1607,350 +2059,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/redis-data-structure-string/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="一抹阳光丶">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一抹阳光丶">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/redis-data-structure-string/" itemprop="url">redis常用的数据结构之string</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-18T22:00:00+08:00">
-                2018-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index">
-                    <span itemprop="name">redis</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/redis-data-structure-string/" class="leancloud_visitors" data-flag-title="redis常用的数据结构之string">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>redis常用的数据结构string，及其底层数据结构实现。</p>
-<p>涉及的内容：string, list, hash, set, zset, hyperloglog, rebloom, redis-cell</p>
-<p>版本：&gt;= 4.0</p>
-<h2 id="RedisObject"><a href="#RedisObject" class="headerlink" title="RedisObject"></a>RedisObject</h2><p>redis对象头的数据结构</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">RedisObject</span> &#123;</span></span><br><span class="line">    int4 type; <span class="comment">// 4bits</span></span><br><span class="line">    int4 encoding; <span class="comment">// 4bits</span></span><br><span class="line">    int24 lru; <span class="comment">// 24bits</span></span><br><span class="line">    int32 refcount; <span class="comment">// 4bytes</span></span><br><span class="line">    <span class="keyword">void</span> *ptr; <span class="comment">// 8bytes，64-bit system</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>一个RedisObject占用16个bytes。</p>
-<h2 id="embstr-amp-raw"><a href="#embstr-amp-raw" class="headerlink" title="embstr &amp; raw"></a>embstr &amp; raw</h2><p>string的存储结构。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/redis-data-structure-string/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/java-readwrite-lock/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="一抹阳光丶">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://www.kehue.com/pic/cls.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一抹阳光丶">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/java-readwrite-lock/" itemprop="url">Java读写锁的实现</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-18T21:00:00+08:00">
-                2018-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/java-readwrite-lock/" class="leancloud_visitors" data-flag-title="Java读写锁的实现">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Java读写锁的实现</p>
-<h2 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h2><p>方法定义，不管是简单实现还是进阶实现，读写锁暴露四个方法</p>
-<ul>
-<li><p>public synchronized void lockRead()</p>
-</li>
-<li><p>public synchronized void unlockRead()</p>
-</li>
-<li><p>public synchronized void lockWrite()</p>
-</li>
-<li><p>public synchronized void unLockWrite()</p>
-</li>
-</ul>
-<p>且都是synchronized的方法，因为其在实例级别并发下，需要保持先后顺序。</p>
-<p>读写锁的要求：</p>
-<ul>
-<li><p>lockRead时，不能有写，写等待请求。</p>
-</li>
-<li><p>unlockRead时，无要求</p>
-</li>
-<li><p>lockWrite时，不能有读，写请求</p>
-</li>
-<li><p>unlockWrite时，无要求</p>
-</li>
-</ul>
-<p>代码如下</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/java-readwrite-lock/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2005,7 +2113,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
