@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://chenlisong.github.io/design-create/</loc>
+    <lastmod>2018-10-11T07:52:38.393Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式-创建型</title>
+        <pubTime>2018-10-09T07:00:00.000Z</pubTime>
+        
+        <tag>design</tag>
+         
+         
+           
+             
+              <breadCrumb title="design" url="http://chenlisong.github.io/categories/design/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chenlisong.github.io/design-start/</loc>
+    <lastmod>2018-10-09T07:44:07.130Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式-</title>
+        <pubTime>2018-10-09T06:00:00.000Z</pubTime>
+        
+        <tag>design</tag>
+         
+         
+           
+             
+              <breadCrumb title="design" url="http://chenlisong.github.io/categories/design/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chenlisong.github.io/redis-devops/</loc>
     <lastmod>2018-09-21T08:00:22.266Z</lastmod>
     <data>

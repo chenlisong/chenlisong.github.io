@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java,gc," />
+  <meta name="keywords" content="design," />
 
 
 
@@ -79,21 +79,18 @@
 
 
 
-<meta name="description" content="介绍长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。 CMS gc常见垃圾回收器 串行 Serial 单线程的一个回收器，简单，易实现，效率高  并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间  吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制  并发标记清除 CMS concurrent mark swe">
-<meta name="keywords" content="java,gc">
+<meta name="description" content="介绍刚毕业时，每隔半年把所有的设计模式重新看一遍，再写一遍，这样能记住一段时间，但是很快忘记。 后来发现有几点挺有意思。  虽然忘记，但是项目中不知不觉的使用着，潜移默化的受着影响；  套路，是为了开阔视野，而不是生搬硬套，A合适，突然发现B也蛮合适，so 都可以，可怕的是不知道A和B；  理解规则很重要，记住某几个设计模式，我觉得并不是很重要。   为什么学习设计模式呢？ 开阔思维，规则，总结，">
+<meta name="keywords" content="design">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java gc总结">
-<meta property="og:url" content="http://chenlisong.github.io/java-gc-review/index.html">
+<meta property="og:title" content="设计模式-">
+<meta property="og:url" content="http://chenlisong.github.io/design-start/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="介绍长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。 CMS gc常见垃圾回收器 串行 Serial 单线程的一个回收器，简单，易实现，效率高  并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间  吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制  并发标记清除 CMS concurrent mark swe">
+<meta property="og:description" content="介绍刚毕业时，每隔半年把所有的设计模式重新看一遍，再写一遍，这样能记住一段时间，但是很快忘记。 后来发现有几点挺有意思。  虽然忘记，但是项目中不知不觉的使用着，潜移默化的受着影响；  套路，是为了开阔视野，而不是生搬硬套，A合适，突然发现B也蛮合适，so 都可以，可怕的是不知道A和B；  理解规则很重要，记住某几个设计模式，我觉得并不是很重要。   为什么学习设计模式呢？ 开阔思维，规则，总结，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://tech.meituan.com/img/JVM-optimize/four.png">
-<meta property="og:image" content="https://tech.meituan.com/img/g1/g1_gc_layout.png">
-<meta property="og:updated_time" content="2018-07-11T18:04:16.635Z">
+<meta property="og:updated_time" content="2018-10-09T07:44:07.130Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java gc总结">
-<meta name="twitter:description" content="介绍长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。 CMS gc常见垃圾回收器 串行 Serial 单线程的一个回收器，简单，易实现，效率高  并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间  吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制  并发标记清除 CMS concurrent mark swe">
-<meta name="twitter:image" content="https://tech.meituan.com/img/JVM-optimize/four.png">
+<meta name="twitter:title" content="设计模式-">
+<meta name="twitter:description" content="介绍刚毕业时，每隔半年把所有的设计模式重新看一遍，再写一遍，这样能记住一段时间，但是很快忘记。 后来发现有几点挺有意思。  虽然忘记，但是项目中不知不觉的使用着，潜移默化的受着影响；  套路，是为了开阔视野，而不是生搬硬套，A合适，突然发现B也蛮合适，so 都可以，可怕的是不知道A和B；  理解规则很重要，记住某几个设计模式，我觉得并不是很重要。   为什么学习设计模式呢？ 开阔思维，规则，总结，">
 
 
 
@@ -123,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://chenlisong.github.io/java-gc-review/"/>
+  <link rel="canonical" href="http://chenlisong.github.io/design-start/"/>
 
 
 
 
 
-  <title>Java gc总结 | 一抹阳光丶</title>
+  <title>设计模式- | 一抹阳光丶</title>
   
 
 
@@ -276,7 +273,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/java-gc-review/">
+    <link itemprop="mainEntityOfPage" href="http://chenlisong.github.io/design-start/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="一抹阳光丶">
@@ -293,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java gc总结</h1>
+          <h1 class="post-title" itemprop="name headline">设计模式-</h1>
         
 
         <div class="post-meta">
@@ -305,8 +302,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T01:20:00+08:00">
-                2018-07-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-09T14:00:00+08:00">
+                2018-10-09
               </time>
             
 
@@ -328,8 +325,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/design/" itemprop="url" rel="index">
+                    <span itemprop="name">design</span>
                   </a>
                 </span>
 
@@ -345,7 +342,7 @@
 
           
           
-             <span id="/java-gc-review/" class="leancloud_visitors" data-flag-title="Java gc总结">
+             <span id="/design-start/" class="leancloud_visitors" data-flag-title="设计模式-">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,57 +373,87 @@
       
 
       
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>长夜漫漫，无心睡眠，起来总结一下Java的gc，cms，g1, zgc。以供回顾。</p>
-<h2 id="CMS-gc"><a href="#CMS-gc" class="headerlink" title="CMS gc"></a>CMS gc</h2><h3 id="常见垃圾回收器"><a href="#常见垃圾回收器" class="headerlink" title="常见垃圾回收器"></a>常见垃圾回收器</h3><ul>
-<li><p>串行 Serial 单线程的一个回收器，简单，易实现，效率高</p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>刚毕业时，每隔半年把所有的设计模式重新看一遍，再写一遍，这样能记住一段时间，但是很快忘记。</p>
+<p>后来发现有几点挺有意思。</p>
+<ol>
+<li><p>虽然忘记，但是项目中不知不觉的使用着，潜移默化的受着影响；</p>
 </li>
-<li><p>并行 ParNew Serial的多线程版，可以充分的利用cpu的资源，减少回收的时间</p>
+<li><p>套路，是为了开阔视野，而不是生搬硬套，A合适，突然发现B也蛮合适，so 都可以，可怕的是不知道A和B；</p>
 </li>
-<li><p>吞吐量优先 Parallel Scavenge，侧重于吞吐量的控制</p>
+<li><p>理解规则很重要，记住某几个设计模式，我觉得并不是很重要。</p>
 </li>
-<li><p>并发标记清除 CMS concurrent mark sweep 一种以获取最短回收停顿时间为目标的回收器，该回收器基于标记-清除算法</p>
-</li>
-</ul>
-<h3 id="cms的执行过程"><a href="#cms的执行过程" class="headerlink" title="cms的执行过程"></a>cms的执行过程</h3><ul>
-<li><p>init-mark初始标记 stw，该阶段进行可达性分析，标记gc root能直接关联到的对象，很快</p>
-</li>
-<li><p>concurrent-mark 并发标记，由前段标记过的绿色对象出发，所有可达到的对象都在本阶段标记</p>
-</li>
-<li><p>remakr重标记，stw，暂停所有用户线程，重新扫描用户堆对象，进行可达性分析，标记活着的对象</p>
-<p>  因为阶段2，可能有用户线程重新让一个对象变得可达。注意，当前阶段以新生代对象为根来判断对象是否存活</p>
-</li>
-<li><p>并发清理，进行并发的垃圾清理</p>
-</li>
-</ul>
+</ol>
+<p>为什么学习设计模式呢？</p>
+<p>开阔思维，规则，总结，归纳。</p>
+<p>面向对象的设计过程中，需要先进行泛化，抽象。然后对具体的对象进行窄化，细化。</p>
 <a id="more"></a>
-<p><img src="https://tech.meituan.com/img/JVM-optimize/four.png" alt="cms-gc"></p>
-<h3 id="常用优化"><a href="#常用优化" class="headerlink" title="常用优化"></a>常用优化</h3><ul>
-<li><p>如果应用存在大量的短期对象，应该选择较大的年轻代；如果存在相对较多的持久对象，老年代应该适当增大。</p>
+<h2 id="六大原则"><a href="#六大原则" class="headerlink" title="六大原则"></a>六大原则</h2><p>废话不多说，先说文章结构。</p>
+<p>本文阐述，规则，定义，然后按照创建型，结构型，行为型在分别讨论重要的几个设计模式。</p>
+<h3 id="单一职责"><a href="#单一职责" class="headerlink" title="单一职责"></a>单一职责</h3><p>不要存在一个导致类变更的原因，通俗的说，一个类只负责一项职责。</p>
+<p>优点：</p>
+<ul>
+<li><p>降低类的复杂度，一个类只负责一项职责，其逻辑肯定肯定要比负责多项职责简单的多；</p>
 </li>
-<li><p>CMS提供CMSScavengeBeforeRemark参数，用来保证Remark前强制进行一次Minor GC</p>
+<li><p>提高类的可读性，提高系统的可维护性</p>
 </li>
-<li><p>通过把-XX:PermSize参数和-XX:MaxPermSize设置成一样，强制虚拟机在启动的时候就把永久代的容量固定下来，避免运行时自动扩容</p>
-</li>
-<li><p>CMS默认情况下不会回收Perm区，通过参数CMSPermGenSweepingEnabled、CMSClassUnloadingEnabled ，可以让CMS在Perm区容量不足时对其回收</p>
+<li><p>变更引起的风险，变更是必然的，如果单一职责遵守的好，只是模块化的设计，可以显著降低对其他功能的影响</p>
 </li>
 </ul>
-<p>注意：</p>
-<p>动态年龄计算：hotspot遍历所有对象时，按照年龄从小到大对其所占用的大小进行累积，当累积的某个年龄大小超过survivor区的一半，取这个年龄与MaxTenuringThreshold中更小的一个</p>
-<h2 id="G1-gc"><a href="#G1-gc" class="headerlink" title="G1 gc"></a>G1 gc</h2><p><img src="https://tech.meituan.com/img/g1/g1_gc_layout.png" alt="g1-gc"></p>
-<h3 id="region"><a href="#region" class="headerlink" title="region"></a>region</h3><p>每个region被标记成eden, old, survivor, humongous，其中humongous代表巨型对象。</p>
-<p>region大小设置 -XX:G1HeapRegionSize ，1，2，4，8，32M，默认值是堆的大小/2048</p>
-<h3 id="yong-gc"><a href="#yong-gc" class="headerlink" title="yong gc"></a>yong gc</h3><p>一般对象均在eden区分配内存，除了humongous对象，当所有eden区域被耗尽内存时，触发yong gc，活跃对象copy到survivor区和old区中，空闲的region会被放入空闲列表</p>
-<p>-XX:MaxGCPauseMillis    设置G1收集过程目标时间，默认值200ms</p>
-<p>-XX:G1NewSizePercent    新生代最小值，默认值5%</p>
-<p>-XX:G1MaxNewSizePercent 新生代最大值，默认值60%</p>
-<h3 id="mixed-gc"><a href="#mixed-gc" class="headerlink" title="mixed gc"></a>mixed gc</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:InitiatingHeapOccupancyPercent=80 -XX:+UseCMSInitiatingOccupancyOnly</span><br></pre></td></tr></table></figure>
-<p>触发机制：当老年代的大小占整个堆大小百分比达到该阀值时，会触发一次mixed gc</p>
-<p>执行过程：参考cms执行过程。类似。会优先考虑收益高的old区域执行gc。</p>
-<h3 id="full-gc"><a href="#full-gc" class="headerlink" title="full gc"></a>full gc</h3><p>如果对象内存分配过快，mixed gc来不及执行，导致年轻代被占满，就会触发full gc，serial old gc，导致长时间的暂停时间。</p>
-<h2 id="zgc"><a href="#zgc" class="headerlink" title="zgc"></a>zgc</h2><p>描述：并发，单代，基于区域的，numa感知的收集器。stw阶段仅限于gc root扫描。gc时间不会随着堆或者对象的大小而增加。</p>
-<p>核心设计：有色指针(colored pointers) 负载障碍(load barriers) 结合使用。</p>
-<p>zgc暂时不开放使用，除非在编译configuration时–with-jvm-features=zgc，并增加jvm选项XX:+UnlockExperimentalVMOptions -XX:+UseZGC</p>
-<p>更多zgc参考zgc的jep地址：<a href="http://openjdk.java.net/jeps/333" target="_blank" rel="noopener">http://openjdk.java.net/jeps/333</a></p>
+<h3 id="里氏替换"><a href="#里氏替换" class="headerlink" title="里氏替换"></a>里氏替换</h3><p>所有引用基类的地方必须能透明的使用其子类的对象；</p>
+<p>当使用继承时，遵循里氏替换原则，类B继承类A，除添加新的方法完成新增功能P2外，尽量不要重写类A的方法，尽量不重载父类A的方法。</p>
+<p>通俗来讲，子类扩展父类的功能，但是不能改变父类原有的功能。</p>
+<ul>
+<li><p>子类可以实现父类的抽象方法，但不能覆盖父类的抽象方法；</p>
+</li>
+<li><p>子类中可以增加自己特有的方法；</p>
+</li>
+<li><p>当子类方法重载父类方法，方法的形参要比父类的更宽松；</p>
+</li>
+<li><p>当子类实现父类的抽象方法时，方法的返回值要更严格。</p>
+</li>
+</ul>
+<h3 id="依赖倒置"><a href="#依赖倒置" class="headerlink" title="依赖倒置"></a>依赖倒置</h3><p>高层模块不应该依赖低层模块，二者都应该依赖其抽象；抽象不应该依赖细节，细节应该依赖其抽象。</p>
+<p>传递依赖关系有三种方式，接口传递，构造方法传递，setter方法传递。</p>
+<ul>
+<li><p>低层模块尽量都要有抽象类或接口；</p>
+</li>
+<li><p>变量的声明类型尽量是抽象类或接口；</p>
+</li>
+</ul>
+<p>依赖倒置的核心就是要我们面向接口编程。</p>
+<h3 id="接口隔离"><a href="#接口隔离" class="headerlink" title="接口隔离"></a>接口隔离</h3><p>建立单一接口，不要建立庞大臃肿的接口，尽量细化接口。</p>
+<p>设计中依赖几个专用的接口要比依赖一个综合的接口更加灵活。接口是设计时对外部设定的契约，通过分散定义多个接口，可以预防外来变更的扩散，提高系统的灵活性和可维护性。</p>
+<ul>
+<li><p>接口尽量小，但是要有限度，如果接口过多，会造成设计复杂，一定要适度；</p>
+</li>
+<li><p>为依赖接口的类定制服务，只暴露给调用的类他需要的方法，他不需要的方法则隐藏起来。专注的为一个模块提供定制服务，建立最小的依赖关系；</p>
+</li>
+<li><p>提高内聚，减少对外交互，使接口用最少的方法去完成最多的事情。</p>
+</li>
+</ul>
+<h3 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h3><p>一个对象应该对其他对象保持最少的了解。</p>
+<p>如果类与类的关系越紧密，耦合度越大，当一个类发生改变时，对另一个类的影响也越大，尽量降低类之间的耦合。</p>
+<p>迪米特法则的初衷是降低类之间的耦合，由于每个类都减少了不必要的依赖，因此的确可以降低耦合关系，可以避免与非直接类的通信，但是通信需要通过中介类，会产生大量的中介类，导致系统变复杂。</p>
+<p>所以设计时，既要做到结构清晰，又要高内聚，低耦合。</p>
+<h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h3><p>一个软件实体如类、模块和函数应该对扩展开放，对修改关闭。</p>
+<p>用抽象构建框架，用实现扩展细节。因为抽象灵活性好，适应性广，只要抽象的合理，可以基本保持软件架构的稳定。而软件中易变的细节，我们用从抽象派生的实现类来进行扩展，当软件需要发生变化时，我们只需要根据需求重新派生一个实现类来扩展就可以了。当然前提是我们的抽象要合理，要对需求的变更有前瞻性和预见性才行。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p>单一职责原则告诉我们实现类要职责单一</p>
+</li>
+<li><p>里氏替换原则告诉我们不要破坏继承体系</p>
+</li>
+<li><p>依赖倒置原则告诉我们要面向接口编程</p>
+</li>
+<li><p>接口隔离原则告诉我们在设计接口的时候要精简单一</p>
+</li>
+<li><p>迪米特法则告诉我们要降低耦合</p>
+</li>
+<li><p>开闭原则是总纲，他告诉我们要对扩展开放，对修改关闭</p>
+</li>
+</ul>
+<blockquote>
+<p>例子参考：<a href="http://www.uml.org.cn/sjms/201211023.asp" target="_blank" rel="noopener">http://www.uml.org.cn/sjms/201211023.asp</a></p>
+</blockquote>
 
       
     </div>
@@ -444,9 +471,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
-          
-            <a href="/tags/gc/" rel="tag"># gc</a>
+            <a href="/tags/design/" rel="tag"># design</a>
           
         </div>
       
@@ -459,8 +484,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/java-annotation-common-log/" rel="next" title="业务数据/日志/快照/操作/统计的通用服务">
-                <i class="fa fa-chevron-left"></i> 业务数据/日志/快照/操作/统计的通用服务
+              <a href="/redis-devops/" rel="next" title="redis运维常用命令">
+                <i class="fa fa-chevron-left"></i> redis运维常用命令
               </a>
             
           </div>
@@ -469,8 +494,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/mycat-mysql-concurrent-lock/" rel="prev" title="mycat与mysql在锁并发竞争场景下的问题">
-                mycat与mysql在锁并发竞争场景下的问题 <i class="fa fa-chevron-right"></i>
+              <a href="/design-create/" rel="prev" title="设计模式-创建型">
+                设计模式-创建型 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -613,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS-gc"><span class="nav-text">CMS gc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见垃圾回收器"><span class="nav-text">常见垃圾回收器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cms的执行过程"><span class="nav-text">cms的执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用优化"><span class="nav-text">常用优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G1-gc"><span class="nav-text">G1 gc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#region"><span class="nav-text">region</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yong-gc"><span class="nav-text">yong gc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mixed-gc"><span class="nav-text">mixed gc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#full-gc"><span class="nav-text">full gc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zgc"><span class="nav-text">zgc</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六大原则"><span class="nav-text">六大原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单一职责"><span class="nav-text">单一职责</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#里氏替换"><span class="nav-text">里氏替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖倒置"><span class="nav-text">依赖倒置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口隔离"><span class="nav-text">接口隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迪米特法则"><span class="nav-text">迪米特法则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开闭原则"><span class="nav-text">开闭原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></li></ol></div>
             
 
           </div>
