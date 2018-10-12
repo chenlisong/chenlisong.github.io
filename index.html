@@ -375,8 +375,7 @@
 
       
         
-          
-            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>行为型模式(Behavioral Pattern)是对在不同的对象之间划分责任和算法的抽象化。</p>
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>行为型模式(Behavioral Pattern)是对在不同的对象之间划分责任和算法的抽象化。</p>
 <p>行为型模式不仅仅关注类和对象的结构，而且重点关注它们之间的相互作用。通过行为型模式，可以更加清晰地划分类与对象的职责，并研究系统在运行时实例对象之间的交互。在系统运行时，对象并不是孤立的，它们可以通过相互通信与协作完成某些复杂功能，一个对象在运行时也将影响到其他对象的运行。</p>
 <ul>
 <li><p>类行为型模式：类的行为型模式使用继承关系在几个类之间分配行为，类行为型模式主要通过多态等方式来分配父类与子类的职责。</p>
@@ -396,104 +395,14 @@
 <p>其他：解释器模式(Interpreter)，中介者模式(Mediator)，备忘录模式(Memento)，状态模式(State)，模板方法模式(Template Method)，访问者模式(Visitor)</p>
 <h2 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h2><p>动机：在软件设计中，我们经常需要向某些对象发送请求，但是并不知道请求的接收者是谁，也不知道被请求的操作是哪个，我们只需在程序运行时指定具体的请求接收者即可，此时，可以使用命令模式来进行设计，使得请求发送者与请求接收者消除彼此之间的耦合，让对象之间的调用关系更加灵活。</p>
 <p>命令模式可以对发送者和接收者完全解耦，发送者与接收者之间没有直接引用关系，发送请求的对象只需要知道如何发送请求，而不必知道如何完成请求。这就是命令模式的模式动机。</p>
-<p>定义：将一个请求封装为一个对象，从而使我们可用不同的请求对客户进行参数化；对请求排队或者记录请求日志，以及支持可撤销的操作。命令模式是一种对象行为型模式，其别名为动作(Action)模式或事务(Transaction)模式。</p>
-<p>角色</p>
-<ul>
-<li>Command: 抽象命令类</li>
-<li>ConcreteCommand: 具体命令类</li>
-<li>Invoker: 调用者</li>
-<li>Receiver: 接收者</li>
-<li>Client:客户类</li>
-</ul>
-<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Command.jpg" alt="Command"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Command.jpg" alt="seq_Command"></p>
-<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Command_eg.jpg" alt="Command_eg"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Command_eg.jpg" alt="seq_Command_eg"></p>
-<p>优点</p>
-<ul>
-<li><p>降低系统的耦合度。</p>
-</li>
-<li><p>新的命令可以很容易地加入到系统中。</p>
-</li>
-<li><p>可以比较容易地设计一个命令队列和宏命令（组合命令）。</p>
-</li>
-<li><p>可以方便地实现对请求的Undo和Redo。</p>
-</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>使用命令模式可能会导致某些系统有过多的具体命令类。因为针对每一个命令都需要设计一个具体命令类，因此某些系统可能需要大量具体命令类，这将影响命令模式的使用。</li>
-</ul>
-<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><p>动机：建立一种对象与对象之间的依赖关系，一个对象发生改变时将自动通知其他对象，其他对象将相应做出反应。在此，发生改变的对象称为观察目标，而被通知的对象称为观察者，一个观察目标可以对应多个观察者，而且这些观察者之间没有相互联系，可以根据需要增加和删除观察者，使得系统更易于扩展，这就是观察者模式的模式动机。</p>
-<p>定义：定义对象间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象皆得到通知并被自动更新。观察者模式又叫做发布-订阅（Publish/Subscribe）模式、模型-视图（Model/View）模式、源-监听器（Source/Listener）模式或从属者（Dependents）模式。</p>
-<p>角色</p>
-<ul>
-<li>Subject: 目标</li>
-<li>ConcreteSubject: 具体目标</li>
-<li>Observer: 观察者</li>
-<li>ConcreteObserver: 具体观察者</li>
-</ul>
-<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Obeserver.jpg" alt="Obeserver"><br><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Obeserver.jpg" alt="seq_Obeserver"></p>
-<p>优点</p>
-<ul>
-<li><p>观察者模式可以实现表示层和数据逻辑层的分离，并定义了稳定的消息更新传递机制，抽象了更新接口，使得可以有各种各样不同的表示层作为具体观察者角色。</p>
-</li>
-<li><p>观察者模式在观察目标和观察者之间建立一个抽象的耦合。</p>
-</li>
-<li><p>观察者模式支持广播通信。</p>
-</li>
-<li><p>观察者模式符合“开闭原则”的要求。</p>
-</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li><p>如果一个观察目标对象有很多直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。</p>
-</li>
-<li><p>如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。</p>
-</li>
-<li><p>观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</p>
-</li>
-</ul>
-<h2 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h2><p>动机</p>
-<ul>
-<li><p>完成一项任务，往往可以有多种不同的方式，每一种方式称为一个策略，我们可以根据环境或者条件的不同选择不同的策略来完成该项任务。</p>
-</li>
-<li><p>在软件开发中也常常遇到类似的情况，实现某一个功能有多个途径，此时可以使用一种设计模式来使得系统可以灵活地选择解决途径，也能够方便地增加新的解决途径。</p>
-</li>
-<li><p>在软件系统中，有许多算法可以实现某一功能，如查找、排序等，一种常用的方法是硬编码(Hard Coding)在一个类中，如需要提供多种查找算法，可以将这些算法写到一个类中，在该类中提供多个方法，每一个方法对应一个具体的查找算法；当然也可以将这些查找算法封装在一个统一的方法中，通过if…else…等条件判断语句来进行选择。这两种实现方法我们都可以称之为硬编码，如果需要增加一种新的查找算法，需要修改封装算法类的源代码；更换查找算法，也需要修改客户端调用代码。在这个算法类中封装了大量查找算法，该类代码将较复杂，维护较为困难。</p>
-</li>
-<li><p>除了提供专门的查找算法类之外，还可以在客户端程序中直接包含算法代码，这种做法更不可取，将导致客户端程序庞大而且难以维护，如果存在大量可供选择的算法时问题将变得更加严重。</p>
-</li>
-<li><p>为了解决这些问题，可以定义一些独立的类来封装不同的算法，每一个类封装一个具体的算法，在这里，每一个封装算法的类我们都可以称之为策略(Strategy)，为了保证这些策略的一致性，一般会用一个抽象的策略类来做算法的定义，而具体每种算法则对应于一个具体策略类。</p>
-</li>
-</ul>
-<p>定义：定义一系列算法，将每一个算法封装起来，并让它们可以相互替换。策略模式让算法独立于使用它的客户而变化，也称为政策模式(Policy)。</p>
-<p>角色</p>
-<ul>
-<li>Context: 环境类</li>
-<li>Strategy: 抽象策略类</li>
-<li>ConcreteStrategy: 具体策略类</li>
-</ul>
-<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/Strategy.jpg" alt="Strategy"></p>
-<p><img src="http://chenlisong.oss-cn-beijing.aliyuncs.com/github.io/seq_Strategy.jpg" alt="seq_Strategy"></p>
-<p>优点</p>
-<ul>
-<li><p>策略模式提供了对“开闭原则”的完美支持，用户可以在不修改原有系统的基础上选择算法或行为，也可以灵活地增加新的算法或行为。</p>
-</li>
-<li><p>策略模式提供了管理相关的算法族的办法。</p>
-</li>
-<li><p>策略模式提供了可以替换继承关系的办法。</p>
-</li>
-<li><p>使用策略模式可以避免使用多重条件转移语句。</p>
-</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li><p>客户端必须知道所有的策略类，并自行决定使用哪一个策略类。</p>
-</li>
-<li><p>策略模式将造成产生很多策略类，可以通过使用享元模式在一定程度上减少对象的数量。</p>
-</li>
-</ul>
-
-          
+<p>定义：将一个请求封装为一个对象，从而使我们可用不同的请求对客户进行参数化；对请求排队或者记录请求日志，以及支持可撤销的操作。命令模式是一种对象行为型模式，其别名为动作(Action)模式或事务(Transaction)模式。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/design-behavior/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
