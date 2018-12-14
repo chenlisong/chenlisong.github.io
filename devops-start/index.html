@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="介绍运维相关工具的汇总记录。 涉及的工具内容：  中间件的运维，部署  db的运维，监控工具  进程/内存的运维，监控工具   中间件redis监控工具：主要依赖redis-cli，例如：redis-cli -p 7000 info | grep ops 分析大key：redis-cli -p 7000 –bigkeys dump rdb，分析key分布，内存大小等：https://github.">
+<meta name="description" content="介绍运维相关工具的汇总记录。 涉及的工具内容：  中间件的运维，部署  db的运维，监控工具  进程/内存的运维，监控工具  运维工具   中间件redis监控工具：主要依赖redis-cli，例如：redis-cli -p 7000 info | grep ops 分析大key：redis-cli -p 7000 –bigkeys dump rdb，分析key分布，内存大小等：https://g">
 <meta name="keywords" content="devops">
 <meta property="og:type" content="article">
 <meta property="og:title" content="devops 工具汇总">
 <meta property="og:url" content="http://chenlisong.github.io/devops-start/index.html">
 <meta property="og:site_name" content="一抹阳光丶">
-<meta property="og:description" content="介绍运维相关工具的汇总记录。 涉及的工具内容：  中间件的运维，部署  db的运维，监控工具  进程/内存的运维，监控工具   中间件redis监控工具：主要依赖redis-cli，例如：redis-cli -p 7000 info | grep ops 分析大key：redis-cli -p 7000 –bigkeys dump rdb，分析key分布，内存大小等：https://github.">
+<meta property="og:description" content="介绍运维相关工具的汇总记录。 涉及的工具内容：  中间件的运维，部署  db的运维，监控工具  进程/内存的运维，监控工具  运维工具   中间件redis监控工具：主要依赖redis-cli，例如：redis-cli -p 7000 info | grep ops 分析大key：redis-cli -p 7000 –bigkeys dump rdb，分析key分布，内存大小等：https://g">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-12T07:27:14.276Z">
+<meta property="og:updated_time" content="2018-12-14T02:58:55.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="devops 工具汇总">
-<meta name="twitter:description" content="介绍运维相关工具的汇总记录。 涉及的工具内容：  中间件的运维，部署  db的运维，监控工具  进程/内存的运维，监控工具   中间件redis监控工具：主要依赖redis-cli，例如：redis-cli -p 7000 info | grep ops 分析大key：redis-cli -p 7000 –bigkeys dump rdb，分析key分布，内存大小等：https://github.">
+<meta name="twitter:description" content="介绍运维相关工具的汇总记录。 涉及的工具内容：  中间件的运维，部署  db的运维，监控工具  进程/内存的运维，监控工具  运维工具   中间件redis监控工具：主要依赖redis-cli，例如：redis-cli -p 7000 info | grep ops 分析大key：redis-cli -p 7000 –bigkeys dump rdb，分析key分布，内存大小等：https://g">
 
 
 
@@ -382,6 +382,8 @@
 </li>
 <li><p>进程/内存的运维，监控工具</p>
 </li>
+<li><p>运维工具</p>
+</li>
 </ol>
 <h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><h3 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h3><p>监控工具：主要依赖redis-cli，例如：redis-cli -p 7000 info | grep ops</p>
 <p>分析大key：redis-cli -p 7000 –bigkeys</p>
@@ -397,6 +399,9 @@
 <h2 id="进程-内存"><a href="#进程-内存" class="headerlink" title="进程/内存"></a>进程/内存</h2><p>jemalloc：用于对外内存leak分析，监听linux native方法调用情况，非侵入；</p>
 <p>jvisualvm：实时查看堆栈信息，需要添加jmx启动参数</p>
 <p>jprofiler：dump prof文件，分析类的instance， size，并拿到其调用链。可在运行时jmap dump，亦可在oom时自动dump，增加启动参数即可。</p>
+<h2 id="运维工具"><a href="#运维工具" class="headerlink" title="运维工具"></a>运维工具</h2><p>sky walking：免费，开源，ui简洁，java agent监控工具，调用链trace等分析。性能损失3%</p>
+<p>oneapm：收费，单独提供jvm分析，性能解析(基于btrace, jemalloc)</p>
+<p>cat：代码层面的监控。</p>
 
       
     </div>
@@ -577,7 +582,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件"><span class="nav-text">中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis"><span class="nav-text">redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rocketmq"><span class="nav-text">rocketmq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elasticsearch"><span class="nav-text">elasticsearch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zookeeper"><span class="nav-text">zookeeper</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DB"><span class="nav-text">DB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql"><span class="nav-text">mysql</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程-内存"><span class="nav-text">进程/内存</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件"><span class="nav-text">中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis"><span class="nav-text">redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rocketmq"><span class="nav-text">rocketmq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elasticsearch"><span class="nav-text">elasticsearch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zookeeper"><span class="nav-text">zookeeper</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DB"><span class="nav-text">DB</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mysql"><span class="nav-text">mysql</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程-内存"><span class="nav-text">进程/内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运维工具"><span class="nav-text">运维工具</span></a></li></ol></div>
             
 
           </div>
